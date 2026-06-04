@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Container from '../components/layout/Container.astro';
+import Button from '../components/ui/Button.astro';
+import PrimaryCta from '../components/ui/PrimaryCta.astro';
+---
+
+<SiteLayout title="Page introuvable" noindex={true}>
+  <section class="py-[var(--space-section)]">
+    <Container size="default">
+      <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+        404
+      </p>
+      <h1
+        class="mt-4 max-w-[20ch] text-[length:var(--text-4xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.025em] text-[var(--color-text)]"
+      >
+        Cette page n'existe pas, ou plus.
+      </h1>
+      <p
+        class="mt-6 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+      >
+        Pas un drame. Vous pouvez revenir à l'accueil, ou directement réserver un échange si vous
+        avez un projet en tête.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <PrimaryCta size="lg" class="w-full sm:w-auto" />
+        <Button href="/" variant="secondary" size="lg" class="w-full sm:w-auto"
+          >Retour à l'accueil</Button
+        >
+      </div>
+    </Container>
+  </section>
+</SiteLayout>

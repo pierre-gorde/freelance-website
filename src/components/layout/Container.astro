@@ -1,0 +1,27 @@
+---
+type ContainerSize = 'narrow' | 'prose' | 'default' | 'wide' | 'full';
+type ContainerTag = 'div' | 'section' | 'article' | 'main' | 'header' | 'footer' | 'nav';
+
+interface Props {
+  size?: ContainerSize;
+  as?: ContainerTag;
+  class?: string;
+}
+
+const SIZE_CLASS: Record<ContainerSize, string> = {
+  narrow: 'max-w-[var(--container-narrow)]',
+  prose: 'max-w-[var(--container-prose)]',
+  default: 'max-w-[var(--container-default)]',
+  wide: 'max-w-[var(--container-wide)]',
+  full: 'max-w-none',
+};
+
+const props = Astro.props;
+const size: ContainerSize = props.size ?? 'default';
+const Tag: ContainerTag = props.as ?? 'div';
+const className: string = props.class ?? '';
+---
+
+<Tag class={`mx-auto w-full px-6 sm:px-8 lg:px-12 ${SIZE_CLASS[size]} ${className}`}>
+  <slot />
+</Tag>

@@ -1,0 +1,30 @@
+---
+import Button from './Button.astro';
+import { CTA_RDV_HREF, CTA_RDV_LABEL } from '../../lib/links.const';
+
+type Props = {
+  size?: 'sm' | 'md' | 'lg';
+  label?: string;
+  class?: string;
+};
+
+const { size = 'md', label = CTA_RDV_LABEL, class: className = '' } = Astro.props;
+---
+
+<Button href={CTA_RDV_HREF} variant="primary" size={size} class={className}>
+  {label}
+  <svg
+    aria-hidden="true"
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M2.5 7h9" />
+    <path d="M8 3.5 11.5 7 8 10.5" />
+  </svg>
+</Button>

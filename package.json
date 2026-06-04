@@ -1,0 +1,31 @@
+{
+  "name": "pierregorde-com",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Site marketing de l'activité freelance solo de Pierre Gorde",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro",
+    "format": "prettier --write \"src/**/*.{astro,ts,tsx,js,jsx,css,md}\"",
+    "lint": "astro check && prettier --check \"src/**/*.{astro,ts,tsx,js,jsx,css,md}\""
+  },
+  "dependencies": {
+    "astro": "^6.4.4",
+    "@astrojs/sitemap": "^3.7.3",
+    "tailwindcss": "^4.3.0",
+    "@tailwindcss/vite": "^4.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "prettier": "^3.4.0",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.7.0"
+  }
+}

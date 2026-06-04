@@ -1,0 +1,64 @@
+---
+interface Props {
+  as?: 'div' | 'section' | 'article' | 'li' | 'span';
+  delay?: number;
+  class?: string;
+}
+
+const props = Astro.props;
+const Tag = props.as ?? 'div';
+const delay = props.delay ?? 0;
+const className = props.class ?? '';
+const delayStyle = delay > 0 ? `--reveal-delay: ${delay}ms` : undefined;
+---
+
+<Tag class:list={['reveal', className]} style={delayStyle} data-reveal>
+  <slot />
+</Tag>
+
+<style>
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.8s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) var(--reveal-delay, 0ms),
+      transform 0.8s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+  if ('IntersectionObserver' in window && reveals.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
+    );
+
+    reveals.forEach((node) => observer.observe(node));
+  } else {
+    // Fallback : si pas d'IntersectionObserver, on affiche tout.
+    reveals.forEach((node) => node.classList.add('is-visible'));
+  }
+</script>

@@ -1,0 +1,9 @@
+import { SITE_NAME, SITE_URL } from './site.const';
+
+export const DEFAULT_TITLE = `${SITE_NAME} — Dev TypeScript freelance`;
+export const DEFAULT_DESCRIPTION =
+  'Je conçois et je livre vos produits tech, avec rigueur, disponibilité et un point quotidien sur l\'avancée.';
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.png`;
+
+export const SITE_LOCALE = 'fr_FR';
+export const SITE_LANG = 'fr';

@@ -1,0 +1,158 @@
+---
+type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+type ButtonSize = 'sm' | 'md' | 'lg';
+
+type Props = {
+  href?: string;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  ariaLabel?: string;
+  external?: boolean;
+};
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className = '',
+  ariaLabel,
+  external = false,
+} = Astro.props;
+
+const baseClasses = [
+  'relative overflow-hidden isolate',
+  'inline-flex items-center justify-center gap-2',
+  'font-medium tracking-[-0.005em] whitespace-nowrap',
+  'rounded-[var(--radius-pill)]',
+  'transition-[transform,box-shadow,background-color,color] duration-[var(--duration-default)]',
+  '[transition-timing-function:var(--ease-out-quart)]',
+  'focus-visible:outline-2 focus-visible:outline-offset-3',
+  'active:translate-y-[1px]',
+  'disabled:opacity-50 disabled:pointer-events-none',
+].join(' ');
+
+const variantClasses: Record<ButtonVariant, string> = {
+  primary: [
+    'btn-shiny',
+    'bg-[var(--color-primary-600)] text-[var(--color-text-inverse)]',
+    'hover:bg-[var(--color-primary-700)]',
+    'shadow-[var(--shadow-cta)] hover:shadow-[var(--shadow-cta-hover)]',
+  ].join(' '),
+  secondary: [
+    'btn-shiny-light',
+    'bg-[var(--color-bg-elevated)] text-[var(--color-text)]',
+    'border border-[var(--color-border-strong)]',
+    'hover:bg-[var(--color-bg-subtle)] hover:border-[var(--color-primary-400)]',
+  ].join(' '),
+  ghost: [
+    'text-[var(--color-text)]',
+    'hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary-700)]',
+  ].join(' '),
+};
+
+const sizeClasses: Record<ButtonSize, string> = {
+  sm: 'h-9 px-4 text-sm',
+  md: 'h-11 px-6 text-base',
+  lg: 'h-14 px-8 text-lg',
+};
+
+const finalClassName = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class={finalClassName}
+      aria-label={ariaLabel}
+      rel={external ? 'noopener noreferrer' : undefined}
+      target={external ? '_blank' : undefined}
+    >
+      <span class="relative z-10 inline-flex items-center gap-2"><slot /></span>
+    </a>
+  ) : (
+    <button type={type} class={finalClassName} aria-label={ariaLabel}>
+      <span class="relative z-10 inline-flex items-center gap-2"><slot /></span>
+    </button>
+  )
+}
+
+<style is:global>
+  /* Effet shiny — sweep gradient au hover + glow vert pour le variant primary */
+  .btn-shiny::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      oklch(98% 0.02 155 / 0.28) 50%,
+      transparent 70%
+    );
+    transform: translateX(-110%) skewX(-12deg);
+    transition: transform 0.85s var(--ease-out-expo);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .btn-shiny:hover::before {
+    transform: translateX(110%) skewX(-12deg);
+  }
+
+  .btn-shiny::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    background: radial-gradient(
+      closest-side,
+      oklch(54% 0.12 155 / 0.45),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-out-quart);
+    pointer-events: none;
+    border-radius: inherit;
+    filter: blur(8px);
+  }
+
+  .btn-shiny:hover::after {
+    opacity: 1;
+  }
+
+  /* Variant secondary — sweep plus discret, en gris foncé */
+  .btn-shiny-light::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      oklch(33% 0.05 155 / 0.06) 50%,
+      transparent 70%
+    );
+    transform: translateX(-110%) skewX(-12deg);
+    transition: transform 0.85s var(--ease-out-expo);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .btn-shiny-light:hover::before {
+    transform: translateX(110%) skewX(-12deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-shiny::before,
+    .btn-shiny-light::before {
+      display: none;
+    }
+    .btn-shiny::after {
+      transition: none;
+    }
+  }
+</style>

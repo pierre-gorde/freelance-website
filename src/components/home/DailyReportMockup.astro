@@ -1,0 +1,113 @@
+---
+const REPORT_TIMESTAMP = 'Mardi 3 juin · 18:34';
+const PROJECT_LABEL = 'Projet · Refonte du paiement en ligne';
+
+const done = [
+  'Le nouveau système de paiement est en place sur les 4 espaces que vous m\'avez listés.',
+  'Les remboursements sont testés sur les 3 cas principaux. Un cas instable à reprendre demain matin.',
+];
+
+const upcoming = [
+  'Activer l\'alerte automatique en cas d\'échec de paiement (estimé : 2 h).',
+  'Mettre à jour la documentation pour votre équipe.',
+];
+
+const decisions = [
+  {
+    title: 'On garde l\'ancien système actif en parallèle pendant une semaine ?',
+    detail: 'Plus prudent pour la transition. Je suis pour. À vous de trancher.',
+  },
+];
+---
+
+<aside
+  class="report-card relative rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6 md:p-7 shadow-[0_30px_60px_-30px_oklch(20%_0.05_155/0.15),0_8px_24px_-8px_oklch(20%_0.05_155/0.08)]"
+  aria-label="Exemple de compte-rendu quotidien"
+>
+  <header class="flex items-baseline justify-between gap-4">
+    <div>
+      <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
+        Compte-rendu du jour
+      </p>
+      <p class="mt-1.5 font-mono text-xs text-[var(--color-text-muted)]">
+        {REPORT_TIMESTAMP}
+      </p>
+    </div>
+    <span
+      class="inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] bg-[var(--color-primary-50)] px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-[var(--color-primary-700)]"
+    >
+      <span class="size-1.5 rounded-full bg-[var(--color-primary-500)]"></span>
+      Envoyé
+    </span>
+  </header>
+
+  <p class="mt-5 font-mono text-xs text-[var(--color-text-subtle)]">
+    {PROJECT_LABEL}
+  </p>
+
+  <section class="mt-5">
+    <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+      Fait
+    </p>
+    <ul class="mt-2.5 space-y-2 text-sm leading-snug text-[var(--color-text)]">
+      {done.map((item) => <li class="flex gap-2.5"><span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]"></span><span>{item}</span></li>)}
+    </ul>
+  </section>
+
+  <section class="mt-5">
+    <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+      À venir demain
+    </p>
+    <ul class="mt-2.5 space-y-2 text-sm leading-snug text-[var(--color-text)]">
+      {upcoming.map((item) => <li class="flex gap-2.5"><span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]"></span><span>{item}</span></li>)}
+    </ul>
+  </section>
+
+  <section class="mt-5">
+    <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+      Décisions en attente
+    </p>
+    <ul class="mt-2.5 space-y-3 text-sm leading-snug">
+      {decisions.map((decision) => (
+        <li class="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg)] p-3">
+          <p class="font-medium text-[var(--color-text)]">{decision.title}</p>
+          <p class="mt-1 text-[var(--color-text-muted)]">{decision.detail}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <footer class="mt-6 flex items-center justify-between border-t border-[var(--color-border)] pt-4">
+    <p class="font-mono text-[0.65rem] text-[var(--color-text-subtle)]">
+      Lu en 30 secondes · Pas un timesheet
+    </p>
+    <p class="font-mono text-[0.65rem] text-[var(--color-text-subtle)]">— Pierre</p>
+  </footer>
+
+  <span aria-hidden="true" class="absolute -top-2 -right-2 hidden md:block">
+    <span
+      class="block size-4 rounded-full bg-[var(--color-primary-500)] opacity-90 [box-shadow:0_0_0_6px_oklch(97.5%_0.012_95)] animate-ping-slow"
+    ></span>
+  </span>
+</aside>
+
+<style>
+  @keyframes ping-slow {
+    0% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    70% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  .animate-ping-slow {
+    animation: ping-slow 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+</style>

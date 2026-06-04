@@ -1,0 +1,285 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Container from '../components/layout/Container.astro';
+import PrimaryCta from '../components/ui/PrimaryCta.astro';
+import Reveal from '../components/ui/Reveal.astro';
+import DailyReportMockup from '../components/home/DailyReportMockup.astro';
+import HeroPattern from '../components/home/HeroPattern.astro';
+import { PERSONA_LINKS } from '../lib/links.const';
+import { RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.const';
+
+const personaSubtitles: Record<string, string> = {
+  '/porteur-projet':
+    "Vous portez un projet tech, vous avez le financement, vous n'avez pas de tech en place.",
+  '/cto-renfort':
+    'Vous êtes CTO, lead dev ou chef de projet. Vous cherchez un renfort senior fiable.',
+  '/dirigeant': 'Vous dirigez une boîte, vous voulez démarrer ou accélérer un produit tech.',
+};
+
+const personaContexts: Record<string, string> = {
+  '/porteur-projet':
+    'On cadre techniquement le projet, on aligne le MVP sur ce qui peut être levé, et je pilote la livraison.',
+  '/cto-renfort':
+    "On démarre sur un chantier précis, je m'intègre à votre stack et à votre équipe, sans baby-sitting.",
+  '/dirigeant':
+    "On parle métier d'abord. Je traduis vos enjeux business en architecture, et je livre.",
+};
+
+const triade = [
+  {
+    label: 'Un point chaque jour',
+    description:
+      'Chaque jour travaillé, un message factuel le soir : ce qui est fait, ce qui bloque, ce qui suit.',
+  },
+  {
+    label: `Premier échange gratuit (${RDV_DURATION_LABEL})`,
+    description:
+      'Vous arrivez avec votre contexte, vous repartez avec une lecture honnête et trois directions concrètes.',
+  },
+  {
+    label: TJM_DISPLAY,
+    description:
+      'Tarif transparent, sur devis pour le démarrage et en régie pour la suite. Pas de "à partir de".',
+  },
+];
+---
+
+<SiteLayout
+  title="Pierre Gorde — Dev TypeScript freelance"
+  description="Je conçois et je livre vos produits tech, avec rigueur, disponibilité et un point quotidien sur l'avancée. Premier échange gratuit en 30 à 45 minutes."
+>
+  <!-- HERO asymétrique avec mockup compte-rendu quotidien à droite -->
+  <section class="relative overflow-hidden pt-16 pb-[var(--space-section-tight)] md:pt-24">
+    <HeroPattern />
+
+    <Container size="wide">
+      <div class="grid gap-16 lg:grid-cols-12 lg:gap-12 lg:items-center">
+        <!-- Colonne gauche : copy + CTA -->
+        <Reveal class="lg:col-span-7">
+          <h1
+            class="max-w-[16ch] text-[length:var(--text-display)] font-semibold leading-[0.95] tracking-[-0.03em] text-[var(--color-text)]"
+          >
+            Vos produits tech, <span class="hero-accent">livrés et fiables</span>.
+          </h1>
+
+          <p
+            class="mt-10 max-w-[58ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
+          >
+            Avec rigueur, disponibilité, et un point quotidien sur l'avancée. Vous savez précisément
+            où vous en êtes — chaque soir.
+          </p>
+
+          <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <PrimaryCta size="lg" class="w-full sm:w-auto" />
+            <a
+              href="/methode"
+              class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
+            >
+              Voir ma méthode
+              <span
+                class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
+              ></span>
+            </a>
+          </div>
+        </Reveal>
+
+        <!-- Colonne droite : mockup compte-rendu quotidien -->
+        <Reveal class="lg:col-span-5" delay={120}>
+          <DailyReportMockup />
+        </Reveal>
+      </div>
+    </Container>
+
+    <!-- Note transition sous le hero -->
+    <Container size="wide" class="mt-20 lg:mt-28">
+      <Reveal>
+        <p
+          class="max-w-[60ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+        >
+          <span
+            class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]"
+            >Ci-dessus →</span
+          >
+          un compte-rendu réel, anonymisé. Vous recevez le vôtre chaque soir de chaque jour travaillé,
+          sur votre canal (Slack, mail, autre).
+        </p>
+      </Reveal>
+    </Container>
+  </section>
+
+  <!-- TRIADE différenciante -->
+  <section
+    class="mt-[var(--space-section)] py-[var(--space-section-tight)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+  >
+    <Container size="wide">
+      <ul class="grid items-start gap-12 md:grid-cols-3 md:gap-x-12 md:gap-y-0">
+        {
+          triade.map((item, index) => (
+            <Reveal as="li" delay={index * 80} class="flex flex-col gap-3 group">
+              <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <p class="text-[length:var(--text-lg)] font-semibold leading-[var(--leading-snug)] text-[var(--color-text)] tracking-[-0.01em]">
+                {item.label}
+              </p>
+              <p class="text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
+                {item.description}
+              </p>
+            </Reveal>
+          ))
+        }
+      </ul>
+    </Container>
+  </section>
+
+  <!-- SÉLECTEUR PERSONA — vertical, séparé par lignes, numéros géants -->
+  <section class="py-[var(--space-section)]">
+    <Container size="wide">
+      <Reveal class="max-w-[44ch]">
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+          Trois portes d'entrée
+        </p>
+        <h2
+          class="mt-4 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+        >
+          Choisissez celle qui vous ressemble.
+        </h2>
+      </Reveal>
+
+      <ul class="mt-16 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+        {
+          PERSONA_LINKS.map((persona, index) => (
+            <Reveal as="li" delay={index * 100}>
+              <a
+                href={persona.href}
+                class="persona-row group flex flex-col gap-6 py-10 md:flex-row md:items-center md:gap-12 md:py-14"
+              >
+                <span class="persona-letter font-mono text-5xl font-semibold leading-none tracking-[-0.04em] text-[var(--color-text-subtle)] md:w-32 md:text-7xl">
+                  {String.fromCharCode(65 + index)}
+                </span>
+
+                <div class="flex-1">
+                  <p class="text-[length:var(--text-xl)] font-semibold leading-[var(--leading-snug)] text-[var(--color-text)] tracking-[-0.01em]">
+                    {persona.label}
+                  </p>
+                  <p class="mt-3 max-w-[60ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
+                    {personaSubtitles[persona.href]}
+                  </p>
+                  <p class="mt-5 max-w-[60ch] text-[length:var(--text-sm)] leading-[var(--leading-relaxed)] text-[var(--color-text-subtle)] italic">
+                    {personaContexts[persona.href]}
+                  </p>
+                </div>
+
+                <span class="persona-arrow inline-flex items-center gap-2 text-sm font-medium text-[var(--color-primary-700)] md:self-center">
+                  <span>Cette porte</span>
+                  <svg
+                    aria-hidden="true"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M2.5 7h9" />
+                    <path d="M8 3.5 11.5 7 8 10.5" />
+                  </svg>
+                </span>
+              </a>
+            </Reveal>
+          ))
+        }
+      </ul>
+    </Container>
+  </section>
+
+  <!-- CTA FINALE — fond vert profond, asymétrique, peak-end soigné -->
+  <section
+    class="relative overflow-hidden py-[var(--space-section)] bg-[var(--color-bg-deep)] text-[var(--color-text-inverse)]"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full opacity-30"
+      style="background: radial-gradient(closest-side, oklch(50% 0.12 155 / 0.6), transparent);"
+    >
+    </div>
+
+    <Container size="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
+        <Reveal class="lg:col-span-8">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
+            Premier échange · {RDV_DURATION_LABEL} · Sans engagement
+          </p>
+          <h2
+            class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
+          >
+            On parle de votre projet,
+            <span class="text-[var(--color-primary-200)]">vraiment</span>.
+          </h2>
+          <p
+            class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
+          >
+            Vous arrivez avec votre contexte. Vous repartez avec une lecture honnête de votre
+            projet, les bonnes questions à se poser, et trois directions concrètes pour avancer
+            cette semaine.
+          </p>
+        </Reveal>
+        <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
+          <PrimaryCta size="lg" class="w-full sm:w-auto" />
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+</SiteLayout>
+
+<style>
+  /* Underline animé sur "livrés et fiables" — se trace au load */
+  .hero-accent {
+    color: var(--color-primary-700);
+    background-image: linear-gradient(
+      to right,
+      oklch(54% 0.105 155 / 0.35),
+      oklch(54% 0.105 155 / 0.35)
+    );
+    background-position: 0 92%;
+    background-repeat: no-repeat;
+    background-size: 0% 0.18em;
+    padding-bottom: 0.02em;
+    animation: trace-accent 1.2s var(--ease-out-expo) 0.4s forwards;
+  }
+
+  @keyframes trace-accent {
+    to {
+      background-size: 100% 0.18em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-accent {
+      background-size: 100% 0.18em;
+      animation: none;
+    }
+  }
+
+  /* Persona row hover — la ligne réagit, la lettre s'allume */
+  .persona-row {
+    transition: padding-left 0.4s var(--ease-out-quart);
+  }
+  .persona-row:hover {
+    padding-left: 0.5rem;
+  }
+  .persona-row:hover .persona-letter {
+    color: var(--color-primary-600);
+  }
+  .persona-row:hover .persona-arrow svg {
+    transform: translateX(4px);
+  }
+  .persona-arrow svg {
+    transition: transform 0.3s var(--ease-out-quart);
+  }
+  .persona-letter {
+    transition: color 0.3s var(--ease-out-quart);
+  }
+</style>
