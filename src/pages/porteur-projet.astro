@@ -1,0 +1,333 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Container from '../components/layout/Container.astro';
+import PrimaryCta from '../components/ui/PrimaryCta.astro';
+import Reveal from '../components/ui/Reveal.astro';
+import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.const';
+
+const benefits = [
+  {
+    title: 'Un partenaire tech qui parle votre langue',
+    description:
+      "Je vous explique les choix techniques sans jargon, je vous dis pourquoi je fais ce que je fais, et je vous laisse arbitrer ce qui doit l'être par vous.",
+  },
+  {
+    title: 'Un cadrage avant le moindre clavier',
+    description:
+      "Avant de coder une ligne, on aligne le scope, l'architecture et les jalons. Pas de surprise en cours de route, pas de devis qui gonfle au milieu.",
+  },
+  {
+    title: 'Une visibilité totale chaque soir',
+    description:
+      "Compte-rendu factuel chaque jour travaillé : ce qui a été fait, ce qui bloque, ce qui suit, ce que j'attends de vous. Vous savez en permanence où vous en êtes.",
+  },
+  {
+    title: 'Un MVP livré à date, sans engagement long terme',
+    description: `Le démarrage se fait sur devis borné, jusqu'à ${FORFAIT_MAX_DAYS} jours. On se teste sans vous engager pour des mois. Si la collaboration prend, on bascule en régie pour la suite.`,
+  },
+];
+
+const journey = [
+  {
+    title: 'Un premier échange gratuit',
+    duration: RDV_DURATION_LABEL,
+    description:
+      'On parle de votre projet, de votre financement, de vos contraintes. Vous repartez avec une lecture honnête et des directions concrètes, peu importe la suite.',
+  },
+  {
+    title: 'Un cadrage clair',
+    duration: 'Sous 5 jours ouvrés',
+    description:
+      "Si on est aligné, je formalise le scope, l'estimation et les jalons dans un devis. Si je n'ai pas assez d'éléments pour cadrer proprement, je vous le dis sans rien forcer.",
+  },
+  {
+    title: 'Un démarrage borné',
+    duration: `Jusqu'à ${FORFAIT_MAX_DAYS} jours`,
+    description:
+      "On commence par un devis à durée limitée. Vous voyez concrètement comment je travaille, je vois concrètement votre projet. Compte-rendu quotidien dès le premier jour.",
+  },
+  {
+    title: 'La suite, en régie',
+    duration: TJM_DISPLAY,
+    description:
+      "Si la collaboration est satisfaisante des deux côtés, on bascule en régie pour faire vivre le produit. TJM transparent, pas de surcouche commerciale.",
+  },
+];
+
+const faqs = [
+  {
+    question: 'Pourquoi un premier échange gratuit ?',
+    answer:
+      "Je veux qu'on vérifie qu'on est aligné avant de signer quoi que ce soit. Et même si on ne travaille pas ensemble, vous devez repartir avec quelque chose d'utile : une lecture honnête de votre projet, les bonnes questions à se poser, des directions concrètes. C'est 30 à 45 minutes, sans engagement.",
+  },
+  {
+    question: `Un MVP en ${FORFAIT_MAX_DAYS} jours, c'est crédible ou c'est du marketing ?`,
+    answer:
+      "C'est crédible si le scope est précis. C'est pour ça qu'on le définit ensemble avant de signer. Le format devient réaliste aujourd'hui parce que l'IA accélère certaines tâches répétitives. Mais ce n'est pas magique : on ne livre pas une plateforme bancaire en 15 jours. Sur un MVP, on livre les fonctionnalités cœur, déployées, testées, utilisables.",
+  },
+  {
+    question: 'Pourquoi vous, plutôt qu\'une agence ou un autre freelance ?',
+    answer:
+      "Je n'ai pas la prétention d'être le meilleur. J'ai 8 ans de dev TypeScript dans les pattes, 6 ans à co-fonder le collectif Coton — soit des dizaines de missions freelance vues de l'intérieur, réussies et plantées. Les méthodes que j'applique (compte-rendu quotidien, devis borné au démarrage) sont issues de ce que j'ai vu marcher chez les plus solides du collectif. C'est ça que je propose.",
+  },
+];
+---
+
+<SiteLayout
+  title="Pour les porteurs de projet financés"
+  description="Vous portez un projet tech. Vous avez le financement. Vous voulez quelqu'un qui vous emmène jusqu'à la livraison, sans jargon et sans surprise. Premier échange gratuit en 30 à 45 minutes."
+  canonicalPath="/porteur-projet"
+>
+  <!-- HERO -->
+  <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
+    <Container size="wide">
+      <Reveal>
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          Pour les porteurs de projet financés
+        </p>
+        <h1
+          class="mt-5 max-w-[24ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
+        >
+          Vous portez un projet tech.
+          <span class="block text-[var(--color-primary-700)]"
+            >Vous voulez le bon partenaire pour le mener à bien.</span
+          >
+        </h1>
+        <p
+          class="mt-10 max-w-[55ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
+        >
+          Vous avez sécurisé un financement (pret bancaire, levée, capitaux personnels). Vous n'avez
+          pas d'équipe tech en place. Vous voulez quelqu'un qui vous emmène jusqu'à la livraison,
+          qui vous explique pourquoi il fait ce qu'il fait, et qui ne disparaît pas en cours de
+          route.
+        </p>
+        <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <PrimaryCta size="lg" class="w-full sm:w-auto" />
+          <a
+            href="/methode"
+            class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
+          >
+            Voir ma méthode
+            <span
+              class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
+            ></span>
+          </a>
+        </div>
+      </Reveal>
+    </Container>
+  </section>
+
+  <!-- BÉNÉFICES -->
+  <section
+    class="mt-[var(--space-section-tight)] py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+  >
+    <Container size="wide">
+      <Reveal class="max-w-[52ch]">
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          01 · Ce que vous obtenez
+        </p>
+        <h2
+          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+        >
+          Quatre engagements concrets, pas des adjectifs.
+        </h2>
+      </Reveal>
+
+      <dl class="mt-16 grid items-start gap-x-12 gap-y-12 md:grid-cols-2">
+        {
+          benefits.map((benefit, index) => (
+            <Reveal as="div" delay={index * 70} class="flex flex-col gap-3">
+              <dt class="flex items-baseline gap-3">
+                <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span class="h-px flex-1 bg-[var(--color-border)]" aria-hidden="true" />
+              </dt>
+              <dd>
+                <p class="text-[length:var(--text-xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.015em] text-[var(--color-text)]">
+                  {benefit.title}
+                </p>
+                <p class="mt-3 max-w-[55ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
+                  {benefit.description}
+                </p>
+              </dd>
+            </Reveal>
+          ))
+        }
+      </dl>
+    </Container>
+  </section>
+
+  <!-- DÉROULÉ -->
+  <section class="py-[var(--space-section)]">
+    <Container size="wide">
+      <Reveal class="max-w-[52ch]">
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          02 · Comment ça se passe
+        </p>
+        <h2
+          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+        >
+          Quatre phases. Sans engagement long terme avant qu'on ait travaillé ensemble.
+        </h2>
+      </Reveal>
+
+      <ol class="mt-16 border-b border-[var(--color-border)]">
+        {
+          journey.map((step, index) => (
+            <Reveal as="li" delay={index * 80}>
+              <article class="flex flex-col gap-6 border-t border-[var(--color-border)] py-10 md:flex-row md:items-start md:gap-12 md:py-12">
+                <div class="md:w-72 md:shrink-0">
+                  <p class="font-mono text-5xl font-semibold leading-none tracking-[-0.04em] text-[var(--color-primary-700)] md:text-6xl">
+                    {String(index + 1).padStart(2, '0')}
+                  </p>
+                  <p class="mt-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                    {step.duration}
+                  </p>
+                </div>
+                <div class="md:min-w-0 md:flex-1">
+                  <h3 class="text-[length:var(--text-2xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.015em] text-[var(--color-text)]">
+                    {step.title}
+                  </h3>
+                  <p class="mt-4 max-w-[65ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
+                    {step.description}
+                  </p>
+                </div>
+              </article>
+            </Reveal>
+          ))
+        }
+      </ol>
+
+      <Reveal class="mt-12">
+        <a
+          href="/methode"
+          class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
+        >
+          Voir tous les détails de la méthode
+          <span
+            class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
+          ></span>
+        </a>
+      </Reveal>
+    </Container>
+  </section>
+
+  <!-- FAQ COURTE -->
+  <section
+    class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-subtle)]"
+  >
+    <Container size="wide">
+      <Reveal class="max-w-[52ch]">
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          03 · Questions qui reviennent
+        </p>
+        <h2
+          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+        >
+          Trois questions qu'on me pose souvent.
+        </h2>
+      </Reveal>
+
+      <div class="mt-16 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+        {
+          faqs.map((faq, index) => (
+            <Reveal as="div" delay={index * 80}>
+              <details class="faq-item group py-8 md:py-10">
+                <summary class="faq-summary flex cursor-pointer items-start justify-between gap-6 list-none">
+                  <h3 class="text-[length:var(--text-xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.01em] text-[var(--color-text)]">
+                    {faq.question}
+                  </h3>
+                  <span
+                    class="faq-icon mt-1 flex size-7 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-subtle)] transition-[transform,background-color,border-color,color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)]"
+                    aria-hidden="true"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path
+                        d="M6 2v8M2 6h8"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </span>
+                </summary>
+                <p class="mt-5 max-w-[68ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
+                  {faq.answer}
+                </p>
+              </details>
+            </Reveal>
+          ))
+        }
+      </div>
+
+      <Reveal class="mt-12">
+        <a
+          href="/faq"
+          class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
+        >
+          Voir toutes les questions fréquentes
+          <span
+            class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
+          ></span>
+        </a>
+      </Reveal>
+    </Container>
+  </section>
+
+  <!-- CTA FINALE -->
+  <section
+    class="relative overflow-hidden py-[var(--space-section)] bg-[var(--color-bg-deep)] text-[var(--color-text-inverse)]"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full opacity-30"
+      style="background: radial-gradient(closest-side, oklch(50% 0.12 155 / 0.6), transparent);"
+    >
+    </div>
+
+    <Container size="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
+        <Reveal class="lg:col-span-8">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
+            Premier échange · {RDV_DURATION_LABEL} · Sans engagement
+          </p>
+          <h2
+            class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
+          >
+            On parle de votre projet,
+            <span class="block text-[var(--color-primary-200)]">de A à Z.</span>
+          </h2>
+          <p
+            class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
+          >
+            Vous arrivez avec votre projet, votre financement, vos contraintes. Vous repartez avec
+            une lecture honnête, les bonnes questions à se poser, et des directions concrètes pour
+            avancer cette semaine.
+          </p>
+        </Reveal>
+        <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
+          <PrimaryCta size="lg" class="w-full sm:w-auto" />
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+</SiteLayout>
+
+<style>
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    border-color: var(--color-primary-400);
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+  }
+
+  .faq-summary:hover .faq-icon {
+    border-color: var(--color-primary-400);
+    color: var(--color-primary-700);
+  }
+</style>
