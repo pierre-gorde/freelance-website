@@ -1,103 +1,230 @@
 ---
-const REPORT_TIMESTAMP = 'Mardi 3 juin · 18:34';
-const PROJECT_LABEL = 'Projet · Refonte du paiement en ligne';
+type Decision = {
+  title: string;
+  detail: string;
+};
 
-const done = [
-  'Le nouveau système de paiement est en place sur les 4 espaces que vous m\'avez listés.',
+interface Props {
+  timestamp?: string;
+  projectLabel?: string;
+  status?: string;
+  done?: readonly string[];
+  blockers?: readonly string[];
+  upcoming?: readonly string[];
+  decisions?: readonly Decision[];
+  footnote?: string;
+  signature?: string;
+  showPing?: boolean;
+}
+
+const DEFAULT_TIMESTAMP = 'Mardi 3 juin · 18:34';
+const DEFAULT_PROJECT = 'Projet · Refonte du paiement en ligne';
+const DEFAULT_STATUS = 'Envoyé';
+const DEFAULT_DONE: readonly string[] = [
+  "Le nouveau système de paiement est en place sur les 4 espaces que vous m'avez listés.",
   'Les remboursements sont testés sur les 3 cas principaux. Un cas instable à reprendre demain matin.',
 ];
-
-const upcoming = [
-  'Activer l\'alerte automatique en cas d\'échec de paiement (estimé : 2 h).',
+const DEFAULT_UPCOMING: readonly string[] = [
+  "Activer l'alerte automatique en cas d'échec de paiement (estimé : 2 h).",
   'Mettre à jour la documentation pour votre équipe.',
 ];
-
-const decisions = [
+const DEFAULT_DECISIONS: readonly Decision[] = [
   {
-    title: 'On garde l\'ancien système actif en parallèle pendant une semaine ?',
+    title: "On garde l'ancien système actif en parallèle pendant une semaine ?",
     detail: 'Plus prudent pour la transition. Je suis pour. À vous de trancher.',
   },
 ];
+const DEFAULT_FOOTNOTE = 'Lu en 30 secondes · Pas de surprise en fin de sprint';
+const DEFAULT_SIGNATURE = '— Pierre';
+
+const props = Astro.props;
+const timestamp = props.timestamp ?? DEFAULT_TIMESTAMP;
+const projectLabel = props.projectLabel ?? DEFAULT_PROJECT;
+const status = props.status ?? DEFAULT_STATUS;
+const done = props.done ?? DEFAULT_DONE;
+const blockers = props.blockers ?? [];
+const upcoming = props.upcoming ?? DEFAULT_UPCOMING;
+const decisions = props.decisions ?? DEFAULT_DECISIONS;
+const footnote = props.footnote ?? DEFAULT_FOOTNOTE;
+const signature = props.signature ?? DEFAULT_SIGNATURE;
+const showPing = props.showPing ?? true;
 ---
 
 <aside
-  class="report-card relative rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6 md:p-7 shadow-[0_30px_60px_-30px_oklch(20%_0.05_155/0.15),0_8px_24px_-8px_oklch(20%_0.05_155/0.08)]"
+  id="daily-report"
+  class="report-card relative rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] shadow-[0_30px_60px_-30px_oklch(20%_0.05_155/0.15),0_8px_24px_-8px_oklch(20%_0.05_155/0.08)]"
   aria-label="Exemple de compte-rendu quotidien"
+  data-open="false"
 >
-  <header class="flex items-baseline justify-between gap-4">
+  <!-- Header — toujours visible -->
+  <header class="flex items-baseline justify-between gap-4 p-6 md:p-7 pb-0">
     <div>
-      <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
+      <p
+        class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--color-text-subtle)]"
+      >
         Compte-rendu du jour
       </p>
       <p class="mt-1.5 font-mono text-xs text-[var(--color-text-muted)]">
-        {REPORT_TIMESTAMP}
+        {timestamp}
       </p>
     </div>
     <span
       class="inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] bg-[var(--color-primary-50)] px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-[var(--color-primary-700)]"
     >
       <span class="size-1.5 rounded-full bg-[var(--color-primary-500)]"></span>
-      Envoyé
+      {status}
     </span>
   </header>
 
-  <p class="mt-5 font-mono text-xs text-[var(--color-text-subtle)]">
-    {PROJECT_LABEL}
-  </p>
+  <!-- Zone contenu + overlay -->
+  <div class="relative px-6 pb-6 md:px-7 md:pb-7 pt-5">
+    <!-- Contenu réel (flou quand fermé) -->
+    <div class="report-content">
+      <p class="font-mono text-xs text-[var(--color-text-subtle)]">
+        {projectLabel}
+      </p>
 
-  <section class="mt-5">
-    <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-      Fait
-    </p>
-    <ul class="mt-2.5 space-y-2 text-sm leading-snug text-[var(--color-text)]">
-      {done.map((item) => <li class="flex gap-2.5"><span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]"></span><span>{item}</span></li>)}
-    </ul>
-  </section>
+      {
+        done.length > 0 && (
+          <section class="report-section mt-5" style="--section-delay: 0ms">
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+              Fait
+            </p>
+            <ul class="mt-2.5 space-y-2 text-sm leading-snug text-[var(--color-text)]">
+              {done.map((item) => (
+                <li class="flex gap-2.5">
+                  <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
 
-  <section class="mt-5">
-    <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-      À venir demain
-    </p>
-    <ul class="mt-2.5 space-y-2 text-sm leading-snug text-[var(--color-text)]">
-      {upcoming.map((item) => <li class="flex gap-2.5"><span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]"></span><span>{item}</span></li>)}
-    </ul>
-  </section>
+      {
+        blockers.length > 0 && (
+          <section
+            class="report-section mt-5 rounded-[var(--radius-sm)] border border-[oklch(45%_0.13_30/0.25)] bg-[oklch(45%_0.13_30/0.04)] p-3"
+            style="--section-delay: 60ms"
+          >
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-error)]">
+              Bloqué aujourd'hui
+            </p>
+            <ul class="mt-2.5 space-y-2 text-sm leading-snug text-[var(--color-text)]">
+              {blockers.map((item) => (
+                <li class="flex gap-2.5">
+                  <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-error)]" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
 
-  <section class="mt-5">
-    <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-      Décisions en attente
-    </p>
-    <ul class="mt-2.5 space-y-3 text-sm leading-snug">
-      {decisions.map((decision) => (
-        <li class="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg)] p-3">
-          <p class="font-medium text-[var(--color-text)]">{decision.title}</p>
-          <p class="mt-1 text-[var(--color-text-muted)]">{decision.detail}</p>
-        </li>
-      ))}
-    </ul>
-  </section>
+      {
+        upcoming.length > 0 && (
+          <section class="report-section mt-5" style="--section-delay: 80ms">
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+              À venir demain
+            </p>
+            <ul class="mt-2.5 space-y-2 text-sm leading-snug text-[var(--color-text)]">
+              {upcoming.map((item) => (
+                <li class="flex gap-2.5">
+                  <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
 
-  <footer class="mt-6 flex items-center justify-between border-t border-[var(--color-border)] pt-4">
-    <p class="font-mono text-[0.65rem] text-[var(--color-text-subtle)]">
-      Lu en 30 secondes · Pas un timesheet
-    </p>
-    <p class="font-mono text-[0.65rem] text-[var(--color-text-subtle)]">— Pierre</p>
-  </footer>
+      {
+        decisions.length > 0 && (
+          <section class="report-section mt-5" style="--section-delay: 160ms">
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+              Décisions en attente
+            </p>
+            <ul class="mt-2.5 space-y-3 text-sm leading-snug">
+              {decisions.map((decision) => (
+                <li class="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg)] p-3">
+                  <p class="font-medium text-[var(--color-text)]">{decision.title}</p>
+                  <p class="mt-1 text-[var(--color-text-muted)]">{decision.detail}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
 
-  <span aria-hidden="true" class="absolute -top-2 -right-2 hidden md:block">
-    <span
-      class="block size-4 rounded-full bg-[var(--color-primary-500)] opacity-90 [box-shadow:0_0_0_6px_oklch(97.5%_0.012_95)] animate-ping-slow"
-    ></span>
-  </span>
+      <footer
+        class="report-section mt-6 flex items-center justify-between border-t border-[var(--color-border)] pt-4"
+        style="--section-delay: 220ms"
+      >
+        <p class="font-mono text-[0.65rem] text-[var(--color-text-subtle)]">
+          {footnote}
+        </p>
+        <p class="font-mono text-[0.65rem] text-[var(--color-text-subtle)]">
+          {signature}
+        </p>
+      </footer>
+    </div>
+
+    <!-- Overlay "ouvrir" (visible quand fermé) -->
+    <button
+      class="report-overlay"
+      type="button"
+      aria-controls="daily-report"
+      aria-label="Ouvrir le compte-rendu"
+    >
+      <span class="report-overlay-cta">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M1 7c0 0 2.333-4.5 6-4.5S13 7 13 7s-2.333 4.5-6 4.5S1 7 1 7z"></path>
+          <circle cx="7" cy="7" r="1.75"></circle>
+        </svg>
+        Ouvrir le compte-rendu
+      </span>
+    </button>
+  </div>
+
+  {
+    showPing && (
+      <span aria-hidden="true" class="ping-dot absolute -top-2 -right-2 hidden md:block">
+        <span class="block size-4 rounded-full bg-[var(--color-primary-500)] opacity-90 [box-shadow:0_0_0_6px_oklch(97.5%_0.012_95)] animate-ping-slow" />
+      </span>
+    )
+  }
 </aside>
+
+<script>
+  const card = document.getElementById('daily-report');
+  if (card) {
+    const overlay = card.querySelector<HTMLButtonElement>('.report-overlay');
+    overlay?.addEventListener('click', () => {
+      card.dataset.open = 'true';
+    });
+  }
+</script>
 
 <style>
   @keyframes ping-slow {
     0% {
       transform: scale(1);
-      opacity: 0.9;
+      opacity: 0.8;
     }
-    70% {
+    80% {
       transform: scale(2.4);
       opacity: 0;
     }
@@ -107,7 +234,155 @@ const decisions = [
     }
   }
 
+  @keyframes reveal-shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
   .animate-ping-slow {
-    animation: ping-slow 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+    animation: ping-slow 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* Ping dot s'efface à l'ouverture */
+  .ping-dot {
+    transition: opacity 600ms ease;
+  }
+
+  [data-open='true'] .ping-dot {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Contenu — flou et atténué quand fermé */
+  .report-content {
+    transition:
+      filter 500ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-open='false'] .report-content {
+    filter: blur(3.5px);
+    opacity: 0.3;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  [data-open='true'] .report-content {
+    filter: blur(0);
+    opacity: 1;
+  }
+
+  /* Stagger des sections à l'ouverture */
+  .report-section {
+    transition:
+      opacity 300ms calc(220ms + var(--section-delay, 0ms)) ease,
+      transform 300ms calc(220ms + var(--section-delay, 0ms)) ease;
+  }
+
+  [data-open='false'] .report-section {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  [data-open='true'] .report-section {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Overlay "ouvrir" */
+  .report-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    transition: opacity 250ms ease;
+  }
+
+  [data-open='true'] .report-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @keyframes cta-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      box-shadow: 0 2px 8px oklch(20% 0.05 155 / 0.08);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow:
+        0 4px 20px oklch(20% 0.05 155 / 0.16),
+        0 0 0 4px oklch(60% 0.08 155 / 0.08);
+    }
+  }
+
+  @keyframes cta-shimmer {
+    0% {
+      transform: translateX(-150%) skewX(-18deg);
+    }
+    100% {
+      transform: translateX(500%) skewX(-18deg);
+    }
+  }
+
+  .report-overlay-cta {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--color-text-subtle);
+    pointer-events: none;
+    animation: cta-breathe 2.6s ease-in-out infinite;
+  }
+
+  .report-overlay-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent 0%, oklch(100% 0 0 / 0.5) 50%, transparent 100%);
+    transform: translateX(-150%) skewX(-18deg);
+    animation: cta-shimmer 2.6s 1.3s ease-in-out infinite;
+  }
+
+  .report-overlay:hover .report-overlay-cta {
+    animation-play-state: paused;
+    transform: scale(1.06) translateY(-1px);
+    box-shadow:
+      0 6px 24px oklch(20% 0.05 155 / 0.18),
+      0 0 0 4px oklch(60% 0.08 155 / 0.1);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .report-overlay:hover .report-overlay-cta::before {
+    animation-play-state: paused;
+  }
+
+  .report-overlay:active .report-overlay-cta {
+    transform: scale(1) translateY(0);
+  }
+
+  [data-open='true'] .report-overlay-cta,
+  [data-open='true'] .report-overlay-cta::before {
+    animation: none;
   }
 </style>
