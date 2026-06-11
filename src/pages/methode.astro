@@ -1,0 +1,333 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Container from '../components/layout/Container.astro';
+import PrimaryCta from '../components/ui/PrimaryCta.astro';
+import Reveal from '../components/ui/Reveal.astro';
+import DailyReportMockup from '../components/home/DailyReportMockup.astro';
+import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.const';
+
+const blockingReport = {
+  timestamp: 'Mercredi 4 juin · 18:42',
+  projectLabel: 'Projet · Refonte du paiement en ligne',
+  done: ["L'alerte d'échec de paiement est branchée et fonctionne en environnement de test."],
+  blockers: [
+    "Un cas particulier sur les remboursements partiels me résiste. J'ai exploré deux pistes, aucune ne tient proprement. Je creuse demain matin avec l'œil reposé. Si je n'avance pas d'ici midi, je vous propose qu'on en parle 15 min.",
+  ],
+  upcoming: [
+    'Finir la documentation pour votre équipe.',
+    'Faire un point sur la mise en production de la semaine prochaine.',
+  ],
+  decisions: [],
+  footnote: 'Lu en 30 secondes · Pas un timesheet',
+};
+
+const phases = [
+  {
+    label: 'Premier échange gratuit',
+    duration: RDV_DURATION_LABEL,
+    description:
+      'On parle de votre projet, de votre contexte, de vos contraintes. Vous repartez avec une lecture honnête et des directions concrètes, peu importe la suite.',
+  },
+  {
+    label: 'Cadrage et devis',
+    duration: 'Sous 5 jours ouvrés',
+    description:
+      "Si on est aligné, je formalise le scope, l'estimation et les jalons. Devis envoyé sous 5 jours. Si je n'ai pas assez d'éléments pour cadrer proprement, je vous le dis.",
+  },
+  {
+    label: 'Démarrage borné',
+    duration: `Jusqu'à ${FORFAIT_MAX_DAYS} jours, sur devis`,
+    description:
+      "On commence par un cadre clair : un devis à durée limitée pour qu'on se teste sans s'engager longtemps. Vous voyez concrètement comment je travaille, je vois concrètement votre contexte.",
+  },
+  {
+    label: 'Long terme en régie',
+    duration: TJM_DISPLAY,
+    description:
+      'Si la collaboration est satisfaisante des deux côtés, on bascule en régie pour la suite. TJM transparent, pas de surcouche commerciale. Le compte-rendu quotidien continue.',
+  },
+];
+
+const modalites = [
+  {
+    label: 'Tarif',
+    value: TJM_DISPLAY,
+    detail:
+      'Sur devis pour le démarrage, en régie pour la suite. Pas de "à partir de" : tarif unique transparent.',
+  },
+  {
+    label: 'Disponibilité',
+    value: 'Heures ouvrées',
+    detail:
+      "Je suis là tous les jours sur ces horaires. Pas d'engagement à la minute, mais une présence réelle.",
+  },
+  {
+    label: 'Modalité de travail',
+    value: 'Full remote',
+    detail:
+      "J'utilise vos outils : Slack, mail, Teams, GitHub, Linear, peu importe. Pas de portail dédié à apprendre.",
+  },
+];
+
+const iaPoints = [
+  {
+    label: "Ce que l'IA fait",
+    text: 'Elle génère le gros du code, surtout sur ce qui est connu : boilerplate, tests, refacto local, exploration rapide quand il faut comparer plusieurs approches.',
+  },
+  {
+    label: 'Ce que je fais',
+    text: "J'écris les lignes que l'IA ne sait pas faire bien ou pas assez vite. Et je suis responsable du reste : la qualité, les choix structurels, l'architecture, la performance, la stabilité, la non-régression.",
+  },
+];
+---
+
+<SiteLayout
+  title="Comment je travaille"
+  description="Le compte-rendu quotidien, le premier échange gratuit, le déroulé d'une mission et les modalités de collaboration. Tout est explicite, rien ne se cache derrière des adjectifs."
+  canonicalPath="/methode"
+>
+  <!-- HERO -->
+  <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
+    <Container size="wide">
+      <Reveal>
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          Méthode
+        </p>
+        <h1
+          class="mt-5 max-w-[22ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
+        >
+          Comment je travaille,<br />
+          <span class="text-[var(--color-primary-700)]">précisément</span>.
+        </h1>
+        <p
+          class="mt-10 max-w-[60ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
+        >
+          Tout ce qui suit est explicite. Le compte-rendu quotidien, le premier échange gratuit, le
+          déroulé d'une mission, les tarifs. Pas d'adjectifs qui cachent.
+        </p>
+      </Reveal>
+    </Container>
+  </section>
+
+  <!-- SECTION compte-rendu quotidien : explication + 2 mockups -->
+  <section
+    class="mt-[var(--space-section-tight)] py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+  >
+    <Container size="wide">
+      <Reveal class="max-w-[58ch]">
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          01 · Le compte-rendu quotidien
+        </p>
+        <h2
+          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+        >
+          Chaque soir de chaque jour travaillé, vous savez exactement où on en est.
+        </h2>
+        <p
+          class="mt-6 text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+        >
+          Un message factuel, lu en 30 secondes. Trois sections : ce qui a été fait, ce qui est
+          bloqué, ce qui est prévu, ce que j'attends de vous. Envoyé sur votre canal (Slack, mail,
+          Teams). Pas un timesheet, pas une présentation soignée, pas une justification de jours
+          facturés. Juste l'état du projet, posé.
+        </p>
+      </Reveal>
+
+      <div class="mt-16 grid gap-8 lg:grid-cols-2 lg:gap-10 lg:items-start">
+        <Reveal>
+          <p
+            class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
+          >
+            Une journée nominale
+          </p>
+          <DailyReportMockup />
+        </Reveal>
+
+        <Reveal delay={120}>
+          <p
+            class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
+          >
+            Une journée avec un blocage
+          </p>
+          <DailyReportMockup {...blockingReport} showPing={false} />
+        </Reveal>
+      </div>
+
+      <Reveal class="mt-16 max-w-[60ch]">
+        <p
+          class="text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+        >
+          <span
+            class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]"
+            >Pourquoi tous les jours →</span
+          >
+          parce qu'une réunion hebdomadaire vous dit ce qui s'est passé. Un compte-rendu quotidien vous
+          permet d'arbitrer le jour-même quand un blocage tombe. Sur un projet financé, perdre une semaine
+          à attendre la prochaine réunion coûte cher.
+        </p>
+      </Reveal>
+    </Container>
+  </section>
+
+  <!-- SECTION déroulé d'une mission : 4 phases -->
+  <section class="py-[var(--space-section)]">
+    <Container size="wide">
+      <Reveal class="max-w-[50ch]">
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          02 · Le déroulé d'une mission
+        </p>
+        <h2
+          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+        >
+          Quatre phases. Sans engagement long terme avant qu'on ait travaillé ensemble.
+        </h2>
+      </Reveal>
+
+      <ol class="mt-16 border-b border-[var(--color-border)]">
+        {
+          phases.map((phase, index) => (
+            <Reveal as="li" delay={index * 80}>
+              <article class="flex flex-col gap-6 border-t border-[var(--color-border)] py-10 md:flex-row md:items-start md:gap-12 md:py-12">
+                <div class="md:w-72 md:shrink-0">
+                  <p class="font-mono text-5xl font-semibold leading-none tracking-[-0.04em] text-[var(--color-primary-700)] md:text-6xl">
+                    {String(index + 1).padStart(2, '0')}
+                  </p>
+                  <p class="mt-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                    {phase.duration}
+                  </p>
+                </div>
+                <div class="md:min-w-0 md:flex-1">
+                  <h3 class="text-[length:var(--text-2xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.015em] text-[var(--color-text)]">
+                    {phase.label}
+                  </h3>
+                  <p class="mt-4 max-w-[65ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
+                    {phase.description}
+                  </p>
+                </div>
+              </article>
+            </Reveal>
+          ))
+        }
+      </ol>
+    </Container>
+  </section>
+
+  <!-- SECTION modalités : tarif, dispo, plafond, remote -->
+  <section
+    class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-subtle)]"
+  >
+    <Container size="wide">
+      <Reveal class="max-w-[50ch]">
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          03 · Modalités
+        </p>
+        <h2
+          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+        >
+          Les règles du jeu, posées dès le départ.
+        </h2>
+      </Reveal>
+
+      <dl class="mt-16 grid items-start gap-x-12 gap-y-12 md:grid-cols-2">
+        {
+          modalites.map((item, index) => (
+            <Reveal as="div" delay={index * 70} class="flex flex-col gap-3">
+              <dt class="flex items-baseline gap-3">
+                <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                  {item.label}
+                </span>
+                <span class="h-px flex-1 bg-[var(--color-border)]" aria-hidden="true" />
+              </dt>
+              <dd>
+                <p class="text-[length:var(--text-2xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.015em] text-[var(--color-text)]">
+                  {item.value}
+                </p>
+                <p class="mt-3 max-w-[55ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
+                  {item.detail}
+                </p>
+              </dd>
+            </Reveal>
+          ))
+        }
+      </dl>
+    </Container>
+  </section>
+
+  <!-- SECTION IA : sobre, factuelle -->
+  <section class="py-[var(--space-section)]">
+    <Container size="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <Reveal class="lg:col-span-5">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+            04 · L'IA dans mon travail
+          </p>
+          <h2
+            class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+          >
+            L'IA écrit le gros du code. Je garde la responsabilité du résultat.
+          </h2>
+          <p
+            class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+          >
+            La question n'est plus de savoir si on code avec une IA. La question est de savoir qui
+            garantit que le résultat tient dans la durée. C'est mon job.
+          </p>
+        </Reveal>
+
+        <Reveal class="lg:col-span-7" delay={120}>
+          <dl class="grid gap-10">
+            {
+              iaPoints.map((point) => (
+                <div class="flex flex-col gap-3">
+                  <dt class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                    {point.label}
+                  </dt>
+                  <dd class="text-[length:var(--text-lg)] leading-[var(--leading-snug)] text-[var(--color-text)] tracking-[-0.005em]">
+                    {point.text}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+
+  <!-- CTA FINALE -->
+  <section
+    class="relative overflow-hidden py-[var(--space-section)] bg-[var(--color-bg-deep)] text-[var(--color-text-inverse)]"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full opacity-30"
+      style="background: radial-gradient(closest-side, oklch(50% 0.12 155 / 0.6), transparent);"
+    >
+    </div>
+
+    <Container size="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
+        <Reveal class="lg:col-span-8">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
+            Étape 01 · Premier échange · {RDV_DURATION_LABEL}
+          </p>
+          <h2
+            class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
+          >
+            On commence par se parler.
+            <span class="block text-[var(--color-primary-200)]">Sans engagement.</span>
+          </h2>
+          <p
+            class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
+          >
+            Vous arrivez avec votre contexte. Vous repartez avec une lecture honnête, les bonnes
+            questions à se poser, et des directions concrètes pour avancer cette semaine.
+          </p>
+        </Reveal>
+        <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
+          <PrimaryCta size="lg" class="w-full sm:w-auto" />
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+</SiteLayout>
