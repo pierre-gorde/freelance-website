@@ -6,7 +6,8 @@ export const CONTACT_EMAIL = 'contact@pierregorde.com';
 
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/pierre-gord%C3%A9/';
 export const GITHUB_URL = 'https://github.com/pierregorde/pierregorde-com';
-export const CAL_BOOKING_URL = 'https://cal.com/pierregorde/echange-gratuit';
+export const CAL_EVENT_LINK = 'pierre-gorde/30min';
+export const CAL_NAMESPACE = 'rdv';
 
 export const TJM_HT = 700;
 export const TJM_DISPLAY = '700 € HT / jour';

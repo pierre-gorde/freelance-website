@@ -1,6 +1,7 @@
 ---
-import Button from './Button.astro';
-import { CTA_RDV_HREF, CTA_RDV_LABEL } from '../../lib/links.const';
+import { CAL_EVENT_LINK, CAL_NAMESPACE } from '../../lib/site.const';
+
+const CTA_LABEL = 'Réserver un échange gratuit';
 
 type Props = {
   size?: 'sm' | 'md' | 'lg';
@@ -8,23 +9,31 @@ type Props = {
   class?: string;
 };
 
-const { size = 'md', label = CTA_RDV_LABEL, class: className = '' } = Astro.props;
+const { size = 'md', label = CTA_LABEL, class: className = '' } = Astro.props;
+
+const sizeClasses = { sm: 'h-9 px-4 text-sm', md: 'h-11 px-6 text-base', lg: 'h-14 px-8 text-lg' } as const;
 ---
 
-<Button href={CTA_RDV_HREF} variant="primary" size={size} class={className}>
-  {label}
-  <svg
-    aria-hidden="true"
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.75"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  >
-    <path d="M2.5 7h9" />
-    <path d="M8 3.5 11.5 7 8 10.5" />
-  </svg>
-</Button>
+<button
+  data-cal-link={CAL_EVENT_LINK}
+  data-cal-namespace={CAL_NAMESPACE}
+  class={`relative overflow-hidden isolate inline-flex items-center justify-center gap-2 font-medium tracking-[-0.005em] whitespace-nowrap rounded-pill transition-[transform,box-shadow,background-color,color] duration-(--duration-default) ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-3 active:translate-y-px cursor-pointer btn-shiny bg-primary-600 text-text-inverse hover:bg-primary-700 shadow-(--shadow-cta) hover:shadow-(--shadow-cta-hover) ${sizeClasses[size]} ${className}`}
+>
+  <span class="relative z-10 inline-flex items-center gap-2">
+    {label}
+    <svg
+      aria-hidden="true"
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M2.5 7h9" />
+      <path d="M8 3.5 11.5 7 8 10.5" />
+    </svg>
+  </span>
+</button>

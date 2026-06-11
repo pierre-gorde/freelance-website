@@ -16,6 +16,3 @@ export const PERSONA_LINKS: readonly NavLink[] = [
   { href: '/cto-renfort', label: 'CTO / lead dev' },
   { href: '/dirigeant', label: 'Dirigeant' },
 ] as const;
-
-export const CTA_RDV_HREF = '/rdv';
-export const CTA_RDV_LABEL = 'Réserver un échange gratuit';

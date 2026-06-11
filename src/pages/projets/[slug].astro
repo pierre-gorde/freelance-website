@@ -8,8 +8,8 @@ import { PROJETS } from '../../lib/projets.const';
 export async function getStaticPaths() {
   const paths = await Promise.all(
     PROJETS.map(async (projet) => {
-      let screenshotUrl: string | null = null;
-      if (projet.url) {
+      let screenshotUrl: string | null = projet.localScreenshot ?? null;
+      if (!screenshotUrl && projet.url) {
         try {
           const resp = await fetch(
             `https://api.microlink.io/?url=${encodeURIComponent(projet.url)}&screenshot=true`
@@ -43,6 +43,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
   title={projet.titre}
   description={projet.resume}
   canonicalPath={`/projets/${projet.slug}`}
+  ogImage={screenshotUrl ?? undefined}
 >
   <!-- HERO -->
   <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">

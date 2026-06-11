@@ -9,6 +9,7 @@ export type Projet = {
   livrables: string[];
   schema: string;
   url?: string;
+  localScreenshot?: string;
 };
 
 const SVG_ATTRS =
@@ -152,6 +153,7 @@ export const PROJETS: Projet[] = [
     secteur: 'Sport / Événementiel',
     periode: 'mars 2024 — juil. 2024',
     url: 'https://triathlon-race-simulator.com/fr',
+    localScreenshot: '/projects/fftri-race-simulator.jpg',
     resume:
       'Simulateur de course multijoueur en temps réel pour la Fédération Française de Triathlon, projeté sur les stands du Village des Jeux Olympiques de Paris 2024 sur vélos et tapis connectés.',
     contexte:
