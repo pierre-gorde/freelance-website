@@ -67,6 +67,12 @@ const modalites = [
     detail:
       "J'utilise vos outils : Slack, mail, Teams, GitHub, Linear, peu importe. Pas de portail dédié à apprendre.",
   },
+  {
+    label: 'Compte-rendu quotidien',
+    value: 'Chaque soir travaillé',
+    detail:
+      "Un message factuel sur votre canal, lu en 30 secondes : ce qui a été fait, ce qui est bloqué, ce qui est prévu, ce que j'attends de vous.",
+  },
 ];
 
 const iaPoints = [
@@ -169,17 +175,58 @@ const iaPoints = [
     </Container>
   </section>
 
-  <!-- SECTION déroulé d'une mission : 4 phases -->
+  <!-- SECTION IA : sobre, factuelle -->
   <section class="py-[var(--space-section)]">
     <Container size="wide">
-      <Reveal class="max-w-[50ch]">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <Reveal class="lg:col-span-5">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+            02 · L'IA dans mon travail
+          </p>
+          <h2
+            class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+          >
+            L'IA écrit le gros du code. Je garde la responsabilité du résultat.
+          </h2>
+          <p
+            class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+          >
+            La question n'est plus de savoir si on code avec une IA. La question est de savoir qui
+            garantit que le résultat tient dans la durée. C'est mon job.
+          </p>
+        </Reveal>
+
+        <Reveal class="lg:col-span-7" delay={120}>
+          <dl class="grid gap-10">
+            {
+              iaPoints.map((point) => (
+                <div class="flex flex-col gap-3">
+                  <dt class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                    {point.label}
+                  </dt>
+                  <dd class="text-[length:var(--text-lg)] leading-[var(--leading-snug)] text-[var(--color-text)] tracking-[-0.005em]">
+                    {point.text}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+
+  <!-- SECTION déroulé d'une mission : 4 phases -->
+  <section class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
+    <Container size="wide">
+      <Reveal class="max-w-[100ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          02 · Le déroulé d'une mission
+          03 · Le déroulé d'une mission
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Quatre phases. Sans engagement long terme avant qu'on ait travaillé ensemble.
+          Quatre phases. <br />Sans engagement long terme avant qu'on ait travaillé ensemble.
         </h2>
       </Reveal>
 
@@ -214,12 +261,12 @@ const iaPoints = [
 
   <!-- SECTION modalités : tarif, dispo, plafond, remote -->
   <section
-    class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-subtle)]"
+    class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
   >
     <Container size="wide">
       <Reveal class="max-w-[50ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          03 · Modalités
+          04 · Modalités
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
@@ -250,47 +297,6 @@ const iaPoints = [
           ))
         }
       </dl>
-    </Container>
-  </section>
-
-  <!-- SECTION IA : sobre, factuelle -->
-  <section class="py-[var(--space-section)]">
-    <Container size="wide">
-      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <Reveal class="lg:col-span-5">
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            04 · L'IA dans mon travail
-          </p>
-          <h2
-            class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
-          >
-            L'IA écrit le gros du code. Je garde la responsabilité du résultat.
-          </h2>
-          <p
-            class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-          >
-            La question n'est plus de savoir si on code avec une IA. La question est de savoir qui
-            garantit que le résultat tient dans la durée. C'est mon job.
-          </p>
-        </Reveal>
-
-        <Reveal class="lg:col-span-7" delay={120}>
-          <dl class="grid gap-10">
-            {
-              iaPoints.map((point) => (
-                <div class="flex flex-col gap-3">
-                  <dt class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                    {point.label}
-                  </dt>
-                  <dd class="text-[length:var(--text-lg)] leading-[var(--leading-snug)] text-[var(--color-text)] tracking-[-0.005em]">
-                    {point.text}
-                  </dd>
-                </div>
-              ))
-            }
-          </dl>
-        </Reveal>
-      </div>
     </Container>
   </section>
 
