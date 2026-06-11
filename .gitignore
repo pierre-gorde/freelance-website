@@ -1,6 +1,7 @@
 # Build artifacts
 dist/
 .astro/
+playwright-report/
 
 # Dependencies
 node_modules/
