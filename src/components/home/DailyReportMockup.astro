@@ -15,6 +15,7 @@ interface Props {
   footnote?: string;
   signature?: string;
   showPing?: boolean;
+  defaultOpen?: boolean;
 }
 
 const DEFAULT_TIMESTAMP = 'Mardi 3 juin · 18:34';
@@ -48,13 +49,14 @@ const decisions = props.decisions ?? DEFAULT_DECISIONS;
 const footnote = props.footnote ?? DEFAULT_FOOTNOTE;
 const signature = props.signature ?? DEFAULT_SIGNATURE;
 const showPing = props.showPing ?? true;
+const defaultOpen = props.defaultOpen ?? false;
 ---
 
 <aside
   id="daily-report"
   class="report-card relative rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] shadow-[0_30px_60px_-30px_oklch(20%_0.05_155/0.15),0_8px_24px_-8px_oklch(20%_0.05_155/0.08)]"
   aria-label="Exemple de compte-rendu quotidien"
-  data-open="false"
+  data-open={defaultOpen ? 'true' : 'false'}
 >
   <!-- Header — toujours visible -->
   <header class="flex items-baseline justify-between gap-4 p-6 md:p-7 pb-0">
