@@ -100,10 +100,10 @@ const iaPoints = [
           <span class="text-[var(--color-primary-700)]">précisément</span>.
         </h1>
         <p
-          class="mt-10 max-w-[60ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
+          class="mt-10 max-w-[40ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
         >
-          Tout ce qui suit est explicite. Le compte-rendu quotidien, le premier échange gratuit, le
-          déroulé d'une mission, les tarifs. Pas d'adjectifs qui cachent.
+          Le compte-rendu quotidien, le premier échange gratuit, le déroulé d'une mission, les
+          tarifs.
         </p>
       </Reveal>
     </Container>
@@ -140,7 +140,7 @@ const iaPoints = [
           >
             Une journée nominale
           </p>
-          <DailyReportMockup />
+          <DailyReportMockup defaultOpen />
         </Reveal>
 
         <Reveal delay={120}>
@@ -149,11 +149,11 @@ const iaPoints = [
           >
             Une journée avec un blocage
           </p>
-          <DailyReportMockup {...blockingReport} showPing={false} />
+          <DailyReportMockup {...blockingReport} showPing={false} defaultOpen />
         </Reveal>
       </div>
 
-      <Reveal class="mt-16 max-w-[60ch]">
+      <Reveal class="mt-16 max-w-[100ch]">
         <p
           class="text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
         >
