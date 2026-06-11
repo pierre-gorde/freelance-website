@@ -78,11 +78,19 @@ const modalites = [
 const iaPoints = [
   {
     label: "Ce que l'IA fait",
-    text: 'Elle génère le gros du code, surtout sur ce qui est connu : boilerplate, tests, refacto local, exploration rapide quand il faut comparer plusieurs approches.',
+    items: [
+      'Boilerplate, tests unitaires, refacto local.',
+      'Exploration rapide quand il faut comparer plusieurs approches.',
+      "Le gros du volume sur tout ce qui est balisé et connu.",
+    ],
   },
   {
     label: 'Ce que je fais',
-    text: "J'écris les lignes que l'IA ne sait pas faire bien ou pas assez vite. Et je suis responsable du reste : la qualité, les choix structurels, l'architecture, la performance, la stabilité, la non-régression.",
+    items: [
+      "J'écris les lignes que l'IA ne sait pas faire bien ou pas assez vite.",
+      "Je valide les choix structurels, l'architecture, la cohérence globale.",
+      'Je suis responsable du résultat : qualité, performance, stabilité, non-régression.',
+    ],
   },
 ];
 ---
@@ -188,28 +196,44 @@ const iaPoints = [
           >
             L'IA écrit le gros du code. Je garde la responsabilité du résultat.
           </h2>
-          <p
-            class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-          >
+          <p class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
             La question n'est plus de savoir si on code avec une IA. La question est de savoir qui
             garantit que le résultat tient dans la durée. C'est mon job.
           </p>
         </Reveal>
 
         <Reveal class="lg:col-span-7" delay={120}>
-          <dl class="grid gap-10">
-            {
-              iaPoints.map((point) => (
-                <div class="flex flex-col gap-3">
-                  <dt class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                    {point.label}
-                  </dt>
-                  <dd class="text-[length:var(--text-lg)] leading-[var(--leading-snug)] text-[var(--color-text)] tracking-[-0.005em]">
-                    {point.text}
-                  </dd>
-                </div>
-              ))
-            }
+          <dl class="grid gap-5 sm:grid-cols-2">
+            <div class="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] p-6">
+              <dt class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                {iaPoints[0].label}
+              </dt>
+              <dd>
+                <ul class="space-y-2.5">
+                  {iaPoints[0].items.map((item) => (
+                    <li class="flex gap-2.5 text-sm leading-snug text-[var(--color-text-muted)]">
+                      <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+            <div class="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--color-primary-200)] bg-[var(--color-primary-50)] p-6">
+              <dt class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+                {iaPoints[1].label}
+              </dt>
+              <dd>
+                <ul class="space-y-2.5">
+                  {iaPoints[1].items.map((item) => (
+                    <li class="flex gap-2.5 text-sm leading-snug text-[var(--color-text)]">
+                      <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-primary-500)]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
           </dl>
         </Reveal>
       </div>
