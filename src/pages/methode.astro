@@ -81,7 +81,7 @@ const iaPoints = [
     items: [
       'Boilerplate, tests unitaires, refacto local.',
       'Exploration rapide quand il faut comparer plusieurs approches.',
-      "Le gros du volume sur tout ce qui est balisé et connu.",
+      'Le gros du volume sur tout ce qui est balisé et connu.',
     ],
   },
   {
@@ -128,7 +128,7 @@ const iaPoints = [
     class="mt-[var(--space-section-tight)] py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
   >
     <Container size="wide">
-      <Reveal class="max-w-[58ch]">
+      <Reveal class="max-w-[100ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
           01 · Le compte-rendu quotidien
         </p>
@@ -196,7 +196,9 @@ const iaPoints = [
           >
             L'IA écrit le gros du code. Je garde la responsabilité du résultat.
           </h2>
-          <p class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
+          <p
+            class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+          >
             La question n'est plus de savoir si on code avec une IA. La question est de savoir qui
             garantit que le résultat tient dans la durée. C'est mon job.
           </p>
@@ -204,33 +206,45 @@ const iaPoints = [
 
         <Reveal class="lg:col-span-7" delay={120}>
           <dl class="grid gap-5 sm:grid-cols-2">
-            <div class="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] p-6">
-              <dt class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+            <div
+              class="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] p-6"
+            >
+              <dt
+                class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
+              >
                 {iaPoints[0].label}
               </dt>
               <dd>
                 <ul class="space-y-2.5">
-                  {iaPoints[0].items.map((item) => (
-                    <li class="flex gap-2.5 text-sm leading-snug text-[var(--color-text-muted)]">
-                      <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
+                  {
+                    iaPoints[0].items.map((item) => (
+                      <li class="flex gap-2.5 text-sm leading-snug text-[var(--color-text-muted)]">
+                        <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]" />
+                        <span>{item}</span>
+                      </li>
+                    ))
+                  }
                 </ul>
               </dd>
             </div>
-            <div class="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--color-primary-200)] bg-[var(--color-primary-50)] p-6">
-              <dt class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+            <div
+              class="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--color-primary-200)] bg-[var(--color-primary-50)] p-6"
+            >
+              <dt
+                class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]"
+              >
                 {iaPoints[1].label}
               </dt>
               <dd>
                 <ul class="space-y-2.5">
-                  {iaPoints[1].items.map((item) => (
-                    <li class="flex gap-2.5 text-sm leading-snug text-[var(--color-text)]">
-                      <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-primary-500)]" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
+                  {
+                    iaPoints[1].items.map((item) => (
+                      <li class="flex gap-2.5 text-sm leading-snug text-[var(--color-text)]">
+                        <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-primary-500)]" />
+                        <span>{item}</span>
+                      </li>
+                    ))
+                  }
                 </ul>
               </dd>
             </div>
@@ -241,7 +255,9 @@ const iaPoints = [
   </section>
 
   <!-- SECTION déroulé d'une mission : 4 phases -->
-  <section class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
+  <section
+    class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-subtle)]"
+  >
     <Container size="wide">
       <Reveal class="max-w-[100ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">

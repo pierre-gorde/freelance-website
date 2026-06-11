@@ -1,0 +1,227 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Container from '../components/layout/Container.astro';
+import PrimaryCta from '../components/ui/PrimaryCta.astro';
+import Reveal from '../components/ui/Reveal.astro';
+import { RDV_DURATION_LABEL } from '../lib/site.const';
+
+const skills = [
+  {
+    label: 'Frontend',
+    items: ['TypeScript', 'React', 'Next.js', 'Astro', 'Vue', 'Tailwind'],
+  },
+  {
+    label: 'Backend',
+    items: ['Node.js', 'NestJS', 'Fastify', 'Bun', 'tRPC', 'GraphQL', 'REST'],
+  },
+  {
+    label: 'Bases de données',
+    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Prisma', 'Drizzle'],
+  },
+  {
+    label: 'Infra & DevOps',
+    items: ['Cloudflare', 'Vercel', 'AWS', 'Docker', 'GitHub Actions', 'Terraform'],
+  },
+];
+---
+
+<SiteLayout
+  title="À propos"
+  description="Dev TypeScript senior, ex-cofondateur du collectif Coton (6 ans). Je passe en solo pour porter des projets tech de bout en bout, avec rigueur et un compte-rendu quotidien."
+  canonicalPath="/a-propos"
+>
+  <!-- HERO + illustration -->
+  <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
+    <Container size="wide">
+      <div class="grid gap-16 lg:grid-cols-12 lg:items-start lg:gap-16">
+        <!-- Colonne gauche : récit -->
+        <Reveal class="lg:col-span-7">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+            À propos
+          </p>
+          <h1
+            class="mt-5 max-w-[18ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
+          >
+            Pierre,
+            <span class="block text-[var(--color-primary-700)]">développeur depuis 10 ans.</span>
+          </h1>
+          <div
+            class="mt-12 space-y-6 text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+          >
+            <p>
+              Pendant 6 ans, j'ai co-fondé et co-géré <strong class="text-[var(--color-text)]"
+                >Coton</strong
+              >, un collectif de développeurs freelance — tout en continuant à coder en mission côté
+              client. J'y ai vu passer des dizaines de projets tech, les réussis et les plantés, et
+              j'en ai tiré ce qui change vraiment le résultat.
+            </p>
+            <p>
+              Je me concentre désormais uniquement sur le freelance dev en solo. Pour{' '}
+              <strong class="text-[var(--color-text)]">porter chaque projet jusqu'à sa livraison</strong
+              >, sans intermédiaire, avec ce qui marche : compte-rendu quotidien, cadrage explicite,
+              tarif transparent.
+            </p>
+            <p>
+              TypeScript depuis le début. Frontend, backend, infra — sans frontière artificielle. Je
+              travaille avec ce que les projets requièrent, pas avec un dogme.
+            </p>
+          </div>
+        </Reveal>
+
+        <!-- Colonne droite : illustration 01 -->
+        <Reveal class="lg:col-span-5 lg:sticky lg:top-28" delay={120}>
+          <div class="overflow-hidden rounded-[var(--radius-lg)]">
+            <img
+              src="/illustrations/pierre-01.png"
+              alt="Pierre Gorde"
+              width="600"
+              height="750"
+              loading="eager"
+              decoding="async"
+              class="w-full h-auto block"
+            />
+          </div>
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+
+  <!-- COMPÉTENCES TECHNIQUES -->
+  <section
+    class="mt-[var(--space-section-tight)] py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+  >
+    <Container size="wide">
+      <Reveal class="max-w-[52ch]">
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          Côté technique
+        </p>
+        <h2
+          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+        >
+          Ce que je sais faire, sans jargon ni vantardise.
+        </h2>
+        <p
+          class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+        >
+          Une liste d'outils n'est pas un argument de vente — ce qui compte c'est de savoir choisir
+          les bons pour un projet donné. Pour situer : je couvre confortablement ce qui suit.
+        </p>
+      </Reveal>
+
+      <dl class="mt-16 grid items-start gap-x-12 gap-y-12 md:grid-cols-2">
+        {
+          skills.map((category, index) => (
+            <Reveal as="div" delay={index * 70} class="flex flex-col gap-4">
+              <dt class="flex items-baseline gap-3">
+                <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                  {category.label}
+                </span>
+                <span class="h-px flex-1 bg-[var(--color-border)]" aria-hidden="true" />
+              </dt>
+              <dd>
+                <ul class="flex flex-wrap gap-2">
+                  {category.items.map((item) => (
+                    <li class="rounded-[var(--radius-pill)] border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-sm text-[var(--color-text)]">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </Reveal>
+          ))
+        }
+      </dl>
+    </Container>
+  </section>
+
+  <!-- POURQUOI LE SOLO -->
+  <section class="py-[var(--space-section)]">
+    <Container size="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
+        <Reveal class="lg:col-span-4">
+          <div class="overflow-hidden rounded-[var(--radius-lg)]">
+            <img
+              src="/pierre-homepage.jpg"
+              alt="Pierre Gorde"
+              width="800"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-auto block"
+            />
+          </div>
+        </Reveal>
+
+        <Reveal class="lg:col-span-8" delay={120}>
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+            Pourquoi le solo, maintenant
+          </p>
+          <h2
+            class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+          >
+            Parce que la relation directe gagne sur tout le reste.
+          </h2>
+          <div
+            class="mt-8 space-y-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+          >
+            <p>
+              Un collectif, c'est une structure qui rassure mais qui met de la distance. En solo, je
+              parle directement à mes clients, sans tampon, sans approbation intermédiaire, sans
+              effet de meute. C'est plus engageant pour moi, et plus utile pour eux.
+            </p>
+            <p>
+              C'est aussi un choix de cadre : je décide de mes méthodes, je décide de ce que je
+              promets et de ce que je ne promets pas. Pas pour faire de la mise en scène, pour faire
+              <strong class="text-[var(--color-text)]"
+                >ce qui marche pour livrer un projet proprement</strong
+              >.
+            </p>
+            <p>
+              Ce que je continue à porter de Coton : la conviction que le freelance senior est un
+              vrai métier, qui demande du soin opérationnel autant que du code. Et l'idée que la
+              transparence (sur le travail, sur le prix, sur les limites) est une fondation, pas un
+              argument marketing.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+
+  <!-- CTA FINALE -->
+  <section
+    class="relative overflow-hidden py-[var(--space-section)] bg-[var(--color-bg-deep)] text-[var(--color-text-inverse)]"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full opacity-30"
+      style="background: radial-gradient(closest-side, oklch(50% 0.12 155 / 0.6), transparent);"
+    >
+    </div>
+
+    <Container size="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
+        <Reveal class="lg:col-span-8">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
+            Premier échange · {RDV_DURATION_LABEL} · Sans engagement
+          </p>
+          <h2
+            class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
+          >
+            On se parle ?
+            <span class="block text-[var(--color-primary-200)]">Sans agenda commercial.</span>
+          </h2>
+          <p
+            class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
+          >
+            Vous arrivez avec votre contexte, vous repartez avec une lecture honnête et des
+            directions concrètes. Que vous travailliez avec moi ensuite ou non.
+          </p>
+        </Reveal>
+        <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
+          <PrimaryCta size="lg" class="w-full sm:w-auto" />
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+</SiteLayout>

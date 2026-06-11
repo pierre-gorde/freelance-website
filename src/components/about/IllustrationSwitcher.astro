@@ -1,0 +1,143 @@
+---
+type Illustration = {
+  src: string;
+  alt: string;
+};
+
+interface Props {
+  images: readonly Illustration[];
+  initialIndex?: number;
+}
+
+const props = Astro.props;
+const images = props.images;
+const initialIndex = props.initialIndex ?? 0;
+---
+
+<figure
+  class="illustration-switcher relative"
+  data-current={initialIndex}
+  data-total={images.length}
+>
+  <!-- Frame de l'illustration -->
+  <div
+    class="frame rounded-[var(--radius-lg)] overflow-hidden"
+    style="display: grid;"
+  >
+    {
+      images.map((image, index) => (
+        <img
+          src={image.src}
+          alt={image.alt}
+          data-index={index}
+          loading={index === 0 ? 'eager' : 'lazy'}
+          decoding="async"
+          style="grid-area: 1 / 1; width: 100%; height: auto; display: block;"
+          class:list={['slide', { 'is-active': index === initialIndex }]}
+        />
+      ))
+    }
+  </div>
+
+  <!-- Controls discrets -->
+  <figcaption
+    class="switcher-controls mt-6 flex items-center justify-between gap-4 text-[var(--color-text-subtle)]"
+  >
+    <button
+      type="button"
+      data-action="prev"
+      aria-label="Illustration précédente"
+      class="switcher-btn group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] transition-colors duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] hover:text-[var(--color-primary-700)]"
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        class="transition-transform duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:-translate-x-0.5"
+      >
+        <path d="M11.5 7h-9"></path>
+        <path d="M6 3.5 2.5 7 6 10.5"></path>
+      </svg>
+      <span>Précédent</span>
+    </button>
+
+    <p class="font-mono text-xs uppercase tracking-[0.15em]">
+      <span data-current-display>{String(initialIndex + 1).padStart(2, '0')}</span>
+      <span class="opacity-50"> / {String(images.length).padStart(2, '0')}</span>
+    </p>
+
+    <button
+      type="button"
+      data-action="next"
+      aria-label="Illustration suivante"
+      class="switcher-btn group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] transition-colors duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] hover:text-[var(--color-primary-700)]"
+    >
+      <span>Suivant</span>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        class="transition-transform duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:translate-x-0.5"
+      >
+        <path d="M2.5 7h9"></path>
+        <path d="M8 3.5 11.5 7 8 10.5"></path>
+      </svg>
+    </button>
+  </figcaption>
+</figure>
+
+<style>
+  .slide {
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out-quart);
+    pointer-events: none;
+  }
+  .slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.illustration-switcher').forEach((switcher) => {
+    const slides = switcher.querySelectorAll<HTMLImageElement>('.slide');
+    const display = switcher.querySelector<HTMLElement>('[data-current-display]');
+    const total = Number(switcher.dataset.total ?? slides.length);
+    let current = Number(switcher.dataset.current ?? 0);
+
+    const setActive = (next: number) => {
+      const normalized = ((next % total) + total) % total;
+      slides.forEach((slide, index) => slide.classList.toggle('is-active', index === normalized));
+      if (display) {
+        display.textContent = String(normalized + 1).padStart(2, '0');
+      }
+      switcher.dataset.current = String(normalized);
+      current = normalized;
+    };
+
+    switcher.querySelectorAll<HTMLButtonElement>('[data-action]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const action = button.dataset.action;
+        setActive(action === 'next' ? current + 1 : current - 1);
+      });
+    });
+
+    // Navigation clavier (gauche / droite) quand le composant a le focus
+    switcher.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') setActive(current - 1);
+      if (event.key === 'ArrowRight') setActive(current + 1);
+    });
+  });
+</script>
