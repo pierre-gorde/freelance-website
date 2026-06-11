@@ -27,14 +27,14 @@ const personaContexts: Record<string, string> = {
 
 const triade = [
   {
-    label: 'Un point chaque jour',
+    label: 'Un rapport écrit chaque jour',
     description:
       'Chaque jour travaillé, un message factuel le soir : ce qui est fait, ce qui bloque, ce qui suit.',
   },
   {
     label: `Premier échange gratuit (${RDV_DURATION_LABEL})`,
     description:
-      'Vous arrivez avec votre contexte, vous repartez avec une lecture honnête et trois directions concrètes.',
+      'Vous arrivez avec votre contexte, vous repartez avec une lecture honnête et des directions concrètes.',
   },
   {
     label: TJM_DISPLAY,
@@ -46,7 +46,7 @@ const triade = [
 
 <SiteLayout
   title="Pierre Gorde — Dev TypeScript freelance"
-  description="Je conçois et je livre vos produits tech, avec rigueur, disponibilité et un point quotidien sur l'avancée. Premier échange gratuit en 30 à 45 minutes."
+  description="Je conçois et je livre vos produits tech, avec rigueur, disponibilité et un compte-rendu quotidien sur l'avancée. Premier échange gratuit en 30 à 45 minutes."
 >
   <!-- HERO asymétrique avec mockup compte-rendu quotidien à droite -->
   <section class="relative overflow-hidden pt-16 pb-[var(--space-section-tight)] md:pt-24">
@@ -65,8 +65,8 @@ const triade = [
           <p
             class="mt-10 max-w-[58ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
           >
-            Avec rigueur, disponibilité, et un point quotidien sur l'avancée. Vous savez précisément
-            où vous en êtes — chaque soir.
+            Avec rigueur, disponibilité, et un compte-rendu quotidien sur l'avancée. Vous savez
+            précisément où vous en êtes — chaque soir.
           </p>
 
           <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
@@ -222,8 +222,8 @@ const triade = [
             class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
           >
             Vous arrivez avec votre contexte. Vous repartez avec une lecture honnête de votre
-            projet, les bonnes questions à se poser, et trois directions concrètes pour avancer
-            cette semaine.
+            projet, les bonnes questions à se poser, et des directions concrètes pour avancer cette
+            semaine.
           </p>
         </Reveal>
         <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
