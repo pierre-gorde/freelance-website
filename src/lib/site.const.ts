@@ -1,5 +1,5 @@
 export const SITE_URL = 'https://pierregorde.com';
-export const SITE_NAME = 'Pierre Gorde';
+export const SITE_NAME = 'Pierre Gordé';
 export const SITE_TAGLINE = 'Dev TypeScript freelance';
 
 export const CONTACT_EMAIL = 'contact@pierregorde.com';

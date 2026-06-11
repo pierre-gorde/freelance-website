@@ -8,19 +8,34 @@ import { RDV_DURATION_LABEL } from '../lib/site.const';
 const skills = [
   {
     label: 'Frontend',
-    items: ['TypeScript', 'React', 'Next.js', 'Astro', 'Vue', 'Tailwind'],
+    items: [
+      'Interfaces web',
+      'Rendu serveur',
+      'Sites statiques',
+      'Frameworks TypeScript',
+      'Design system',
+      'Animations',
+    ],
   },
   {
-    label: 'Backend',
-    items: ['Node.js', 'NestJS', 'Fastify', 'Bun', 'tRPC', 'GraphQL', 'REST'],
-  },
-  {
-    label: 'Bases de données',
-    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Prisma', 'Drizzle'],
+    label: 'Backend & données',
+    items: [
+      'APIs REST',
+      'GraphQL',
+      'Logique métier',
+      'Bases SQL',
+      'Bases NoSQL',
+      'Cache',
+      'Temps réel',
+    ],
   },
   {
     label: 'Infra & DevOps',
-    items: ['Cloudflare', 'Vercel', 'AWS', 'Docker', 'GitHub Actions', 'Terraform'],
+    items: ['CI/CD', 'Containers', 'Cloud', 'Edge & CDN', 'Monitoring', 'IaC'],
+  },
+  {
+    label: 'Intégrations IA',
+    items: ['Chat streaming', 'APIs LLM', 'RAG', 'Modèles locaux', 'Pipelines IA'],
   },
 ];
 ---
@@ -52,33 +67,29 @@ const skills = [
               Pendant 6 ans, j'ai co-fondé et co-géré <strong class="text-[var(--color-text)]"
                 >Coton</strong
               >, un collectif de développeurs freelance — tout en continuant à coder en mission côté
-              client. J'y ai vu passer des dizaines de projets tech, les réussis et les plantés, et
-              j'en ai tiré ce qui change vraiment le résultat.
+              client.
             </p>
             <p>
               Je me concentre désormais uniquement sur le freelance dev en solo. Pour{' '}
-              <strong class="text-[var(--color-text)]">porter chaque projet jusqu'à sa livraison</strong
+              <strong class="text-[var(--color-text)]"
+                >porter chaque projet jusqu'à sa livraison</strong
               >, sans intermédiaire, avec ce qui marche : compte-rendu quotidien, cadrage explicite,
               tarif transparent.
-            </p>
-            <p>
-              TypeScript depuis le début. Frontend, backend, infra — sans frontière artificielle. Je
-              travaille avec ce que les projets requièrent, pas avec un dogme.
             </p>
           </div>
         </Reveal>
 
         <!-- Colonne droite : illustration 01 -->
         <Reveal class="lg:col-span-5 lg:sticky lg:top-28" delay={120}>
-          <div class="overflow-hidden rounded-[var(--radius-lg)]">
+          <div class="overflow-hidden rounded-[var(--radius-lg)] aspect-4/5">
             <img
               src="/illustrations/pierre-01.png"
-              alt="Pierre Gorde"
+              alt="Pierre Gordé"
               width="600"
               height="750"
               loading="eager"
               decoding="async"
-              class="w-full h-auto block"
+              class="w-full h-full object-cover object-center"
             />
           </div>
         </Reveal>
@@ -91,14 +102,14 @@ const skills = [
     class="mt-[var(--space-section-tight)] py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
   >
     <Container size="wide">
-      <Reveal class="max-w-[52ch]">
+      <Reveal class="max-w-[100ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
           Côté technique
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Ce que je sais faire, sans jargon ni vantardise.
+          Mes compétences.
         </h2>
         <p
           class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
@@ -121,7 +132,7 @@ const skills = [
               <dd>
                 <ul class="flex flex-wrap gap-2">
                   {category.items.map((item) => (
-                    <li class="rounded-[var(--radius-pill)] border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-sm text-[var(--color-text)]">
+                    <li class="rounded-pill border border-border bg-bg px-3 py-1.5 text-sm text-text">
                       {item}
                     </li>
                   ))}
@@ -142,7 +153,7 @@ const skills = [
           <div class="overflow-hidden rounded-[var(--radius-lg)]">
             <img
               src="/pierre-homepage.jpg"
-              alt="Pierre Gorde"
+              alt="Pierre Gordé"
               width="800"
               height="800"
               loading="lazy"
@@ -165,22 +176,21 @@ const skills = [
             class="mt-8 space-y-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
           >
             <p>
-              Un collectif, c'est une structure qui rassure mais qui met de la distance. En solo, je
-              parle directement à mes clients, sans tampon, sans approbation intermédiaire, sans
-              effet de meute. C'est plus engageant pour moi, et plus utile pour eux.
+              Dans un collectif, l'attention se divise : entre la mission côté client, et les sujets
+              propres au collectif — recrutement, outillage, cohésion, stratégie commune. En solo,
+              tout va au projet en cours. <strong class="text-[var(--color-text)]"
+                >Un seul client à la fois, un seul focus.</strong
+              >
             </p>
             <p>
               C'est aussi un choix de cadre : je décide de mes méthodes, je décide de ce que je
-              promets et de ce que je ne promets pas. Pas pour faire de la mise en scène, pour faire
-              <strong class="text-[var(--color-text)]"
-                >ce qui marche pour livrer un projet proprement</strong
-              >.
+              promets et de ce que je ne promets pas. Pour faire ce qui marche pour livrer un projet
+              proprement.
             </p>
             <p>
-              Ce que je continue à porter de Coton : la conviction que le freelance senior est un
-              vrai métier, qui demande du soin opérationnel autant que du code. Et l'idée que la
-              transparence (sur le travail, sur le prix, sur les limites) est une fondation, pas un
-              argument marketing.
+              <strong class="text-[var(--color-text)]"
+                >Ce que je garde de Coton : l'idée que la transparence</strong
+              > — sur le travail, sur le prix, sur les limites — est une fondation. Pas un argument.
             </p>
           </div>
         </Reveal>
@@ -209,7 +219,7 @@ const skills = [
             class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
           >
             On se parle ?
-            <span class="block text-[var(--color-primary-200)]">Sans agenda commercial.</span>
+            <span class="block text-[var(--color-primary-200)]">On voit où vous en êtes.</span>
           </h2>
           <p
             class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"

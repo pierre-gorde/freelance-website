@@ -1,0 +1,120 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Container from '../components/layout/Container.astro';
+import Reveal from '../components/ui/Reveal.astro';
+import { CONTACT_EMAIL, SITE_URL } from '../lib/site.const';
+
+const sections = [
+  {
+    title: 'Éditeur du site',
+    items: [
+      { label: 'Nom', value: 'Pierre Gordé' },
+      { label: 'Statut', value: 'Micro-entrepreneur' },
+      { label: 'SIRET', value: 'À compléter' },
+      { label: 'Email', value: CONTACT_EMAIL },
+      { label: 'Site', value: SITE_URL },
+    ],
+  },
+  {
+    title: 'Directeur de publication',
+    items: [{ label: 'Responsable', value: 'Pierre Gordé' }],
+  },
+  {
+    title: 'Hébergement',
+    items: [
+      { label: 'Prestataire', value: 'Cloudflare Pages' },
+      { label: 'Société', value: 'Cloudflare, Inc.' },
+      { label: 'Adresse', value: '101 Townsend St, San Francisco, CA 94107, États-Unis' },
+      { label: 'Site', value: 'https://pages.cloudflare.com' },
+    ],
+  },
+];
+---
+
+<SiteLayout
+  title="Mentions légales"
+  description="Mentions légales du site pierregorde.com."
+  canonicalPath="/mentions-legales"
+  noindex={true}
+>
+  <section class="py-[var(--space-section)]">
+    <Container size="narrow">
+      <Reveal>
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+          Mentions légales
+        </p>
+        <h1
+          class="mt-5 text-[length:var(--text-4xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.025em] text-[var(--color-text)]"
+        >
+          Mentions légales
+        </h1>
+      </Reveal>
+
+      <div class="mt-16 flex flex-col gap-14">
+        {
+          sections.map((section, sIndex) => (
+            <Reveal delay={sIndex * 60}>
+              <h2 class="text-[length:var(--text-xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.015em] text-[var(--color-text)]">
+                {section.title}
+              </h2>
+              <dl class="mt-6 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+                {section.items.map((item) => (
+                  <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-8">
+                    <dt class="w-40 shrink-0 font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-text-subtle)]">
+                      {item.label}
+                    </dt>
+                    <dd class="text-[length:var(--text-base)] text-[var(--color-text-muted)]">
+                      {item.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          ))
+        }
+
+        <Reveal delay={180}>
+          <h2
+            class="text-[length:var(--text-xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.015em] text-[var(--color-text)]"
+          >
+            Propriété intellectuelle
+          </h2>
+          <p
+            class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+          >
+            L'ensemble du contenu de ce site (textes, illustrations, code) est la propriété de
+            Pierre Gordé, sauf mention contraire. Toute reproduction, même partielle, est soumise à
+            autorisation préalable.
+          </p>
+        </Reveal>
+
+        <Reveal delay={220}>
+          <h2
+            class="text-[length:var(--text-xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.015em] text-[var(--color-text)]"
+          >
+            Données personnelles
+          </h2>
+          <div
+            class="mt-6 space-y-4 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+          >
+            <p>
+              Ce site ne collecte aucune donnée personnelle directement. La prise de rendez-vous est
+              gérée par Cal.com, dont la politique de confidentialité est disponible sur <a
+                href="https://cal.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[var(--color-primary-700)] underline underline-offset-2 hover:no-underline"
+                >cal.com/privacy</a
+              >.
+            </p>
+            <p>
+              Les statistiques de fréquentation sont mesurées via Plausible Analytics, solution
+              respectueuse de la vie privée, sans cookie et sans transfert de données vers des
+              tiers. Conforme au RGPD.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+</SiteLayout>

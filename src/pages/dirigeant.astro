@@ -7,94 +7,103 @@ import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.c
 
 const benefits = [
   {
-    title: 'Un partenaire tech qui parle votre langue',
+    title: 'On parle business avant de parler tech',
     description:
-      "Je vous explique les choix techniques sans jargon, je vous dis pourquoi je fais ce que je fais, et je vous laisse arbitrer ce qui doit l'être par vous.",
+      "Je traduis vos enjeux en choix techniques, pas l'inverse. Vous n'avez pas à apprendre ce qu'est une API pour prendre une décision éclairée — c'est mon rôle de vous donner les éléments qui comptent.",
   },
   {
-    title: 'Un cadrage avant le moindre clavier',
+    title: 'Pas de jargon inutile',
     description:
-      "Avant de coder une ligne, on aligne le scope, l'architecture et les jalons. Pas de surprise en cours de route, pas de devis qui gonfle au milieu.",
+      "Les comptes-rendus quotidiens sont rédigés pour être lisibles sans bagage technique. Vous savez ce qui a été fait, ce qui bloque, et ce que j'attends de vous — sans avoir à décrypter.",
   },
   {
-    title: 'Une visibilité totale chaque soir',
+    title: 'Un engagement sur la livraison',
     description:
-      "Compte-rendu factuel chaque jour travaillé : ce qui a été fait, ce qui bloque, ce qui suit, ce que j'attends de vous. Vous savez en permanence où vous en êtes.",
+      'Je ne livre pas de maquettes ou de specs sans suite. Je livre du produit fonctionnel, déployé, utilisable. Si un délai change, vous le savez le jour même — pas à la livraison.',
   },
   {
-    title: 'Un MVP livré à date, sans engagement long terme',
-    description: `Le démarrage se fait sur devis borné, jusqu'à ${FORFAIT_MAX_DAYS} jours. On se teste sans vous engager pour des mois. Si la collaboration prend, on bascule en régie pour la suite.`,
+    title: 'Un démarrage sans risque long terme',
+    description: `Le démarrage se fait sur devis borné, jusqu'à ${FORFAIT_MAX_DAYS} jours. Vous testez la collaboration avant de vous engager sur la durée. Si ça colle, on continue en régie à ${TJM_DISPLAY}.`,
   },
 ];
 
 const journey = [
   {
-    title: 'Un premier échange gratuit',
+    title: 'Un premier échange sur votre projet',
     duration: RDV_DURATION_LABEL,
     description:
-      'On parle de votre projet, de votre financement, de vos contraintes. Vous repartez avec une lecture honnête et des directions concrètes, peu importe la suite.',
+      "On parle de votre contexte, de votre marché, de ce que vous voulez construire et pourquoi. Pas besoin de savoir ce que vous voulez techniquement — c'est ce que je suis là pour comprendre.",
   },
   {
-    title: 'Un cadrage clair',
+    title: 'Une traduction business → tech',
     duration: 'Sous 5 jours ouvrés',
     description:
-      "Si on est aligné, je formalise le scope, l'estimation et les jalons dans un devis. Si je n'ai pas assez d'éléments pour cadrer proprement, je vous le dis sans rien forcer.",
+      'Si on est aligné, je formalise ce que ça implique techniquement : scope, architecture, jalons, estimation. En français, sans jargon superflu. Vous arbitrez les compromis avec les bons éléments en main.',
   },
   {
     title: 'Un démarrage borné',
     duration: `Jusqu'à ${FORFAIT_MAX_DAYS} jours`,
     description:
-      'On commence par un devis à durée limitée. Vous voyez concrètement comment je travaille, je vois concrètement votre projet. Compte-rendu quotidien dès le premier jour.',
+      'On commence par un devis à durée limitée. Vous voyez comment je travaille, vous recevez un compte-rendu chaque soir, vous avez la main sur les priorités. Aucune surprise en fin de sprint.',
   },
   {
     title: 'La suite, en régie',
     duration: TJM_DISPLAY,
     description:
-      'Si la collaboration est satisfaisante des deux côtés, on bascule en régie pour faire vivre le produit. TJM transparent, pas de surcouche commerciale.',
+      'Si la collaboration est satisfaisante des deux côtés, on continue pour faire vivre et évoluer le produit. Tarif transparent, reporting constant, pas de tunnel de développement opaque.',
   },
 ];
 
 const faqs = [
   {
-    question: `Un MVP en ${FORFAIT_MAX_DAYS} jours, c'est crédible ou c'est du marketing ?`,
+    question: "Je ne connais rien à la tech — est-ce que c'est un problème ?",
     answer:
-      "C'est crédible si le scope est précis. C'est pour ça qu'on le définit ensemble avant de signer. Le format devient réaliste aujourd'hui parce que l'IA accélère certaines tâches répétitives. Mais ce n'est pas magique : on ne livre pas une plateforme bancaire en 15 jours. Sur un MVP, on livre les fonctionnalités cœur, déployées, testées, utilisables.",
+      "Non. Ce n'est pas votre métier, c'est le mien. Ce que j'attends de vous, c'est que vous connaissiez votre marché, vos utilisateurs, vos contraintes business. Je m'occupe de traduire ça en produit. Si une décision technique vous concerne, je vous l'explique en termes clairs avant de la prendre.",
   },
   {
-    question: "Pourquoi vous, plutôt qu'une agence ou un autre freelance ?",
+    question: `Un MVP en ${FORFAIT_MAX_DAYS} jours, c'est réaliste ?`,
     answer:
-      "J'ai 10 ans de dev TypeScript dans les pattes, 6 ans à co-fonder le collectif Coton — soit des dizaines de missions freelance vues de l'intérieur, réussies et plantées. Les méthodes que j'applique (compte-rendu quotidien, devis borné au démarrage) sont issues de ce que j'ai vu marcher chez les plus solides du collectif. C'est ça que je propose.",
+      "Oui, si le scope est bien défini. C'est pour ça qu'on commence par un cadrage sérieux. Un MVP, ce n'est pas un produit fini — c'est le minimum fonctionnel qui permet de tester une hypothèse. Si votre hypothèse est claire, le périmètre se délimite. Si elle ne l'est pas encore, c'est ce qu'on clarifie ensemble avant de signer.",
+  },
+  {
+    question: "Vous pouvez me conseiller sur les choix de stack ou d'architecture ?",
+    answer:
+      "Oui, c'est même une partie importante de ce que je fais. Pas pour vous vendre une techno exotique, mais pour vous aider à choisir ce qui correspond à votre contexte : votre budget, vos ambitions, vos contraintes de recrutement futur. Je vous donne mon avis avec les raisons, vous décidez.",
+  },
+  {
+    question: "Vous pouvez m'aider à recruter mon équipe tech ?",
+    answer:
+      "En partie. Je ne chasse pas les profils — c'est le travail d'un recruteur. Mais je peux créer les tests techniques, évaluer les candidats, et conduire les entretiens techniques. C'est un rôle que j'ai tenu chez Coton pour recruter les freelances du collectif, et qu'on proposait aussi à nos clients. Si vous avez des candidats à évaluer, je vous donne une lecture structurée.",
   },
 ];
 ---
 
 <SiteLayout
-  title="Pour les porteurs de projet financés"
-  description="Vous portez un projet tech. Vous avez le financement. Vous voulez quelqu'un qui vous emmène jusqu'à la livraison, sans jargon et sans surprise. Premier échange gratuit en 30 à 45 minutes."
-  canonicalPath="/porteur-projet"
+  title="Développement produit pour dirigeants"
+  description="Vous avez un projet tech à démarrer ou à accélérer. Vous voulez un dev senior qui parle business, livre avec rigueur, et vous tient informé chaque jour. Premier échange gratuit en 30 à 45 minutes."
+  canonicalPath="/dirigeant"
 >
   <!-- HERO -->
   <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
     <Container size="wide">
       <Reveal>
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          Pour les porteurs de projet financés
+          Pour les dirigeants
         </p>
         <h1
           class="mt-5 max-w-[24ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
         >
-          Vous portez le projet.
+          Vous avez un projet tech.
           <span class="block text-[var(--color-primary-700)]"
-            >Il faut quelqu'un pour livrer.</span
+            >Il faut quelqu'un qui parle business.</span
           >
         </h1>
         <p
           class="mt-10 max-w-[55ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
         >
-          Vous avez sécurisé un financement (pret bancaire, levée, capitaux personnels). Vous n'avez
-          pas d'équipe tech en place. Vous voulez quelqu'un qui vous emmène jusqu'à la livraison,
-          qui vous explique pourquoi il fait ce qu'il fait, et <strong>qui ne disparaît pas en cours de
-          route.</strong>
+          Vous dirigez une boîte. Vous avez une idée de produit, une fonctionnalité à ajouter, ou
+          une refonte à mener. Vous ne cherchez pas à comprendre toute la technique — vous cherchez
+          <strong>quelqu'un qui la maîtrise et vous tient informé.</strong>
         </p>
         <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
           <PrimaryCta size="lg" class="w-full sm:w-auto" />
@@ -220,7 +229,7 @@ const faqs = [
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Deux questions qu'on me pose souvent.
+          Quatre questions qu'on me pose souvent.
         </h2>
       </Reveal>
 
@@ -293,14 +302,14 @@ const faqs = [
             class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
           >
             On parle de votre projet,
-            <span class="block text-[var(--color-primary-200)]">de A à Z.</span>
+            <span class="block text-[var(--color-primary-200)]">en termes clairs.</span>
           </h2>
           <p
             class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
           >
-            Vous arrivez avec votre projet, votre financement, vos contraintes. Vous repartez avec
-            une lecture honnête, les bonnes questions à se poser, et des directions concrètes pour
-            avancer cette semaine.
+            Vous décrivez votre contexte business, vos objectifs, vos contraintes. Je vous dis ce
+            que ça implique techniquement, ce qui est faisable, et comment on pourrait travailler
+            ensemble.
           </p>
         </Reveal>
         <Reveal class="lg:col-span-4 lg:text-right" delay={150}>

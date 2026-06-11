@@ -1,6 +1,6 @@
 # pierregorde.com
 
-Site marketing de l'activité freelance solo de Pierre Gorde, dev TypeScript senior.
+Site marketing de l'activité freelance solo de Pierre Gordé, dev TypeScript senior.
 
 Le site n'est pas un portfolio : c'est un site de vente, conçu pour convertir des prospects qualifiés (porteurs de projet financés, CTO en recherche de renfort, dirigeants tech-enabled) en RDV gratuit, puis en mission.
 
@@ -23,14 +23,14 @@ Le serveur dev tourne sur `http://localhost:4321`.
 
 ## Commandes
 
-| Commande              | Action                                                |
-| --------------------- | ----------------------------------------------------- |
-| `npm run dev`         | Lance le serveur de dev (HMR).                        |
-| `npm run build`       | Build statique vers `./dist/`.                        |
-| `npm run preview`     | Sert le build local pour vérification avant deploy.   |
-| `npm run check`       | Type-check + diagnostic Astro.                        |
-| `npm run format`      | Formate les fichiers source avec Prettier.            |
-| `npm run lint`        | Vérifie le format + type-check.                       |
+| Commande          | Action                                              |
+| ----------------- | --------------------------------------------------- |
+| `npm run dev`     | Lance le serveur de dev (HMR).                      |
+| `npm run build`   | Build statique vers `./dist/`.                      |
+| `npm run preview` | Sert le build local pour vérification avant deploy. |
+| `npm run check`   | Type-check + diagnostic Astro.                      |
+| `npm run format`  | Formate les fichiers source avec Prettier.          |
+| `npm run lint`    | Vérifie le format + type-check.                     |
 
 ## Structure
 

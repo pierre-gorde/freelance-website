@@ -1,0 +1,229 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Container from '../components/layout/Container.astro';
+import PrimaryCta from '../components/ui/PrimaryCta.astro';
+import Reveal from '../components/ui/Reveal.astro';
+import { RDV_DURATION_LABEL, FORFAIT_MAX_DAYS } from '../lib/site.const';
+
+const faqs = [
+  {
+    category: 'La méthode',
+    questions: [
+      {
+        question:
+          "Pourquoi un compte-rendu chaque jour ? Une réunion hebdo, ce n'est pas suffisant ?",
+        answer:
+          "Un point hebdo vous dit ce qui s'est passé. Un compte-rendu quotidien vous permet de réagir le jour-même. Si je découvre un blocage le mardi, vous pouvez trancher le mercredi — pas le lundi suivant. Sur un projet financé, perdre une semaine à attendre la prochaine réunion, c'est cher. Le format est volontairement léger : un message factuel le soir, lu en 30 secondes, archivé. Pas une présentation soignée à préparer.",
+      },
+      {
+        question:
+          "Vous travaillez à distance — comment je sais que vous serez là quand j'en aurai besoin ?",
+        answer:
+          "Je suis présent tous les jours en heures ouvrées. Le compte-rendu quotidien le matérialise — vous voyez chaque soir ce qui a été fait. Sur les canaux de communication, j'utilise les vôtres (Slack, mail, Teams, etc.), pas un portail dédié à apprendre.",
+      },
+      {
+        question: 'Et si vous êtes malade, en vacances, ou débordé ?',
+        answer:
+          "Je suis un humain, pas une équipe — je ne promets pas une disponibilité 24/7. Pour les vacances, je préviens à l'avance et on cale les jalons en conséquence. En cas d'imprévu long, je connais quelques freelances seniors de confiance que je peux éventuellement vous recommander, sans intermédiation.",
+      },
+    ],
+  },
+  {
+    category: 'La collaboration',
+    questions: [
+      {
+        question: `Un forfait MVP en ${FORFAIT_MAX_DAYS} jours, c'est crédible ou c'est du marketing ?`,
+        answer:
+          "C'est crédible si le scope est précis — c'est pourquoi on le définit ensemble avant de signer. Le format devient réaliste aujourd'hui parce que l'IA accélère certaines tâches répétitives : boilerplate, tests, refacto local. Mais ce n'est pas magique. On ne livre pas une plateforme bancaire en 15 jours. Sur un MVP, on livre les fonctionnalités cœur, déployées, testées, utilisables.",
+      },
+      {
+        question: 'Tu peux prendre un chantier sans brief exhaustif ?',
+        answer:
+          'Oui, à condition que le scope soit délimité. Je ne travaille pas bien dans le flou total — pas parce que je ne suis pas autonome, mais parce que le flou produit du code qui part dans tous les sens. Si le brief est incomplet, je pose les questions qui manquent avant de démarrer, pas au milieu.',
+      },
+      {
+        question: "Je ne connais rien à la tech — est-ce que c'est un problème ?",
+        answer:
+          "Non. Ce n'est pas votre métier, c'est le mien. Ce que j'attends de vous, c'est que vous connaissiez votre marché, vos utilisateurs, vos contraintes business. Je m'occupe de traduire ça en produit. Si une décision technique vous concerne, je vous l'explique en termes clairs avant de la prendre.",
+      },
+      {
+        question: 'Tu peux coordonner une équipe, pas seulement coder ?',
+        answer:
+          "Oui. Chez Coton, j'ai piloté des équipes de freelances sur des missions clients — sélection des profils, répartition du travail, points de synchronisation, tests techniques de recrutement. Sur le projet <a href=\"/projets/ublo\" class=\"underline underline-offset-2 hover:text-[var(--color-text)]\">Ublo</a>, j'ai coordonné une équipe de 4 développeurs juniors : cadrage des chantiers, revues de PR, accompagnement technique quotidien. Si vous avez besoin de quelqu'un qui code et structure le travail autour d'une équipe réduite, c'est quelque chose que je fais.",
+      },
+      {
+        question: "Vous pouvez m'aider à recruter mon équipe tech ?",
+        answer:
+          "En partie. Je ne chasse pas les profils — c'est le travail d'un recruteur. Mais je peux créer les tests techniques, évaluer les candidats, et conduire les entretiens techniques. C'est un rôle que j'ai tenu chez Coton pour recruter les freelances du collectif, et qu'on proposait aussi à nos clients. Si vous avez des candidats à évaluer, je vous donne une lecture structurée.",
+      },
+    ],
+  },
+  {
+    category: 'Le profil',
+    questions: [
+      {
+        question: "Pourquoi vous, plutôt qu'une agence ou un autre freelance ?",
+        answer:
+          "Je n'ai pas la prétention d'être le meilleur. J'ai 10 ans de dev TypeScript dans les pattes, 6 ans à co-fonder le collectif Coton — soit des dizaines de missions freelance vues de l'intérieur, réussies et plantées. Les méthodes que j'applique (compte-rendu quotidien, devis borné au démarrage) sont issues de ce que j'ai vu marcher chez les plus solides du collectif. C'est ça que je propose.",
+      },
+      {
+        question: "Qu'est-ce que tu ne feras pas ?",
+        answer:
+          "Je ne joue pas au héros. Je ne prends pas de décisions d'architecture qui engagent le long terme sans vous en parler. Je ne code pas vite pour avoir l'air productif — je code proprement pour que ça tienne.",
+      },
+    ],
+  },
+  {
+    category: 'La technique',
+    questions: [
+      {
+        question: "Comment tu t'intègres dans une codebase existante ?",
+        answer:
+          "Je lis avant d'écrire. Je commence par comprendre les conventions du projet, les patterns déjà en place, les endroits fragiles. Je ne refactore pas tout dès la première semaine. Si je vois quelque chose qui mérite d'être discuté, je le pose à l'écrit — dans le compte-rendu ou directement dans la PR — sans imposer.",
+      },
+      {
+        question: "Vous pouvez me conseiller sur les choix de stack ou d'architecture ?",
+        answer:
+          "Oui, c'est même une partie importante de ce que je fais. Pas pour vous vendre une techno exotique, mais pour vous aider à choisir ce qui correspond à votre contexte : votre budget, vos ambitions, vos contraintes de recrutement futur. Je vous donne mon avis avec les raisons, vous décidez.",
+      },
+    ],
+  },
+  {
+    category: "L'IA et le code",
+    questions: [
+      {
+        question:
+          "Vous codez avec l'IA, donc c'est juste du code généré que je paye au prix fort ?",
+        answer:
+          "L'IA est un outil. Ce que vous payez, c'est le cadrage de ce qui doit être codé, le choix de l'architecture, le contrôle de ce qui sort, la prise de décision sur les compromis, et la responsabilité de garantir que ça tient dans 18 mois. Du code IA mal piloté crée de la dette technique invisible — c'est exactement ce que mon travail consiste à éviter. Le code que vous recevez est celui que j'aurais écrit, en plus vite.",
+      },
+    ],
+  },
+];
+---
+
+<SiteLayout
+  title="FAQ"
+  description="Les questions qu'on me pose souvent, répondues honnêtement. Sur la méthode, la collaboration, et l'IA."
+  canonicalPath="/faq"
+>
+  <!-- HERO -->
+  <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
+    <Container size="default">
+      <Reveal>
+        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
+          FAQ
+        </p>
+        <h1
+          class="mt-5 max-w-[22ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
+        >
+          Les questions qu'on me pose souvent.
+        </h1>
+        <p
+          class="mt-8 max-w-[52ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
+        >
+          Répondues honnêtement — sans esquiver ce qui dérange.
+        </p>
+      </Reveal>
+    </Container>
+  </section>
+
+  <!-- QUESTIONS -->
+  <section class="py-[var(--space-section)]">
+    <Container size="default">
+      <div class="flex flex-col gap-20">
+        {
+          faqs.map((group) => (
+            <div>
+              <Reveal>
+                <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
+                  {group.category}
+                </p>
+              </Reveal>
+
+              <div class="mt-8 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+                {group.questions.map((faq, index) => (
+                  <Reveal as="div" delay={index * 60}>
+                    <details class="faq-item group py-8 md:py-10">
+                      <summary class="faq-summary flex cursor-pointer items-start justify-between gap-6 list-none">
+                        <h2 class="text-[length:var(--text-xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.01em] text-[var(--color-text)]">
+                          {faq.question}
+                        </h2>
+                        <span
+                          class="faq-icon mt-1 flex size-7 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-text-subtle)] transition-[transform,background-color,border-color,color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)]"
+                          aria-hidden="true"
+                        >
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path
+                              d="M6 2v8M2 6h8"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                            />
+                          </svg>
+                        </span>
+                      </summary>
+                      <p
+                        class="mt-5 max-w-[95ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+                        set:html={faq.answer}
+                      />
+                    </details>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  <!-- CTA FINALE -->
+  <section
+    class="relative overflow-hidden py-[var(--space-section)] bg-[var(--color-bg-deep)] text-[var(--color-text-inverse)]"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full opacity-30"
+      style="background: radial-gradient(closest-side, oklch(50% 0.12 155 / 0.6), transparent);"
+    >
+    </div>
+
+    <Container size="default">
+      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
+        <Reveal class="lg:col-span-8">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
+            Premier échange · {RDV_DURATION_LABEL} · Sans engagement
+          </p>
+          <h2
+            class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
+          >
+            Une autre question ?
+            <span class="block text-[var(--color-primary-200)]">On peut en parler.</span>
+          </h2>
+        </Reveal>
+        <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
+          <PrimaryCta size="lg" class="w-full sm:w-auto" />
+        </Reveal>
+      </div>
+    </Container>
+  </section>
+</SiteLayout>
+
+<style>
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    border-color: var(--color-primary-400);
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+  }
+
+  .faq-summary:hover .faq-icon {
+    border-color: var(--color-primary-400);
+    color: var(--color-primary-700);
+  }
+</style>

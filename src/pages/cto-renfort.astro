@@ -3,98 +3,108 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import Container from '../components/layout/Container.astro';
 import PrimaryCta from '../components/ui/PrimaryCta.astro';
 import Reveal from '../components/ui/Reveal.astro';
-import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.const';
+import { RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.const';
 
 const benefits = [
   {
-    title: 'Un partenaire tech qui parle votre langue',
+    title: 'Une intégration sans friction',
     description:
-      "Je vous explique les choix techniques sans jargon, je vous dis pourquoi je fais ce que je fais, et je vous laisse arbitrer ce qui doit l'être par vous.",
+      "Je lis le code avant d'en écrire. Je comprends vos conventions avant de les modifier. Je pose des questions utiles, pas du bruit. Vous n'avez pas à m'expliquer comment fonctionne un PR.",
   },
   {
-    title: 'Un cadrage avant le moindre clavier',
+    title: 'Autonomie senior, sans délégation aveugle',
     description:
-      "Avant de coder une ligne, on aligne le scope, l'architecture et les jalons. Pas de surprise en cours de route, pas de devis qui gonfle au milieu.",
+      "Je prends des décisions techniques sans vous solliciter toutes les demi-heures. Quand une décision dépasse mon périmètre ou engage l'architecture, je reviens vous chercher.",
   },
   {
-    title: 'Une visibilité totale chaque soir',
+    title: 'Un compte-rendu quotidien orienté tech',
     description:
-      "Compte-rendu factuel chaque jour travaillé : ce qui a été fait, ce qui bloque, ce qui suit, ce que j'attends de vous. Vous savez en permanence où vous en êtes.",
+      "Chaque jour travaillé, un message factuel : ce qui a été mergé, ce qui bloque, ce que j'ai arbitré et pourquoi, ce qui suit. Vous et votre équipe savez exactement ce qui a été touché.",
   },
   {
-    title: 'Un MVP livré à date, sans engagement long terme',
-    description: `Le démarrage se fait sur devis borné, jusqu'à ${FORFAIT_MAX_DAYS} jours. On se teste sans vous engager pour des mois. Si la collaboration prend, on bascule en régie pour la suite.`,
+    title: 'En régie, transparent',
+    description: `${TJM_DISPLAY}. Pas de sur-facturation cachée, pas de frais de "coordination". Vous payez ce que je fais, vous savez ce que je fais.`,
   },
 ];
 
 const journey = [
   {
-    title: 'Un premier échange gratuit',
+    title: 'Un premier échange technique',
     duration: RDV_DURATION_LABEL,
     description:
-      'On parle de votre projet, de votre financement, de vos contraintes. Vous repartez avec une lecture honnête et des directions concrètes, peu importe la suite.',
+      'On parle de votre stack, de vos conventions, du chantier que vous avez en tête. Je vous pose les questions qui comptent. Vous repartez avec une idée claire de comment ça pourrait se passer.',
   },
   {
-    title: 'Un cadrage clair',
-    duration: 'Sous 5 jours ouvrés',
+    title: 'Un audit rapide du contexte',
+    duration: '1 à 2 jours',
     description:
-      "Si on est aligné, je formalise le scope, l'estimation et les jalons dans un devis. Si je n'ai pas assez d'éléments pour cadrer proprement, je vous le dis sans rien forcer.",
+      'Si on est aligné, je prends le temps de lire la codebase avant de démarrer. Pas de blind dive. Je reviens avec mes observations, mes questions, et une estimation du chantier ciblé.',
   },
   {
-    title: 'Un démarrage borné',
-    duration: `Jusqu'à ${FORFAIT_MAX_DAYS} jours`,
+    title: 'Un démarrage sur un chantier ciblé',
+    duration: 'Périmètre défini en amont',
     description:
-      'On commence par un devis à durée limitée. Vous voyez concrètement comment je travaille, je vois concrètement votre projet. Compte-rendu quotidien dès le premier jour.',
+      'On commence par quelque chose de délimité — une feature, un refacto, une migration. Vous voyez comment je travaille dans votre contexte. Compte-rendu quotidien dès le premier jour.',
   },
   {
-    title: 'La suite, en régie',
+    title: 'La continuité en régie',
     duration: TJM_DISPLAY,
     description:
-      'Si la collaboration est satisfaisante des deux côtés, on bascule en régie pour faire vivre le produit. TJM transparent, pas de surcouche commerciale.',
+      "Si la collaboration est satisfaisante des deux côtés, on continue. Je reste dans votre équipe le temps qu'il faut, avec la même rigueur opérationnelle.",
   },
 ];
 
 const faqs = [
   {
-    question: `Un MVP en ${FORFAIT_MAX_DAYS} jours, c'est crédible ou c'est du marketing ?`,
+    question: "Comment tu t'intègres dans une codebase existante ?",
     answer:
-      "C'est crédible si le scope est précis. C'est pour ça qu'on le définit ensemble avant de signer. Le format devient réaliste aujourd'hui parce que l'IA accélère certaines tâches répétitives. Mais ce n'est pas magique : on ne livre pas une plateforme bancaire en 15 jours. Sur un MVP, on livre les fonctionnalités cœur, déployées, testées, utilisables.",
+      "Je lis avant d'écrire. Je commence par comprendre les conventions du projet, les patterns déjà en place, les endroits fragiles. Je ne refactore pas tout dès la première semaine. Si je vois quelque chose qui mérite d'être discuté, je le pose à l'écrit — dans le compte-rendu ou directement dans la PR — sans imposer.",
   },
   {
-    question: "Pourquoi vous, plutôt qu'une agence ou un autre freelance ?",
+    question: 'Tu peux prendre un chantier sans brief exhaustif ?',
     answer:
-      "J'ai 10 ans de dev TypeScript dans les pattes, 6 ans à co-fonder le collectif Coton — soit des dizaines de missions freelance vues de l'intérieur, réussies et plantées. Les méthodes que j'applique (compte-rendu quotidien, devis borné au démarrage) sont issues de ce que j'ai vu marcher chez les plus solides du collectif. C'est ça que je propose.",
+      'Oui, à condition que le scope soit délimité. Je ne travaille pas bien dans le flou total — pas parce que je ne suis pas autonome, mais parce que le flou produit du code qui part dans tous les sens. Si le brief est incomplet, je pose les questions qui manquent avant de démarrer, pas au milieu.',
+  },
+  {
+    question: "Qu'est-ce que tu ne feras pas ?",
+    answer:
+      "Je ne joue pas au héros. Je ne prends pas de décisions d'architecture qui engagent le long terme sans vous en parler. Je ne code pas vite pour avoir l'air productif — je code proprement pour que ça tienne.",
+  },
+  {
+    question: 'Tu peux coordonner une équipe, pas seulement coder ?',
+    answer:
+      "Oui. Chez Coton, j'ai piloté des équipes de freelances sur des missions clients — sélection des profils, répartition du travail, points de synchronisation, tests techniques de recrutement. Sur le projet <a href=\"/projets/ublo\" class=\"underline underline-offset-2 hover:text-[var(--color-text)]\">Ublo</a>, j'ai coordonné une équipe de 4 développeurs juniors : cadrage des chantiers, revues de PR, accompagnement technique quotidien. Si vous avez besoin de quelqu'un qui code et structure le travail autour d'une équipe réduite, c'est quelque chose que je fais.",
   },
 ];
 ---
 
 <SiteLayout
-  title="Pour les porteurs de projet financés"
-  description="Vous portez un projet tech. Vous avez le financement. Vous voulez quelqu'un qui vous emmène jusqu'à la livraison, sans jargon et sans surprise. Premier échange gratuit en 30 à 45 minutes."
-  canonicalPath="/porteur-projet"
+  title="Renfort senior pour CTO et équipes tech"
+  description="Vous avez une équipe tech. Vous cherchez un renfort senior TypeScript qui s'intègre sans friction, travaille avec autonomie, et rend compte chaque jour. Premier échange gratuit en 30 à 45 minutes."
+  canonicalPath="/cto-renfort"
 >
   <!-- HERO -->
   <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
     <Container size="wide">
       <Reveal>
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          Pour les porteurs de projet financés
+          Pour les CTO, leads et chefs de projet
         </p>
         <h1
           class="mt-5 max-w-[24ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
         >
-          Vous portez le projet.
+          Vous avez besoin de renfort.
           <span class="block text-[var(--color-primary-700)]"
-            >Il faut quelqu'un pour livrer.</span
+            >Ni junior à former, ni agence à gérer.</span
           >
         </h1>
         <p
           class="mt-10 max-w-[55ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
         >
-          Vous avez sécurisé un financement (pret bancaire, levée, capitaux personnels). Vous n'avez
-          pas d'équipe tech en place. Vous voulez quelqu'un qui vous emmène jusqu'à la livraison,
-          qui vous explique pourquoi il fait ce qu'il fait, et <strong>qui ne disparaît pas en cours de
-          route.</strong>
+          Vous avez un chantier qui déborde, une feature qui traîne, un refacto qui attend. Vous
+          cherchez quelqu'un qui lit la codebase, s'intègre à votre équipe, et livre — <strong
+            >sans que vous ayez à passer vos journées à relire ou à débloquer.</strong
+          >
         </p>
         <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
           <PrimaryCta size="lg" class="w-full sm:w-auto" />
@@ -156,14 +166,14 @@ const faqs = [
   <!-- DÉROULÉ -->
   <section class="py-[var(--space-section)]">
     <Container size="wide">
-      <Reveal class="max-w-[100ch]">
+      <Reveal class="max-w-[52ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
           02 · Comment ça se passe
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Quatre phases. <br />Sans engagement long terme avant qu'on ait travaillé ensemble.
+          Un démarrage ciblé, une continuité en régie.
         </h2>
       </Reveal>
 
@@ -220,7 +230,7 @@ const faqs = [
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Deux questions qu'on me pose souvent.
+          Quatre questions qu'on me pose souvent.
         </h2>
       </Reveal>
 
@@ -249,9 +259,10 @@ const faqs = [
                     </svg>
                   </span>
                 </summary>
-                <p class="mt-5 max-w-[95ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
-                  {faq.answer}
-                </p>
+                <p
+                  class="mt-5 max-w-[95ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+                  set:html={faq.answer}
+                />
               </details>
             </Reveal>
           ))
@@ -292,15 +303,14 @@ const faqs = [
           <h2
             class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
           >
-            On parle de votre projet,
-            <span class="block text-[var(--color-primary-200)]">de A à Z.</span>
+            On parle du chantier,
+            <span class="block text-[var(--color-primary-200)]">concrètement.</span>
           </h2>
           <p
             class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
           >
-            Vous arrivez avec votre projet, votre financement, vos contraintes. Vous repartez avec
-            une lecture honnête, les bonnes questions à se poser, et des directions concrètes pour
-            avancer cette semaine.
+            Vous décrivez le contexte, la stack, ce qui bloque. Je vous dis si je suis le bon
+            profil, et comment ça pourrait se passer. Trente minutes, sans engagement.
           </p>
         </Reveal>
         <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
