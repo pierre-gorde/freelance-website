@@ -20,7 +20,7 @@ const personaContexts: Record<string, string> = {
   '/porteur-projet':
     'On cadre techniquement le projet, on aligne le MVP sur ce qui peut être levé, et je pilote la livraison.',
   '/cto-renfort':
-    "On démarre sur un chantier précis, je m'intègre à votre stack et à votre équipe, sans baby-sitting.",
+    "On démarre sur un chantier précis, je m'intègre à votre stack et à votre équipe, avec autonomie.",
   '/dirigeant':
     "On parle métier d'abord. Je traduis vos enjeux business en architecture, et je livre.",
 };
@@ -135,14 +135,14 @@ const triade = [
   <!-- SÉLECTEUR PERSONA — vertical, séparé par lignes, numéros géants -->
   <section class="py-[var(--space-section)]">
     <Container size="wide">
-      <Reveal class="max-w-[44ch]">
+      <Reveal>
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-          Trois portes d'entrée
+          Selon votre contexte, <br />l'un de ces trois profils vous correspond
         </p>
         <h2
           class="mt-4 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Choisissez celle qui vous ressemble.
+          Dans quel cas êtes-vous ?
         </h2>
       </Reveal>
 
@@ -171,7 +171,7 @@ const triade = [
                 </div>
 
                 <span class="persona-arrow inline-flex items-center gap-2 text-sm font-medium text-[var(--color-primary-700)] md:self-center">
-                  <span>Cette porte</span>
+                  <span>En savoir plus</span>
                   <svg
                     aria-hidden="true"
                     width="18"
