@@ -5,7 +5,7 @@ export const SITE_TAGLINE = 'Dev TypeScript freelance';
 export const CONTACT_EMAIL = 'contact@pierregorde.com';
 
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/pierre-gord%C3%A9/';
-export const GITHUB_URL = 'https://github.com/pierregorde/pierregorde-com';
+export const GITHUB_URL = 'https://github.com/pierre-gorde';
 export const CAL_EVENT_LINK = 'pierre-gorde/30min';
 export const CAL_NAMESPACE = 'rdv';
 
