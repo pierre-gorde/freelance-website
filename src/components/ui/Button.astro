@@ -71,11 +71,15 @@ const finalClassName = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[
       rel={external ? 'noopener noreferrer' : undefined}
       target={external ? '_blank' : undefined}
     >
-      <span class="relative z-10 inline-flex items-center gap-2"><slot /></span>
+      <span class="relative z-10 inline-flex items-center gap-2">
+        <slot />
+      </span>
     </a>
   ) : (
     <button type={type} class={finalClassName} aria-label={ariaLabel}>
-      <span class="relative z-10 inline-flex items-center gap-2"><slot /></span>
+      <span class="relative z-10 inline-flex items-center gap-2">
+        <slot />
+      </span>
     </button>
   )
 }
@@ -108,11 +112,7 @@ const finalClassName = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[
     position: absolute;
     inset: -2px;
     z-index: -1;
-    background: radial-gradient(
-      closest-side,
-      oklch(54% 0.12 155 / 0.45),
-      transparent 70%
-    );
+    background: radial-gradient(closest-side, oklch(54% 0.12 155 / 0.45), transparent 70%);
     opacity: 0;
     transition: opacity 0.35s var(--ease-out-quart);
     pointer-events: none;

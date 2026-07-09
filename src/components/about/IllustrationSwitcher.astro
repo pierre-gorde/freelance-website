@@ -20,10 +20,7 @@ const initialIndex = props.initialIndex ?? 0;
   data-total={images.length}
 >
   <!-- Frame de l'illustration -->
-  <div
-    class="frame rounded-[var(--radius-lg)] overflow-hidden"
-    style="display: grid;"
-  >
+  <div class="frame rounded-[var(--radius-lg)] overflow-hidden" style="display: grid;">
     {
       images.map((image, index) => (
         <img

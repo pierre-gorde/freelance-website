@@ -39,8 +39,8 @@
 
   /* Typographie */
   --font-sans:
-    'General Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', sans-serif;
+    'General Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
 
   /* Scale typo fluide (clamp) — ratio ≥ 1.25 entre paliers */
   --text-xs: clamp(0.75rem, 0.74rem + 0.05vw, 0.78rem);
