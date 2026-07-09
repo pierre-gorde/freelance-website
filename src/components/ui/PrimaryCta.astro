@@ -1,5 +1,6 @@
 ---
 import { CAL_EVENT_LINK, CAL_NAMESPACE } from '../../lib/site.const';
+import { EVENT_CTA_RDV } from '../../lib/analytics.const';
 
 const CTA_LABEL = 'Réserver un échange gratuit';
 
@@ -11,12 +12,17 @@ type Props = {
 
 const { size = 'md', label = CTA_LABEL, class: className = '' } = Astro.props;
 
-const sizeClasses = { sm: 'h-9 px-4 text-sm', md: 'h-11 px-6 text-base', lg: 'h-14 px-8 text-lg' } as const;
+const sizeClasses = {
+  sm: 'h-9 px-4 text-sm',
+  md: 'h-11 px-6 text-base',
+  lg: 'h-14 px-8 text-lg',
+} as const;
 ---
 
 <button
   data-cal-link={CAL_EVENT_LINK}
   data-cal-namespace={CAL_NAMESPACE}
+  data-umami-event={EVENT_CTA_RDV}
   class={`relative overflow-hidden isolate inline-flex items-center justify-center gap-2 font-medium tracking-[-0.005em] whitespace-nowrap rounded-pill transition-[transform,box-shadow,background-color,color] duration-(--duration-default) ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-3 active:translate-y-px cursor-pointer btn-shiny bg-primary-600 text-text-inverse hover:bg-primary-700 shadow-(--shadow-cta) hover:shadow-(--shadow-cta-hover) ${sizeClasses[size]} ${className}`}
 >
   <span class="relative z-10 inline-flex items-center gap-2">
@@ -32,8 +38,8 @@ const sizeClasses = { sm: 'h-9 px-4 text-sm', md: 'h-11 px-6 text-base', lg: 'h-
       stroke-linecap="round"
       stroke-linejoin="round"
     >
-      <path d="M2.5 7h9" />
-      <path d="M8 3.5 11.5 7 8 10.5" />
+      <path d="M2.5 7h9"></path>
+      <path d="M8 3.5 11.5 7 8 10.5"></path>
     </svg>
   </span>
 </button>

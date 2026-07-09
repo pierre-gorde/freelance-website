@@ -13,8 +13,10 @@
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
-    "format": "prettier --write \"src/**/*.{astro,ts,tsx,js,jsx,css,md}\"",
-    "lint": "astro check && prettier --check \"src/**/*.{astro,ts,tsx,js,jsx,css,md}\""
+    "format": "prettier --write \"src/**/*.{astro,ts,tsx,js,jsx,css,md}\" \"scripts/**/*.ts\"",
+    "lint": "astro check && prettier --check \"src/**/*.{astro,ts,tsx,js,jsx,css,md}\" \"scripts/**/*.ts\"",
+    "report:weekly": "node --experimental-strip-types scripts/weekly-report/index.ts",
+    "report:sample": "node --experimental-strip-types scripts/weekly-report/index.ts --sample"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

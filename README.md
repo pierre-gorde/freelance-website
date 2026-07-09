@@ -12,7 +12,8 @@ Ce n'est pas un portfolio : c'est un **site de vente**, conçu pour convertir de
 | [Tailwind CSS v4](https://tailwindcss.com) | Utility-first, tokens via `@theme` |
 | [Cloudflare Pages](https://pages.cloudflare.com) | Déploiement statique edge |
 | [Cal.com](https://cal.com) | Prise de RDV intégrée |
-| [Plausible](https://plausible.io) | Analytics RGPD-friendly sans cookies |
+| [Umami Cloud](https://umami.is) | Analytics RGPD-friendly sans cookies + events de clic |
+| [Resend](https://resend.com) | Envoi du rapport hebdo analytics par email |
 | [Microlink](https://microlink.io) | Screenshots sites clients (pré-résolus au build) |
 
 ## Pages
@@ -50,6 +51,8 @@ npm run dev
 | `npm run check` | Type-check + diagnostic Astro |
 | `npm run format` | Formate avec Prettier |
 | `npm run lint` | Format + type-check |
+| `npm run report:sample` | Aperçu HTML du rapport hebdo (données factices) |
+| `npm run report:weekly` | Envoi réel du rapport hebdo (voir [scripts/weekly-report/](scripts/weekly-report/README.md)) |
 
 ## Structure
 
@@ -65,11 +68,15 @@ src/
 │   ├── projets.const.ts  Données des 9 projets clients + schémas SVG
 │   ├── site.const.ts     Constantes site (URLs, TJM, email)
 │   ├── seo.const.ts      Defaults SEO et OG
-│   └── links.const.ts    Liens de navigation
+│   ├── links.const.ts    Liens de navigation
+│   └── analytics.const.ts  ID Umami + noms des events de clic
 ├── pages/              Routes file-based (voir tableau ci-dessus)
 └── styles/
     ├── global.css      Import Tailwind + base styles
     └── tokens.css      Tokens design (palette OKLCH, typo, spacing)
+
+scripts/
+└── weekly-report/      Rapport analytics hebdo par email (cron GitHub Actions)
 ```
 
 ## Conventions
@@ -85,3 +92,11 @@ src/
 - Hébergement : **Cloudflare Pages** — auto-deploy sur push `main`.
 - Domaine : **pierregorde.com** via Cloudflare Registrar.
 - Email : `contact@pierregorde.com` via Google Workspace.
+
+## Analytics
+
+- **Umami Cloud** injecté par `BaseLayout` en production uniquement, et seulement si
+  `UMAMI_WEBSITE_ID` est renseigné dans `src/lib/analytics.const.ts`.
+- Clics trackés via `data-umami-event` : CTA RDV (`cta-rdv`), email (`contact-email`),
+  LinkedIn (`linkedin`), GitHub (`github`).
+- Rapport hebdo automatique chaque lundi 9h : voir [scripts/weekly-report/](scripts/weekly-report/README.md).

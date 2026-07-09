@@ -2,6 +2,7 @@
 dist/
 .astro/
 playwright-report/
+weekly-report-preview.html
 
 # Dependencies
 node_modules/

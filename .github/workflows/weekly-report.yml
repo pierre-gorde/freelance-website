@@ -1,0 +1,36 @@
+name: Rapport hebdo analytics
+
+on:
+  schedule:
+    # Lundi 9h heure de Paris. Cron GitHub = UTC, donc deux déclencheurs (heure d'été
+    # et heure d'hiver) filtrés par le garde-fou "9h à Paris" ci-dessous.
+    - cron: '0 7 * * 1'
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lire l'heure de Paris
+        id: paris
+        run: echo "hour=$(TZ=Europe/Paris date +%H)" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        if: github.event_name == 'workflow_dispatch' || steps.paris.outputs.hour == '09'
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        if: github.event_name == 'workflow_dispatch' || steps.paris.outputs.hour == '09'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Envoyer le rapport
+        if: github.event_name == 'workflow_dispatch' || steps.paris.outputs.hour == '09'
+        run: node scripts/weekly-report/index.ts
+        env:
+          UMAMI_SHARE_URL: ${{ secrets.UMAMI_SHARE_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          REPORT_EMAIL_FROM: ${{ secrets.REPORT_EMAIL_FROM }}
+          REPORT_EMAIL_TO: ${{ secrets.REPORT_EMAIL_TO }}
