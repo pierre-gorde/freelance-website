@@ -291,8 +291,8 @@ export const PROJETS: Projet[] = [
 </svg>`,
   },
   {
-    slug: 'early-metrics',
-    titre: 'Early Metrics',
+    slug: 'scalex-invest',
+    titre: 'ScaleX Invest',
     secteur: 'FinTech / Data',
     periode: 'mars 2021 — juil. 2021',
     url: 'https://www.scalex-invest.com/',
