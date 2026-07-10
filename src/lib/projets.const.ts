@@ -63,9 +63,9 @@ export const PROJETS: Projet[] = [
     periode: "2025 — aujourd'hui",
     url: 'https://www.agregata.ai',
     resume:
-      "Plateforme SaaS de gestion et d'analyse de trésorerie, construite de zéro au sein du collectif Coton. Architecture fullstack TypeScript complète, infrastructure AWS Fargate, workers BullMQ séparés, et agents IA intégrés.",
+      "Plateforme SaaS de gestion et d'analyse de trésorerie que j'ai construite de zéro pour Agregata. Architecture fullstack TypeScript complète, infrastructure AWS Fargate, workers BullMQ séparés, et agents IA intégrés.",
     contexte:
-      'Produit phare du collectif Coton, développé pour des PME et TPE qui gèrent leur trésorerie manuellement via Excel. Fullstack TypeScript de bout en bout — du schéma Prisma au déploiement ECS Fargate, en passant par les workers de traitement de données et les agents IA conversationnels.',
+      'Plateforme développée pour des PME et TPE qui gèrent leur trésorerie manuellement via Excel. Fullstack TypeScript de bout en bout — du schéma Prisma au déploiement ECS Fargate, en passant par les workers de traitement de données et les agents IA conversationnels.',
     stack: [
       'React',
       'MUI',
@@ -157,7 +157,7 @@ export const PROJETS: Projet[] = [
     resume:
       'Simulateur de course multijoueur en temps réel pour la Fédération Française de Triathlon, projeté sur les stands du Village des Jeux Olympiques de Paris 2024 sur vélos et tapis connectés.',
     contexte:
-      "Commandé par la FFTri pour les JO de Paris 2024. Les participants pédalent ou courent sur des équipements connectés dans le Village Olympique, leur position s'affiche en temps réel sur une carte 3D Cesium avec vue POV caméra. Développé au sein du collectif Coton.",
+      "Commandé par la FFTri pour les JO de Paris 2024. Les participants pédalent ou courent sur des équipements connectés dans le Village Olympique, leur position s'affiche en temps réel sur une carte 3D Cesium avec vue POV caméra.",
     stack: [
       'Next.js',
       'TypeScript',
@@ -361,7 +361,7 @@ export const PROJETS: Projet[] = [
     resume:
       "Développement fullstack sur deux ans et demi pour une société de gestion d'actifs parisienne. Applications React, APIs NestJS et Express, base SQL, site WordPress et infrastructure Docker.",
     contexte:
-      "Mission longue durée chez un gestionnaire d'actifs. Stack diversifiée : interfaces React pour les analystes, APIs métier en Node.js/NestJS, scripts d'automatisation, et maintenance de l'infrastructure serveur.",
+      "Stack diversifiée : interfaces React pour les analystes, APIs métier en Node.js/NestJS, scripts d'automatisation, et maintenance de l'infrastructure serveur.",
     stack: ['React', 'NestJS', 'Express', 'Node.js', 'TypeScript', 'SQL', 'Docker', 'WordPress'],
     livrables: [
       "Applications React pour les outils internes d'analyse financière",
