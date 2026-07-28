@@ -1,0 +1,33 @@
+---
+import type { FlagCountry } from '../../lib/locale.const';
+
+type Props = {
+  country: FlagCountry;
+  class?: string;
+};
+
+const { country, class: className } = Astro.props;
+---
+
+{/* Couleurs officielles des drapeaux : valeurs fixes hors theme, exception assumée. */}
+<span
+  class:list={['inline-flex shrink-0 overflow-hidden rounded-[3px] ring-1 ring-border', className]}
+  aria-hidden="true"
+>
+  {
+    country === 'mu' ? (
+      <svg width="21" height="15" viewBox="0 0 21 15">
+        <rect width="21" height="3.75" y="0" fill="#EA2839" />
+        <rect width="21" height="3.75" y="3.75" fill="#1A206D" />
+        <rect width="21" height="3.75" y="7.5" fill="#FFD500" />
+        <rect width="21" height="3.75" y="11.25" fill="#00A551" />
+      </svg>
+    ) : (
+      <svg width="21" height="15" viewBox="0 0 21 15">
+        <rect width="7" height="15" x="0" fill="#0055A4" />
+        <rect width="7" height="15" x="7" fill="#FFFFFF" />
+        <rect width="7" height="15" x="14" fill="#EF4135" />
+      </svg>
+    )
+  }
+</span>

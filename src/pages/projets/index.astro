@@ -4,6 +4,9 @@ import Container from '../../components/layout/Container.astro';
 import PrimaryCta from '../../components/ui/PrimaryCta.astro';
 import Reveal from '../../components/ui/Reveal.astro';
 import { PROJETS } from '../../lib/projets.const';
+import { useLocale } from '../../lib/i18n';
+
+const { t, l } = useLocale(Astro.currentLocale);
 ---
 
 <SiteLayout
@@ -16,7 +19,7 @@ import { PROJETS } from '../../lib/projets.const';
     <Container size="wide">
       <Reveal>
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          Projets
+          {t('Projets', { 'fr-MU': 'Bann proze' })}
         </p>
         <h1
           class="mt-5 max-w-[22ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
@@ -40,7 +43,7 @@ import { PROJETS } from '../../lib/projets.const';
           PROJETS.map((projet, index) => (
             <Reveal as="li" delay={index * 60}>
               <a
-                href={`/projets/${projet.slug}`}
+                href={l(`/projets/${projet.slug}`)}
                 class="projet-row group flex flex-col gap-6 py-10 md:flex-row md:items-start md:gap-12 md:py-12"
               >
                 <div class="flex shrink-0 items-baseline gap-4 md:w-48 md:flex-col md:gap-2">

@@ -3,7 +3,10 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import Container from '../components/layout/Container.astro';
 import PrimaryCta from '../components/ui/PrimaryCta.astro';
 import Reveal from '../components/ui/Reveal.astro';
-import { RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.const';
+import { RDV_DURATION_LABEL } from '../lib/site.const';
+import { useLocale } from '../lib/i18n';
+
+const { t, l, tjm } = useLocale(Astro.currentLocale);
 
 const benefits = [
   {
@@ -23,7 +26,7 @@ const benefits = [
   },
   {
     title: 'En régie, transparent',
-    description: `${TJM_DISPLAY}. Pas de sur-facturation cachée, pas de frais de "coordination". Vous payez ce que je fais, vous savez ce que je fais.`,
+    description: `${tjm}. Pas de sur-facturation cachée, pas de frais de "coordination". Vous payez ce que je fais, vous savez ce que je fais.`,
   },
 ];
 
@@ -48,7 +51,7 @@ const journey = [
   },
   {
     title: 'La continuité en régie',
-    duration: TJM_DISPLAY,
+    duration: tjm,
     description:
       "Si la collaboration est satisfaisante des deux côtés, on continue. Je reste dans votre équipe le temps qu'il faut, avec la même rigueur opérationnelle.",
   },
@@ -72,8 +75,7 @@ const faqs = [
   },
   {
     question: 'Tu peux coordonner une équipe, pas seulement coder ?',
-    answer:
-      "Oui. Chez Coton, j'ai piloté des équipes de freelances sur des missions clients — sélection des profils, répartition du travail, points de synchronisation, tests techniques de recrutement. Sur le projet <a href=\"/projets/ublo\" class=\"underline underline-offset-2 hover:text-[var(--color-text)]\">Ublo</a>, j'ai coordonné une équipe de 4 développeurs juniors : cadrage des chantiers, revues de PR, accompagnement technique quotidien. Si vous avez besoin de quelqu'un qui code et structure le travail autour d'une équipe réduite, c'est quelque chose que je fais.",
+    answer: `Oui. Chez Coton, j'ai piloté des équipes de freelances sur des missions clients — sélection des profils, répartition du travail, points de synchronisation, tests techniques de recrutement. Sur le projet <a href="${l('/projets/ublo')}" class="underline underline-offset-2 hover:text-[var(--color-text)]">Ublo</a>, j'ai coordonné une équipe de 4 développeurs juniors : cadrage des chantiers, revues de PR, accompagnement technique quotidien. Si vous avez besoin de quelqu'un qui code et structure le travail autour d'une équipe réduite, c'est quelque chose que je fais.`,
   },
 ];
 ---
@@ -88,14 +90,16 @@ const faqs = [
     <Container size="wide">
       <Reveal>
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          Pour les CTO, leads et chefs de projet
+          {t('Pour les CTO, leads et chefs de projet', { 'fr-MU': 'Pou bann CTO, lead ek sef proze' })}
         </p>
         <h1
           class="mt-5 max-w-[24ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
         >
-          Vous avez besoin de renfort.
+          {t('Vous avez besoin de renfort.', { 'fr-MU': 'Ou bizin ranfor.' })}
           <span class="block text-[var(--color-primary-700)]"
-            >Ni junior à former, ni agence à gérer.</span
+            >{t('Ni junior à former, ni agence à gérer.', {
+              'fr-MU': 'Ni zenior pou formé, ni lazans pou zéré.',
+            })}</span
           >
         </h1>
         <p
@@ -109,10 +113,10 @@ const faqs = [
         <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
           <PrimaryCta size="lg" class="w-full sm:w-auto" />
           <a
-            href="/methode"
+            href={l('/methode')}
             class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
           >
-            Voir ma méthode
+            {t('Voir ma méthode', { 'fr-MU': 'Get mo metod' })}
             <span
               class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
             ></span>
@@ -129,12 +133,16 @@ const faqs = [
     <Container size="wide">
       <Reveal class="max-w-[52ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          01 · Ce que vous obtenez
+          01 · {t('Ce que vous obtenez', { 'fr-MU': 'Séki ou gagné' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Quatre engagements concrets, pas des adjectifs.
+          {
+            t('Quatre engagements concrets, pas des adjectifs.', {
+              'fr-MU': 'Kat langazman konkré, pa bann gran mo.',
+            })
+          }
         </h2>
       </Reveal>
 
@@ -168,12 +176,16 @@ const faqs = [
     <Container size="wide">
       <Reveal class="max-w-[52ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          02 · Comment ça se passe
+          02 · {t('Comment ça se passe', { 'fr-MU': 'Kouma sa pasé' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Un démarrage ciblé, une continuité en régie.
+          {
+            t('Un démarrage ciblé, une continuité en régie.', {
+              'fr-MU': 'Enn démaraz siblé, enn kontinuité an rézi.',
+            })
+          }
         </h2>
       </Reveal>
 
@@ -206,10 +218,10 @@ const faqs = [
 
       <Reveal class="mt-12">
         <a
-          href="/methode"
+          href={l('/methode')}
           class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
         >
-          Voir tous les détails de la méthode
+          {t('Voir tous les détails de la méthode', { 'fr-MU': 'Get tou détay lor mo metod' })}
           <span
             class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
           ></span>
@@ -225,12 +237,16 @@ const faqs = [
     <Container size="wide">
       <Reveal class="max-w-[52ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          03 · Questions qui reviennent
+          03 · {t('Questions qui reviennent', { 'fr-MU': 'Bann kestion ki revini' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Quatre questions qu'on me pose souvent.
+          {
+            t("Quatre questions qu'on me pose souvent.", {
+              'fr-MU': 'Kat kestion ki zot poz mwa souvan.',
+            })
+          }
         </h2>
       </Reveal>
 
@@ -271,10 +287,10 @@ const faqs = [
 
       <Reveal class="mt-12">
         <a
-          href="/faq"
+          href={l('/faq')}
           class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
         >
-          Voir toutes les questions fréquentes
+          {t('Voir toutes les questions fréquentes', { 'fr-MU': 'Get tou bann kestion' })}
           <span
             class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
           ></span>
@@ -298,13 +314,15 @@ const faqs = [
       <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
         <Reveal class="lg:col-span-8">
           <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
-            Premier échange · {RDV_DURATION_LABEL} · Sans engagement
+            {t('Premier échange', { 'fr-MU': 'Premie kozé' })} · {RDV_DURATION_LABEL} · Sans engagement
           </p>
           <h2
             class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
           >
-            On parle du chantier,
-            <span class="block text-[var(--color-primary-200)]">concrètement.</span>
+            {t('On parle du chantier,', { 'fr-MU': 'Nou koz santié-la,' })}
+            <span class="block text-[var(--color-primary-200)]"
+              >{t('concrètement.', { 'fr-MU': 'konkretman.' })}</span
+            >
           </h2>
           <p
             class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"

@@ -13,6 +13,7 @@ import PrimaryCta from '../components/ui/PrimaryCta.astro';
       </p>
       <h1
         class="mt-4 max-w-[20ch] text-[length:var(--text-4xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.025em] text-[var(--color-text)]"
+        data-notfound-title
       >
         Cette page n'existe pas, ou plus.
       </h1>
@@ -24,10 +25,26 @@ import PrimaryCta from '../components/ui/PrimaryCta.astro';
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-4">
         <PrimaryCta size="lg" class="w-full sm:w-auto" />
-        <Button href="/" variant="secondary" size="lg" class="w-full sm:w-auto"
-          >Retour à l'accueil</Button
-        >
+        <span data-notfound-home class="contents">
+          <Button href="/" variant="secondary" size="lg" class="w-full sm:w-auto"
+            >Retour à l'accueil</Button
+          >
+        </span>
       </div>
     </Container>
   </section>
 </SiteLayout>
+
+<!-- La 404 est servie depuis le build FR pour toutes les routes, /mu/* inclus (un seul
+     404.html sur Cloudflare Pages) : le clin d'oeil kreol se fait côté client. -->
+<script>
+  const MU_PREFIX = '/mu';
+  const isMauritianPath =
+    location.pathname === MU_PREFIX || location.pathname.startsWith(`${MU_PREFIX}/`);
+
+  if (isMauritianPath) {
+    const title = document.querySelector('[data-notfound-title]');
+    if (title) title.textContent = 'Sa paz-la pa existé.';
+    document.querySelector('[data-notfound-home] a')?.setAttribute('href', MU_PREFIX);
+  }
+</script>

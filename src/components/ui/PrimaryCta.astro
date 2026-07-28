@@ -1,6 +1,7 @@
 ---
 import { CAL_EVENT_LINK, CAL_NAMESPACE } from '../../lib/site.const';
 import { EVENT_CTA_RDV } from '../../lib/analytics.const';
+import { useLocale } from '../../lib/i18n';
 
 const CTA_LABEL = 'Réserver un échange gratuit';
 
@@ -10,7 +11,13 @@ type Props = {
   class?: string;
 };
 
-const { size = 'md', label = CTA_LABEL, class: className = '' } = Astro.props;
+const { t } = useLocale(Astro.currentLocale);
+
+const {
+  size = 'md',
+  label = t(CTA_LABEL, { 'fr-MU': 'Nou kozé ? — randevou gratis' }),
+  class: className = '',
+} = Astro.props;
 
 const sizeClasses = {
   sm: 'h-9 px-4 text-sm',

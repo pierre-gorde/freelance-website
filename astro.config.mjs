@@ -12,10 +12,24 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  i18n: {
+    defaultLocale: 'fr',
+    locales: ['fr', { path: 'mu', codes: ['fr-MU'] }],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'fr',
+        locales: { fr: 'fr', mu: 'fr-MU' },
+      },
+    }),
+  ],
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport',

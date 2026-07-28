@@ -9,8 +9,6 @@ export const GITHUB_URL = 'https://github.com/pierre-gorde';
 export const CAL_EVENT_LINK = 'pierre-gorde/30min';
 export const CAL_NAMESPACE = 'rdv';
 
-export const TJM_HT = 700;
-export const TJM_DISPLAY = '700 € HT / jour';
 export const FORFAIT_MAX_DAYS = 20;
 
 export const RDV_DURATION_LABEL = '30 à 45 minutes';

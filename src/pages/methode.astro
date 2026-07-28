@@ -4,7 +4,10 @@ import Container from '../components/layout/Container.astro';
 import PrimaryCta from '../components/ui/PrimaryCta.astro';
 import Reveal from '../components/ui/Reveal.astro';
 import DailyReportMockup from '../components/home/DailyReportMockup.astro';
-import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.const';
+import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL } from '../lib/site.const';
+import { useLocale } from '../lib/i18n';
+
+const { t, tjm } = useLocale(Astro.currentLocale);
 
 const blockingReport = {
   timestamp: 'Mercredi 4 juin · 18:42',
@@ -42,7 +45,7 @@ const phases = [
   },
   {
     label: 'Long terme en régie',
-    duration: TJM_DISPLAY,
+    duration: tjm,
     description:
       'Si la collaboration est satisfaisante des deux côtés, on bascule en régie pour la suite. TJM transparent, pas de surcouche commerciale. Le compte-rendu quotidien continue.',
   },
@@ -51,7 +54,7 @@ const phases = [
 const modalites = [
   {
     label: 'Tarif',
-    value: TJM_DISPLAY,
+    value: tjm,
     detail:
       'Sur devis pour le démarrage, en régie pour la suite. Pas de "à partir de" : tarif unique transparent.',
   },
@@ -105,19 +108,25 @@ const iaPoints = [
     <Container size="wide">
       <Reveal>
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          Méthode
+          {t('Méthode', { 'fr-MU': 'Metod' })}
         </p>
         <h1
           class="mt-5 max-w-[22ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
         >
-          Comment je travaille,<br />
-          <span class="text-[var(--color-primary-700)]">précisément</span>.
+          {t('Comment je travaille,', { 'fr-MU': 'Kouma mo travay,' })}<br />
+          <span class="text-[var(--color-primary-700)]"
+            >{t('précisément', { 'fr-MU': 'présizéman' })}</span
+          >.
         </h1>
         <p
           class="mt-10 max-w-[40ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
         >
-          Le compte-rendu quotidien, le premier échange gratuit, le déroulé d'une mission, les
-          tarifs.
+          {
+            t(
+              "Le compte-rendu quotidien, le premier échange gratuit, le déroulé d'une mission, les tarifs.",
+              { 'fr-MU': 'Rapor toulézour, premie kozé gratis, dérouléman enn mision, bann tarif.' }
+            )
+          }
         </p>
       </Reveal>
     </Container>
@@ -130,12 +139,16 @@ const iaPoints = [
     <Container size="wide">
       <Reveal class="max-w-[100ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          01 · Le compte-rendu quotidien
+          01 · {t('Le compte-rendu quotidien', { 'fr-MU': 'Rapor toulézour' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Chaque soir de chaque jour travaillé, vous savez exactement où on en est.
+          {
+            t('Chaque soir de chaque jour travaillé, vous savez exactement où on en est.', {
+              'fr-MU': 'Sak swar travay, ou koné exakteman kot nou été.',
+            })
+          }
         </h2>
         <p
           class="mt-6 text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
@@ -152,7 +165,7 @@ const iaPoints = [
           <p
             class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
           >
-            Une journée nominale
+            {t('Une journée nominale', { 'fr-MU': 'Enn zourné normal' })}
           </p>
           <DailyReportMockup defaultOpen />
         </Reveal>
@@ -161,7 +174,7 @@ const iaPoints = [
           <p
             class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
           >
-            Une journée avec un blocage
+            {t('Une journée avec un blocage', { 'fr-MU': 'Enn zourné avek enn blokaz' })}
           </p>
           <DailyReportMockup {...blockingReport} showPing={false} defaultOpen />
         </Reveal>
@@ -173,7 +186,7 @@ const iaPoints = [
         >
           <span
             class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]"
-            >Pourquoi tous les jours →</span
+            >{t('Pourquoi tous les jours', { 'fr-MU': 'Kifer toulézour' })} →</span
           >
           parce qu'une réunion hebdomadaire vous dit ce qui s'est passé. Un compte-rendu quotidien vous
           permet d'arbitrer le jour-même quand un blocage tombe. Sur un projet financé, perdre une semaine
@@ -189,12 +202,16 @@ const iaPoints = [
       <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
         <Reveal class="lg:col-span-5">
           <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            02 · L'IA dans mon travail
+            02 · {t("L'IA dans mon travail", { 'fr-MU': 'IA dan mo travay' })}
           </p>
           <h2
             class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
           >
-            L'IA écrit le gros du code. Je garde la responsabilité du résultat.
+            {
+              t("L'IA écrit le gros du code. Je garde la responsabilité du résultat.", {
+                'fr-MU': 'IA ekrir gro parti kod-la. Mwa mo gard responsabilité rézilta-la.',
+              })
+            }
           </h2>
           <p
             class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
@@ -261,12 +278,17 @@ const iaPoints = [
     <Container size="wide">
       <Reveal class="max-w-[100ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          03 · Le déroulé d'une mission
+          03 · {t("Le déroulé d'une mission", { 'fr-MU': 'Dérouléman enn mision' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Quatre phases. <br />Sans engagement long terme avant qu'on ait travaillé ensemble.
+          {t('Quatre phases.', { 'fr-MU': 'Kat faz.' })} <br />
+          {
+            t("Sans engagement long terme avant qu'on ait travaillé ensemble.", {
+              'fr-MU': 'San langazman long term avan nou finn travay ansam.',
+            })
+          }
         </h2>
       </Reveal>
 
@@ -306,12 +328,16 @@ const iaPoints = [
     <Container size="wide">
       <Reveal class="max-w-[50ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          04 · Modalités
+          04 · {t('Modalités', { 'fr-MU': 'Bann modalité' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Les règles du jeu, posées dès le départ.
+          {
+            t('Les règles du jeu, posées dès le départ.', {
+              'fr-MU': 'Bann régleman, klér depi koumansman.',
+            })
+          }
         </h2>
       </Reveal>
 
@@ -355,13 +381,15 @@ const iaPoints = [
       <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
         <Reveal class="lg:col-span-8">
           <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
-            Étape 01 · Premier échange · {RDV_DURATION_LABEL}
+            Étape 01 · {t('Premier échange', { 'fr-MU': 'Premie kozé' })} · {RDV_DURATION_LABEL}
           </p>
           <h2
             class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
           >
-            On commence par se parler.
-            <span class="block text-[var(--color-primary-200)]">Sans engagement.</span>
+            {t('On commence par se parler.', { 'fr-MU': 'Nou komans par kozé.' })}
+            <span class="block text-[var(--color-primary-200)]"
+              >{t('Sans engagement.', { 'fr-MU': 'San langazman.' })}</span
+            >
           </h2>
           <p
             class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"

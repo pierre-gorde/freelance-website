@@ -1,0 +1,118 @@
+---
+import Flag from '../ui/Flag.astro';
+import { LOCALES } from '../../lib/locale.const';
+import { EVENT_LOCALE_SWITCH } from '../../lib/analytics.const';
+import { localizePath, stripLocalePrefix, useLocale } from '../../lib/i18n';
+
+type Props = {
+  variant?: 'dropdown' | 'row';
+  class?: string;
+};
+
+const { variant = 'dropdown', class: className } = Astro.props;
+
+const { locale } = useLocale(Astro.currentLocale);
+const basePath = stripLocalePrefix(Astro.url.pathname);
+const options = LOCALES.map((entry) => ({
+  ...entry,
+  href: localizePath(entry.code, basePath),
+  isCurrent: entry.code === locale.code,
+}));
+---
+
+{
+  variant === 'dropdown' ? (
+    <details class:list={['locale-select relative', className]} data-locale-select>
+      <summary
+        aria-label={`Langue : ${locale.shortLabel} — changer`}
+        class="inline-flex h-9 cursor-pointer list-none items-center gap-1.5 rounded-md px-2 select-none hover:bg-bg-subtle transition-colors duration-(--duration-fast)"
+      >
+        <Flag country={locale.flag} />
+        <svg
+          aria-hidden="true"
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-text-subtle transition-transform duration-(--duration-fast)"
+        >
+          <path d="M2 3.5 5 6.5 8 3.5" />
+        </svg>
+      </summary>
+      <ul class="absolute top-full right-0 z-50 mt-2 min-w-24 rounded-md border border-border bg-bg-elevated p-1 shadow-(--shadow-cta)">
+        {options.map((option) => (
+          <li>
+            <a
+              href={option.href}
+              aria-current={option.isCurrent ? 'true' : undefined}
+              aria-label={option.switchLabel}
+              data-umami-event={EVENT_LOCALE_SWITCH}
+              data-umami-event-to={option.code}
+              class:list={[
+                'flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm font-medium transition-colors duration-(--duration-fast)',
+                option.isCurrent
+                  ? 'text-primary-700 bg-primary-50'
+                  : 'text-text-muted hover:text-text hover:bg-bg-subtle',
+              ]}
+            >
+              <Flag country={option.flag} />
+              {option.shortLabel}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  ) : (
+    <div class:list={['flex items-center gap-2 py-4', className]}>
+      {options.map((option) => (
+        <a
+          href={option.href}
+          aria-current={option.isCurrent ? 'true' : undefined}
+          aria-label={option.switchLabel}
+          data-umami-event={EVENT_LOCALE_SWITCH}
+          data-umami-event-to={option.code}
+          class:list={[
+            'inline-flex h-9 items-center gap-2 rounded-md border px-3 text-sm font-medium transition-colors duration-(--duration-fast)',
+            option.isCurrent
+              ? 'border-primary-200 bg-primary-50 text-primary-700'
+              : 'border-border text-text-muted hover:text-text hover:bg-bg-subtle',
+          ]}
+        >
+          <Flag country={option.flag} />
+          {option.shortLabel}
+        </a>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .locale-select summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .locale-select[open] summary svg {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-locale-select]').forEach((details) => {
+    document.addEventListener('click', (event) => {
+      if (
+        details.hasAttribute('open') &&
+        event.target instanceof Node &&
+        !details.contains(event.target)
+      ) {
+        details.removeAttribute('open');
+      }
+    });
+    details.addEventListener('keydown', (event) => {
+      if ((event as KeyboardEvent).key === 'Escape') details.removeAttribute('open');
+    });
+  });
+</script>

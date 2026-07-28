@@ -4,32 +4,12 @@ import Container from '../../components/layout/Container.astro';
 import PrimaryCta from '../../components/ui/PrimaryCta.astro';
 import Reveal from '../../components/ui/Reveal.astro';
 import { PROJETS } from '../../lib/projets.const';
+import { getProjetsStaticPaths } from '../../lib/projets.paths';
+import { useLocale } from '../../lib/i18n';
 
-export async function getStaticPaths() {
-  const paths = await Promise.all(
-    PROJETS.map(async (projet) => {
-      let screenshotUrl: string | null = projet.localScreenshot ?? null;
-      if (!screenshotUrl && projet.url) {
-        try {
-          const resp = await fetch(
-            `https://api.microlink.io/?url=${encodeURIComponent(projet.url)}&screenshot=true`
-          );
-          if (resp.ok) {
-            const json = await resp.json();
-            screenshotUrl = (json?.data?.screenshot?.url as string) ?? null;
-          }
-        } catch {
-          // screenshot indisponible
-        }
-      }
-      return {
-        params: { slug: projet.slug },
-        props: { projet, screenshotUrl },
-      };
-    })
-  );
-  return paths;
-}
+export const getStaticPaths = getProjetsStaticPaths;
+
+const { l } = useLocale(Astro.currentLocale);
 
 const { projet, screenshotUrl } = Astro.props;
 const index = PROJETS.findIndex((p) => p.slug === projet.slug);
@@ -50,7 +30,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
     <Container size="wide">
       <Reveal>
         <a
-          href="/projets"
+          href={l('/projets')}
           class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)] hover:text-[var(--color-primary-700)] transition-colors duration-[var(--duration-fast)]"
         >
           <svg
@@ -263,7 +243,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
         <Container size="wide">
           <div class="flex items-center justify-between gap-8">
             {prev ? (
-              <a href={`/projets/${prev.slug}`} class="group flex flex-col gap-1">
+              <a href={l(`/projets/${prev.slug}`)} class="group flex flex-col gap-1">
                 <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
                   ← Précédent
                 </span>
@@ -275,7 +255,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
               <span />
             )}
             {next && (
-              <a href={`/projets/${next.slug}`} class="group flex flex-col items-end gap-1">
+              <a href={l(`/projets/${next.slug}`)} class="group flex flex-col items-end gap-1">
                 <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
                   Suivant →
                 </span>

@@ -3,7 +3,10 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import Container from '../components/layout/Container.astro';
 import PrimaryCta from '../components/ui/PrimaryCta.astro';
 import Reveal from '../components/ui/Reveal.astro';
-import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL, TJM_DISPLAY } from '../lib/site.const';
+import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL } from '../lib/site.const';
+import { useLocale } from '../lib/i18n';
+
+const { t, l, tjm } = useLocale(Astro.currentLocale);
 
 const benefits = [
   {
@@ -48,7 +51,7 @@ const journey = [
   },
   {
     title: 'La suite, en régie',
-    duration: TJM_DISPLAY,
+    duration: tjm,
     description:
       'Si la collaboration est satisfaisante des deux côtés, on bascule en régie pour faire vivre le produit. TJM transparent, pas de surcouche commerciale.',
   },
@@ -78,13 +81,15 @@ const faqs = [
     <Container size="wide">
       <Reveal>
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          Pour les porteurs de projet financés
+          {t('Pour les porteurs de projet financés', { 'fr-MU': 'Pou bann porter proze finansé' })}
         </p>
         <h1
           class="mt-5 max-w-[24ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
         >
-          Vous portez le projet.
-          <span class="block text-[var(--color-primary-700)]">Il faut quelqu'un pour livrer.</span>
+          {t('Vous portez le projet.', { 'fr-MU': 'Ou port proze-la.' })}
+          <span class="block text-[var(--color-primary-700)]"
+            >{t("Il faut quelqu'un pour livrer.", { 'fr-MU': 'Bizin kikenn pou livré.' })}</span
+          >
         </h1>
         <p
           class="mt-10 max-w-[55ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
@@ -98,10 +103,10 @@ const faqs = [
         <div class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
           <PrimaryCta size="lg" class="w-full sm:w-auto" />
           <a
-            href="/methode"
+            href={l('/methode')}
             class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
           >
-            Voir ma méthode
+            {t('Voir ma méthode', { 'fr-MU': 'Get mo metod' })}
             <span
               class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
             ></span>
@@ -118,12 +123,16 @@ const faqs = [
     <Container size="wide">
       <Reveal class="max-w-[52ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          01 · Ce que vous obtenez
+          01 · {t('Ce que vous obtenez', { 'fr-MU': 'Séki ou gagné' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Quatre engagements concrets, pas des adjectifs.
+          {
+            t('Quatre engagements concrets, pas des adjectifs.', {
+              'fr-MU': 'Kat langazman konkré, pa bann gran mo.',
+            })
+          }
         </h2>
       </Reveal>
 
@@ -157,12 +166,17 @@ const faqs = [
     <Container size="wide">
       <Reveal class="max-w-[100ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          02 · Comment ça se passe
+          02 · {t('Comment ça se passe', { 'fr-MU': 'Kouma sa pasé' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Quatre phases. <br />Sans engagement long terme avant qu'on ait travaillé ensemble.
+          {t('Quatre phases.', { 'fr-MU': 'Kat faz.' })} <br />
+          {
+            t("Sans engagement long terme avant qu'on ait travaillé ensemble.", {
+              'fr-MU': 'San langazman long term avan nou finn travay ansam.',
+            })
+          }
         </h2>
       </Reveal>
 
@@ -195,10 +209,10 @@ const faqs = [
 
       <Reveal class="mt-12">
         <a
-          href="/methode"
+          href={l('/methode')}
           class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
         >
-          Voir tous les détails de la méthode
+          {t('Voir tous les détails de la méthode', { 'fr-MU': 'Get tou détay lor mo metod' })}
           <span
             class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
           ></span>
@@ -214,12 +228,16 @@ const faqs = [
     <Container size="wide">
       <Reveal class="max-w-[52ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          03 · Questions qui reviennent
+          03 · {t('Questions qui reviennent', { 'fr-MU': 'Bann kestion ki revini' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Deux questions qu'on me pose souvent.
+          {
+            t("Deux questions qu'on me pose souvent.", {
+              'fr-MU': 'Dé kestion ki zot poz mwa souvan.',
+            })
+          }
         </h2>
       </Reveal>
 
@@ -259,10 +277,10 @@ const faqs = [
 
       <Reveal class="mt-12">
         <a
-          href="/faq"
+          href={l('/faq')}
           class="group inline-flex items-center gap-2 text-base font-medium text-[var(--color-text)] tracking-[-0.005em]"
         >
-          Voir toutes les questions fréquentes
+          {t('Voir toutes les questions fréquentes', { 'fr-MU': 'Get tou bann kestion' })}
           <span
             class="inline-block h-px w-8 bg-[var(--color-text-subtle)] transition-[width,background-color] duration-[var(--duration-default)] [transition-timing-function:var(--ease-out-quart)] group-hover:w-12 group-hover:bg-[var(--color-primary-600)]"
           ></span>
@@ -286,13 +304,15 @@ const faqs = [
       <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
         <Reveal class="lg:col-span-8">
           <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
-            Premier échange · {RDV_DURATION_LABEL} · Sans engagement
+            {t('Premier échange', { 'fr-MU': 'Premie kozé' })} · {RDV_DURATION_LABEL} · Sans engagement
           </p>
           <h2
             class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
           >
-            On parle de votre projet,
-            <span class="block text-[var(--color-primary-200)]">de A à Z.</span>
+            {t('On parle de votre projet,', { 'fr-MU': 'Nou koz ou proze,' })}
+            <span class="block text-[var(--color-primary-200)]"
+              >{t('de A à Z.', { 'fr-MU': 'dépi A ziska Z.' })}</span
+            >
           </h2>
           <p
             class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
