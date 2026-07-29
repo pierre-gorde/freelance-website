@@ -9,7 +9,7 @@ import { useLocale } from '../../lib/i18n';
 
 export const getStaticPaths = getProjetsStaticPaths;
 
-const { l } = useLocale(Astro.currentLocale);
+const { t, l } = useLocale(Astro.currentLocale);
 
 const { projet, screenshotUrl } = Astro.props;
 const index = PROJETS.findIndex((p) => p.slug === projet.slug);
@@ -48,7 +48,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
             <path d="M11.5 7h-9"></path>
             <path d="M6 3.5 2.5 7 6 10.5"></path>
           </svg>
-          Tous les projets
+          {t('Tous les projets', { 'fr-MU': 'Tou bann proze' })}
         </a>
       </Reveal>
 
@@ -161,7 +161,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
         <h2
           class="mt-5 text-[length:var(--text-2xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Vue d'ensemble technique
+          {t("Vue d'ensemble technique", { 'fr-MU': 'Enn koudey teknik' })}
         </h2>
       </Reveal>
 
@@ -185,7 +185,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
         <!-- Contexte -->
         <Reveal class="lg:col-span-5">
           <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            Contexte
+            {t('Contexte', { 'fr-MU': 'Kontex' })}
           </p>
           <p
             class="mt-6 text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
@@ -214,7 +214,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
         <!-- Livrables -->
         <Reveal class="lg:col-span-7" delay={100}>
           <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            Livrables
+            {t('Livrables', { 'fr-MU': 'Bann livrab' })}
           </p>
           <ul class="mt-6 space-y-4">
             {
@@ -245,7 +245,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
             {prev ? (
               <a href={l(`/projets/${prev.slug}`)} class="group flex flex-col gap-1">
                 <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                  ← Précédent
+                  ← {t('Précédent', { 'fr-MU': 'Avan' })}
                 </span>
                 <span class="text-[length:var(--text-base)] font-medium text-[var(--color-text)] group-hover:text-[var(--color-primary-700)] transition-colors duration-[var(--duration-fast)]">
                   {prev.titre}
@@ -257,7 +257,7 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
             {next && (
               <a href={l(`/projets/${next.slug}`)} class="group flex flex-col items-end gap-1">
                 <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                  Suivant →
+                  {t('Suivant', { 'fr-MU': 'Apré' })} →
                 </span>
                 <span class="text-[length:var(--text-base)] font-medium text-[var(--color-text)] group-hover:text-[var(--color-primary-700)] transition-colors duration-[var(--duration-fast)]">
                   {next.titre}
@@ -284,13 +284,15 @@ const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '
       <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
         <Reveal class="lg:col-span-8">
           <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
-            Vous avez un projet similaire ?
+            {t('Vous avez un projet similaire ?', { 'fr-MU': 'Ou éna enn proze parey ?' })}
           </p>
           <h2
             class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
           >
-            On en parle,
-            <span class="block text-[var(--color-primary-200)]">sans engagement.</span>
+            {t('On en parle,', { 'fr-MU': 'Nou kozé,' })}
+            <span class="block text-[var(--color-primary-200)]"
+              >{t('sans engagement.', { 'fr-MU': 'san langazman.' })}</span
+            >
           </h2>
         </Reveal>
         <Reveal class="lg:col-span-4 lg:text-right" delay={150}>

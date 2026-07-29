@@ -61,7 +61,9 @@ const skills = [
             class="mt-5 max-w-[18ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
           >
             Pierre,
-            <span class="block text-[var(--color-primary-700)]">développeur depuis 10 ans.</span>
+            <span class="block text-[var(--color-primary-700)]"
+              >{t('développeur depuis 10 ans.', { 'fr-MU': 'devlopper depi 10 an.' })}</span
+            >
           </h1>
           <div
             class="mt-12 space-y-6 text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
@@ -112,12 +114,12 @@ const skills = [
     <Container size="wide">
       <Reveal class="max-w-[100ch]">
         <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          Côté technique
+          {t('Côté technique', { 'fr-MU': 'Kote teknik' })}
         </p>
         <h2
           class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
         >
-          Mes compétences.
+          {t('Mes compétences.', { 'fr-MU': 'Séki mo koné fer.' })}
         </h2>
         <p
           class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
@@ -173,12 +175,16 @@ const skills = [
 
         <Reveal class="lg:col-span-8" delay={120}>
           <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            Pourquoi le solo, maintenant
+            {t('Pourquoi le solo, maintenant', { 'fr-MU': 'Kifer solo, aster-la' })}
           </p>
           <h2
             class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
           >
-            Parce que la relation directe gagne sur tout le reste.
+            {
+              t('Parce que la relation directe gagne sur tout le reste.', {
+                'fr-MU': 'Parski relasion direk pli for ki tou léres.',
+              })
+            }
           </h2>
           <div
             class="mt-8 space-y-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
@@ -226,8 +232,10 @@ const skills = [
           <h2
             class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
           >
-            On se parle ?
-            <span class="block text-[var(--color-primary-200)]">On voit où vous en êtes.</span>
+            {t('On se parle ?', { 'fr-MU': 'Nou kozé ?' })}
+            <span class="block text-[var(--color-primary-200)]"
+              >{t('On voit où vous en êtes.', { 'fr-MU': 'Nou get kot ou été.' })}</span
+            >
           </h2>
           <p
             class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"

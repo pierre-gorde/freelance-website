@@ -19,6 +19,7 @@ import PrimaryCta from '../components/ui/PrimaryCta.astro';
       </h1>
       <p
         class="mt-6 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
+        data-notfound-text
       >
         Pas un drame. Vous pouvez revenir à l'accueil, ou directement réserver un échange si vous
         avez un projet en tête.
@@ -45,6 +46,14 @@ import PrimaryCta from '../components/ui/PrimaryCta.astro';
   if (isMauritianPath) {
     const title = document.querySelector('[data-notfound-title]');
     if (title) title.textContent = 'Sa paz-la pa existé.';
-    document.querySelector('[data-notfound-home] a')?.setAttribute('href', MU_PREFIX);
+    const text = document.querySelector('[data-notfound-text]');
+    if (text) {
+      text.textContent =
+        'Pa grav. Ou kapav retourn lakaz, ouswa rézerv enn kozé si ou éna enn proze an tet.';
+    }
+    const homeLink = document.querySelector('[data-notfound-home] a');
+    homeLink?.setAttribute('href', MU_PREFIX);
+    const homeLabel = homeLink?.querySelector('span');
+    if (homeLabel) homeLabel.textContent = 'Retourn lakaz';
   }
 </script>
