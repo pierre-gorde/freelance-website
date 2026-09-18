@@ -1,11 +1,12 @@
 # Rapport hebdo analytics
 
-Envoie chaque lundi à 9h (heure de Paris) un email récapitulatif des stats Umami de la
-semaine écoulée : visites, visiteurs, pages vues, taux de rebond, durée moyenne, top
+Envoie chaque lundi matin un email récapitulatif des stats Umami de la semaine
+écoulée : visites, visiteurs, pages vues, taux de rebond, durée moyenne, top
 pages, sources de trafic et clics (events), avec comparaison vs semaine précédente.
 
-Déclenché par `.github/workflows/weekly-report.yml` (deux crons UTC + garde-fou « 9h à
-Paris » pour absorber les changements d'heure été/hiver). Envoi via l'API Resend.
+Déclenché par `.github/workflows/weekly-report.yml` (cron lundi 7h17 UTC, soit 9h17 à
+Paris en été et 8h17 en hiver ; GitHub peut retarder le déclenchement de plusieurs
+heures). Envoi via l'API Resend.
 
 L'accès API classique d'Umami Cloud est réservé au plan Pro : le script passe donc par
 la **Share URL** (gratuite) du site — l'endpoint public `/api/share/{shareId}` fournit
@@ -50,7 +51,7 @@ variables > Actions).
    domaine `pierregorde.com` (DNS chez Cloudflare), créer une API key → secret
    `RESEND_API_KEY`. Renseigner `REPORT_EMAIL_FROM` et `REPORT_EMAIL_TO`.
 3. Pousser sur `main`, puis tester via **Actions > Rapport hebdo analytics > Run
-   workflow** (le déclenchement manuel ignore le garde-fou horaire).
+   workflow**.
 
 ## Commandes
 
