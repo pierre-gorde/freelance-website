@@ -63,9 +63,9 @@ export const PROJETS: Projet[] = [
     periode: "2025 — aujourd'hui",
     url: 'https://www.agregata.ai',
     resume:
-      "Plateforme SaaS de gestion et d'analyse de trésorerie que j'ai construite de zéro pour Agregata. Architecture fullstack TypeScript complète, infrastructure AWS Fargate, workers BullMQ séparés, et agents IA intégrés.",
+      "Plateforme SaaS de gestion et d'analyse de trésorerie que j'ai construite de zéro pour Agregata. Architecture fullstack TypeScript, infrastructure AWS Fargate, workers BullMQ séparés, connecteurs comptables automatisés et agents IA intégrés.",
     contexte:
-      'Plateforme développée pour des PME et TPE qui gèrent leur trésorerie manuellement via Excel. Fullstack TypeScript de bout en bout — du schéma Prisma au déploiement ECS Fargate, en passant par les workers de traitement de données et les agents IA conversationnels.',
+      'Plateforme développée pour des PME et TPE qui gèrent leur trésorerie manuellement via Excel. Fullstack TypeScript de bout en bout — du schéma Prisma au déploiement ECS Fargate, en passant par les workers de traitement de données et les agents IA conversationnels. Un connecteur comptable on-premise, installé sur un poste du client, supprime les exports manuels de comptabilité.',
     stack: [
       'React',
       'MUI',
@@ -77,16 +77,19 @@ export const PROJETS: Projet[] = [
       'AWS ECS',
       'Terraform',
       'TypeScript',
+      'Go',
+      'Wails',
     ],
     livrables: [
       'Plateforme de trésorerie : lignes réelles et prévisionnelles, scénarios, hypothèses',
       'Architecture workers BullMQ en processus séparés (import CSV/ZIP + recalcul)',
       "Agents IA conversationnels pour l'analyse financière (NestJS + LLM)",
       'Synchronisation bancaire via Bridge API (open banking)',
+      'Connecteur comptable on-premise : agent Windows Go, installeur Wails, supervision et auto-update',
       'Infrastructure AWS ECS Fargate pilotée par Terraform, CI/CD GitHub Actions',
       'Frontend React 18 + MUI, internationalisation FR/EN, auth JWT cookies HTTP-only',
     ],
-    schema: `<svg viewBox="0 0 720 300" ${SVG_ATTRS}>${markerDef('p0')}
+    schema: `<svg viewBox="0 0 720 360" ${SVG_ATTRS}>${markerDef('p0')}
   <!-- Ligne haute : services externes liés à l'API -->
   ${box('p0', 60, 20, 'Bridge API', '', 'external')}
   ${box('p0', 220, 20, 'AI Agents', 'LLM', 'external')}
@@ -112,6 +115,16 @@ export const PROJETS: Projet[] = [
   ${box('p0', 340, 180, 'Worker', 'Import CSV', 'primary')}
   ${arrow('p0', 460, 200, 498, 200)}
   ${box('p0', 500, 180, 'Worker', 'Recalcul', 'primary')}
+  <!-- Zone poste client (on-premise) -->
+  <rect x="10" y="258" width="340" height="80" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="340" y="272" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280" text-anchor="end">Poste client (on-premise)</text>
+  ${box('p0', 20, 283, 'Agent Go', 'Service Windows', 'primary')}
+  <text x="179" y="294" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280" text-anchor="middle">Lecture seule</text>
+  ${arrow('p0', 140, 303, 218, 303)}
+  ${box('p0', 220, 283, 'SQL Server', 'Comptable EBP / Sage', 'external')}
+  <!-- Flèche Agent → API (vers le haut, contourne Redis) -->
+  ${arrow('p0', 85, 283, 195, 152)}
+  <text x="130" y="241" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280">HTTPS : imports, heartbeat, auto-update</text>
 </svg>`,
   },
   {
