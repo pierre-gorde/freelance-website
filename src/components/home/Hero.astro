@@ -1,0 +1,234 @@
+---
+import { Image } from 'astro:assets';
+
+import DailyReport from '../report/DailyReport.astro';
+import PrimaryCta from '../ui/PrimaryCta.astro';
+import SlamTitle from '../ui/SlamTitle.astro';
+import illustration from '../../assets/pierre-illustration.png';
+import { HERO_REPORT } from '../../lib/report.const';
+import { EXPERIENCE_YEARS } from '../../lib/site.const';
+import { useLocale } from '../../lib/i18n';
+
+const { t, l, tjm } = useLocale(Astro.currentLocale);
+
+const facts = [t('Temps plein ou partiel'), t('À distance'), tjm];
+---
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <SlamTitle
+        class="hero-title"
+        text={t('Votre équipe est prise par le produit.')}
+        highlight={t("Je prends l'autre projet.")}
+      />
+      <p class="lead hero-sub">
+        Développeur TypeScript freelance, {EXPERIENCE_YEARS} ans d'expérience. Outil interne, migration,
+        connecteur, back-office : je le livre en autonomie dans votre stack. Chaque soir, un compte-rendu
+        écrit vous dit où on en est.
+      </p>
+      <div class="hero-actions">
+        <PrimaryCta size="lg" place="hero" magnet />
+        <a class="link" href={l('/projets')}
+          >{t('Voir les projets', { 'fr-MU': 'Get bann proze' })}</a
+        >
+      </div>
+      <ul class="facts" aria-label="En bref">
+        {facts.map((fact) => <li class="chip">{fact}</li>)}
+      </ul>
+    </div>
+
+    <div class="hero-visual" data-hero-visual>
+      <p class="bubble" data-hero-bubble>
+        {t("Salut, c'est Pierre.", { 'fr-MU': 'Bonzour ! Mo apel Pierre.' })}
+      </p>
+      <div class="portrait-case" data-hero-case>
+        <Image
+          class="portrait printing"
+          src={illustration}
+          alt="Portrait illustré de Pierre Gordé, souriant"
+          widths={[320, 480, 600]}
+          sizes="(min-width: 900px) 480px, 90vw"
+          loading="eager"
+          fetchpriority="high"
+          data-hero-portrait
+        />
+      </div>
+      <DailyReport
+        class="hero-report"
+        meta={HERO_REPORT.meta}
+        done={HERO_REPORT.done}
+        decide={HERO_REPORT.decide}
+        footLink={{
+          href: l('/methode'),
+          label: 'Lire un compte-rendu complet',
+        }}
+        typing
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    overflow-x: clip;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+    padding-block: clamp(40px, 5vw, 80px) clamp(56px, 7vw, 104px);
+  }
+
+  .hero-copy :global(.hero-title) {
+    margin: 0;
+    font-size: var(--text-hero);
+  }
+
+  .hero-sub {
+    margin-top: 28px;
+    max-width: 34em;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px 26px;
+    margin-top: 36px;
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .facts li {
+    animation: fact-in 0.5s var(--ease-out) both;
+  }
+
+  .facts li:nth-child(1) {
+    animation-delay: 0.6s;
+    --r: -4deg;
+  }
+
+  .facts li:nth-child(2) {
+    animation-delay: 0.67s;
+    --r: 3deg;
+  }
+
+  .facts li:nth-child(3) {
+    animation-delay: 0.74s;
+    --r: -2deg;
+    background: var(--cyan-pale);
+  }
+
+  .hero-visual {
+    position: relative;
+    min-width: 0;
+  }
+
+  .bubble {
+    position: absolute;
+    z-index: 3;
+    top: -22px;
+    left: -18px;
+    transform: rotate(-4deg);
+    background: var(--paper);
+    border: var(--border);
+    border-radius: 20px;
+    padding: 10px 16px;
+    box-shadow: var(--shadow-md);
+    font-weight: 800;
+    font-stretch: 110%;
+    animation: bubble-in 0.6s var(--ease-out) 1.25s both;
+    transform-origin: 80% 120%;
+    translate: calc(var(--px, 0) * 1px) calc(var(--py, 0) * 1px);
+  }
+
+  .bubble::after {
+    content: '';
+    position: absolute;
+    right: 30px;
+    bottom: -11px;
+    width: 18px;
+    height: 18px;
+    background: var(--paper);
+    border-right: var(--border);
+    border-bottom: var(--border);
+    transform: rotate(45deg);
+  }
+
+  .portrait-case {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: clamp(300px, 34vw, 480px);
+    overflow: hidden;
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    background-color: var(--orange);
+    background-image: var(--halftone-orange);
+    background-size: var(--halftone-size) var(--halftone-size);
+  }
+
+  .portrait {
+    display: block;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom;
+  }
+
+  .hero-visual :global(.hero-report) {
+    z-index: 2;
+    margin: -92px 0 0 9%;
+    animation: report-in 0.9s var(--ease-out) 0.5s both;
+    translate: calc(var(--px, 0) * 1px) 0;
+  }
+
+  @keyframes fact-in {
+    from {
+      transform: translateY(12px) rotate(var(--r));
+    }
+  }
+
+  @keyframes bubble-in {
+    from {
+      transform: scale(0) rotate(-28deg);
+    }
+  }
+
+  @keyframes report-in {
+    from {
+      transform: translateY(48px) rotate(3deg);
+    }
+  }
+
+  @media (max-width: 899px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .bubble {
+      left: 8px;
+    }
+
+    .hero-visual :global(.hero-report) {
+      margin: -64px 0 0 6%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .facts li,
+    .bubble,
+    .hero-visual :global(.hero-report) {
+      animation: none;
+    }
+  }
+</style>

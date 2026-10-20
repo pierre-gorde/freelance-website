@@ -1,0 +1,182 @@
+---
+import { frenchSpacing } from '../../lib/typo';
+
+type FootLink = { href: string; label: string };
+
+type Props = {
+  meta: string;
+  title?: string;
+  stamp?: string;
+  done?: readonly string[];
+  blocked?: readonly string[];
+  upcoming?: readonly string[];
+  decide?: readonly string[];
+  footLink?: FootLink;
+  signature?: string;
+  /** Les lignes s'écrivent une à une (script de la home). */
+  typing?: boolean;
+  /** Le tampon « Envoyé » se pose au défilement. */
+  stampMotion?: boolean;
+  id?: string;
+  class?: string;
+};
+
+const {
+  meta,
+  title = 'Compte-rendu du soir',
+  stamp = 'Envoyé',
+  done = [],
+  blocked = [],
+  upcoming = [],
+  decide = [],
+  footLink,
+  signature = 'Pierre',
+  typing = false,
+  stampMotion = false,
+  id,
+  class: className,
+} = Astro.props;
+
+const sections = [
+  { label: 'Fait', items: done, tone: 'plain' },
+  { label: 'Bloqué', items: blocked, tone: 'alert' },
+  { label: 'Demain', items: upcoming, tone: 'plain' },
+  { label: 'À décider', items: decide, tone: 'alert' },
+].filter((section) => section.items.length > 0);
+---
+
+<article
+  id={id}
+  class:list={['report', className]}
+  aria-label="Exemple de compte-rendu du soir"
+  data-report={typing ? 'typing' : undefined}
+>
+  <p class="report-title">{title}</p>
+  <p class="report-meta">{meta}</p>
+  <span class="report-stamp" data-report-stamp data-stamp={stampMotion ? '' : undefined}
+    >{stamp}</span
+  >
+  <dl class="report-body">
+    {
+      sections.map((section) => (
+        <>
+          <dt class:list={[section.tone === 'alert' && 'is-alert']}>{section.label}</dt>
+          {section.items.map((item) => (
+            <dd data-type={typing ? '' : undefined}>{frenchSpacing(item)}</dd>
+          ))}
+        </>
+      ))
+    }
+  </dl>
+  <p class="report-foot">
+    {
+      footLink ? (
+        <a class="link" href={footLink.href}>
+          {footLink.label}
+        </a>
+      ) : (
+        <span>Lu en 30 secondes</span>
+      )
+    }
+    <span>{signature}</span>
+  </p>
+</article>
+
+<style>
+  .report {
+    position: relative;
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 20px 22px 18px;
+  }
+
+  .report-title {
+    font-weight: 800;
+    font-stretch: 112%;
+    font-size: 1.05rem;
+  }
+
+  .report-meta {
+    margin-top: 2px;
+    padding-right: 92px;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  .report-stamp {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    transform: rotate(-8deg);
+    border: 2px solid var(--orange-ink);
+    border-radius: var(--radius-sm);
+    padding: 3px 9px;
+    background: var(--paper);
+    color: var(--orange-ink);
+    font-weight: 900;
+    font-stretch: 112%;
+    font-size: var(--text-xs);
+  }
+
+  .report-body {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 6px 14px;
+    margin-top: 14px;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+
+  dt {
+    grid-column: 1;
+    font-weight: 800;
+  }
+
+  dd {
+    grid-column: 2;
+    margin: 0;
+  }
+
+  dt:not(:first-child),
+  dt:not(:first-child) + dd {
+    margin-top: 6px;
+  }
+
+  dt.is-alert {
+    color: var(--orange-ink);
+  }
+
+  .report-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 2px dashed var(--ink);
+    font-size: 0.92rem;
+  }
+
+  .report :global(.caret) {
+    display: inline-block;
+    width: 0.5em;
+    height: 1.05em;
+    margin-left: 1px;
+    vertical-align: -0.15em;
+    background: var(--ink);
+    animation: blink 0.8s steps(1) infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .report :global(.caret) {
+      animation: none;
+    }
+  }
+</style>

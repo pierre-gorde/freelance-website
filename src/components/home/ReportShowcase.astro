@@ -1,0 +1,67 @@
+---
+import DailyReport from '../report/DailyReport.astro';
+import { BLOCKED_REPORT } from '../../lib/report.const';
+import { useLocale } from '../../lib/i18n';
+
+const { t, l } = useLocale(Astro.currentLocale);
+const methodeLabel = t('Voir la méthode', { 'fr-MU': 'Get mo metod' });
+---
+
+<section class="showcase" id="compte-rendu" aria-labelledby="compte-rendu-titre" data-wipe="left">
+  <div class="wrap showcase-grid">
+    <div class="showcase-copy">
+      <h2 class="display section-title" id="compte-rendu-titre" data-slam>
+        {t('Chaque soir, un compte-rendu écrit.', { 'fr-MU': 'Sak swar, enn rapor ekri.' })}
+      </h2>
+      <div data-rise>
+        <p>
+          Ce qui est fait, ce qui bloque, ce qui suit, ce que j'attends de vous. Lu en 30 secondes,
+          sur votre canal : Slack, mail ou Teams.
+        </p>
+        <p>
+          Les jours où ça coince, vous le savez le soir même. Vous pouvez trancher le lendemain,
+          sans attendre la réunion de la semaine.
+        </p>
+        <p><a class="link" href={l('/methode')}>{methodeLabel}</a></p>
+      </div>
+    </div>
+    <div class="showcase-report" data-tilt="8,-2">
+      <DailyReport
+        meta={BLOCKED_REPORT.meta}
+        done={BLOCKED_REPORT.done}
+        blocked={BLOCKED_REPORT.blocked}
+        upcoming={BLOCKED_REPORT.upcoming}
+        stampMotion
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase {
+    background: var(--cyan-pale);
+    border-bottom: var(--border);
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 40px clamp(32px, 6vw, 88px);
+    align-items: center;
+    padding-block: var(--space-section);
+  }
+
+  [data-rise] {
+    display: grid;
+    gap: 16px;
+    margin-top: 24px;
+    font-size: 1.15rem;
+    max-width: 32em;
+  }
+
+  @media (max-width: 899px) {
+    .showcase-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
