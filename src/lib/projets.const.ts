@@ -1,71 +1,85 @@
+import type { ImageMetadata } from 'astro';
+
+import captureAgregata from '../assets/projets/agregata.jpg';
+import captureBdl from '../assets/projets/bdl-capital-management.jpg';
+import captureFftri from '../assets/projets/fftri-race-simulator.jpg';
+import captureHotelave from '../assets/projets/hotelave.jpg';
+import captureMargoo from '../assets/projets/margoo.jpg';
+import captureScalex from '../assets/projets/scalex-invest.jpg';
+import captureSlowAdventures from '../assets/projets/slow-adventures.jpg';
+import captureUblo from '../assets/projets/ublo.jpg';
+import captureVouloirDire from '../assets/projets/vouloir-dire.jpg';
+
+export type ProjetTone = 'cyan' | 'orange' | 'paper' | 'pale' | 'ink';
+
 export type Projet = {
   slug: string;
   titre: string;
+  /** Nom court affiché dans le bandeau des clients. */
+  client: string;
   secteur: string;
+  stamp: string;
+  tone: ProjetTone;
   periode: string;
+  /** Années affichées sur la carte. */
+  annees: string;
   resume: string;
+  /** Phrase courte de la carte, tirée du résumé. */
+  accroche: string;
+  /** Fait marquant, repris de la fiche. */
+  fait: string;
   contexte: string;
   stack: string[];
   livrables: string[];
   schema: string;
-  url?: string;
-  localScreenshot?: string;
+  url: string;
+  capture: ImageMetadata;
+  captureAlt: string;
 };
 
-const SVG_ATTRS =
-  'fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;"';
+type SchemaTone = 'primary' | 'neutral' | 'external';
 
-const box = (
-  id: string,
-  x: number,
-  y: number,
-  label: string,
-  sub: string,
-  variant: 'primary' | 'neutral' | 'external'
-) => {
-  const fills: Record<string, string> = {
-    primary: '#f0fdf4',
-    neutral: '#f9fafb',
-    external: '#fff7ed',
-  };
-  const strokes: Record<string, string> = {
-    primary: '#86efac',
-    neutral: '#e5e7eb',
-    external: '#fed7aa',
-  };
-  const textColors: Record<string, string> = {
-    primary: '#166534',
-    neutral: '#374151',
-    external: '#92400e',
-  };
-  const subColors: Record<string, string> = {
-    primary: '#4d7c68',
-    neutral: '#6b7280',
-    external: '#b45309',
-  };
+const BOX_WIDTH = 120;
+const BOX_HEIGHT = 40;
+
+const SVG_ATTRS = 'fill="none" xmlns="http://www.w3.org/2000/svg" role="img"';
+
+const box = (x: number, y: number, label: string, sub: string, tone: SchemaTone) => {
   const cy = sub ? y + 15 : y + 20;
-  return `<rect x="${x}" y="${y}" width="120" height="40" rx="6" fill="${fills[variant]}" stroke="${strokes[variant]}" stroke-width="1.5"/>
-  <text x="${x + 60}" y="${cy}" font-size="12" font-family="system-ui,sans-serif" fill="${textColors[variant]}" text-anchor="middle" dominant-baseline="middle" font-weight="500">${label}</text>
-  ${sub ? `<text x="${x + 60}" y="${y + 29}" font-size="10" font-family="system-ui,sans-serif" fill="${subColors[variant]}" text-anchor="middle" dominant-baseline="middle">${sub}</text>` : ''}`;
+  return `<g class="sch-node sch-node--${tone}"><rect x="${x}" y="${y}" width="${BOX_WIDTH}" height="${BOX_HEIGHT}" rx="6"/>
+  <text class="sch-label" x="${x + BOX_WIDTH / 2}" y="${cy}" text-anchor="middle" dominant-baseline="middle">${label}</text>
+  ${sub ? `<text class="sch-sub" x="${x + BOX_WIDTH / 2}" y="${y + 29}" text-anchor="middle" dominant-baseline="middle">${sub}</text>` : ''}</g>`;
 };
 
 const arrow = (id: string, x1: number, y1: number, x2: number, y2: number) =>
-  `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#${id})"/>`;
+  `<line class="sch-arrow" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#${id})"/>`;
 
 const markerDef = (id: string) =>
-  `<defs><marker id="${id}" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0 0L8 3L0 6z" fill="#9ca3af"/></marker></defs>`;
+  `<defs><marker id="${id}" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path class="sch-head" d="M0 0L8 3L0 6z"/></marker></defs>`;
+
+const note = (x: number, y: number, text: string, anchor: 'start' | 'middle' | 'end' = 'middle') =>
+  `<text class="sch-note" x="${x}" y="${y}" text-anchor="${anchor}">${text}</text>`;
 
 export const PROJETS: Projet[] = [
   {
     slug: 'agregata',
     titre: 'Agregata',
-    secteur: 'FinTech / SaaS',
-    periode: "2025 — aujourd'hui",
+    client: 'Agregata',
+    secteur: 'FinTech, SaaS',
+    stamp: 'FinTech',
+    tone: 'orange',
+    periode: "2025 – aujourd'hui",
+    annees: 'depuis 2025',
     url: 'https://www.agregata.ai',
+    capture: captureAgregata,
+    captureAlt: "Page d'accueil d'agregata.ai",
     resume:
       "Plateforme SaaS de gestion et d'analyse de trésorerie que j'ai construite de zéro pour Agregata. Architecture fullstack TypeScript, infrastructure AWS Fargate, workers BullMQ séparés, connecteurs comptables automatisés et agents IA intégrés.",
+    accroche:
+      'Une plateforme de trésorerie construite de zéro. Un connecteur installé chez le client lit la comptabilité EBP ou Sage et supprime les exports manuels.',
+    fait: 'Construite de zéro, déployée sur AWS',
     contexte:
-      'Plateforme développée pour des PME et TPE qui gèrent leur trésorerie manuellement via Excel. Fullstack TypeScript de bout en bout — du schéma Prisma au déploiement ECS Fargate, en passant par les workers de traitement de données et les agents IA conversationnels. Un connecteur comptable on-premise, installé sur un poste du client, supprime les exports manuels de comptabilité.',
+      'Plateforme développée pour des PME et TPE qui gèrent leur trésorerie manuellement via Excel. Fullstack TypeScript de bout en bout, du schéma Prisma au déploiement ECS Fargate, en passant par les workers de traitement de données et les agents IA conversationnels. Un connecteur comptable on-premise, installé sur un poste du client, supprime les exports manuels de comptabilité.',
     stack: [
       'React',
       'MUI',
@@ -90,53 +104,54 @@ export const PROJETS: Projet[] = [
       'Frontend React 18 + MUI, internationalisation FR/EN, auth JWT cookies HTTP-only',
     ],
     schema: `<svg viewBox="0 0 720 360" ${SVG_ATTRS}>${markerDef('p0')}
-  <!-- Ligne haute : services externes liés à l'API -->
-  ${box('p0', 60, 20, 'Bridge API', '', 'external')}
-  ${box('p0', 220, 20, 'AI Agents', 'LLM', 'external')}
-  ${box('p0', 500, 20, 'AWS S3', 'Fichiers', 'external')}
-  <!-- Flèches API → Bridge API et AI Agents (vers le haut) -->
+  ${box(60, 20, 'Bridge API', '', 'external')}
+  ${box(220, 20, 'AI Agents', 'LLM', 'external')}
+  ${box(500, 20, 'AWS S3', 'Fichiers', 'external')}
   ${arrow('p0', 240, 110, 120, 60)}
   ${arrow('p0', 260, 110, 270, 60)}
-  <!-- Flèche Worker Import → S3 (vers le haut) -->
   ${arrow('p0', 400, 170, 540, 60)}
-  <!-- Ligne principale -->
-  ${box('p0', 20, 110, 'React', 'MUI + Zustand', 'primary')}
+  ${box(20, 110, 'React', 'MUI + Zustand', 'primary')}
   ${arrow('p0', 140, 130, 178, 130)}
-  ${box('p0', 180, 110, 'NestJS', 'API + WS', 'primary')}
+  ${box(180, 110, 'NestJS', 'API + WS', 'primary')}
   ${arrow('p0', 300, 130, 338, 130)}
-  ${box('p0', 340, 110, 'PostgreSQL', 'Prisma ORM', 'neutral')}
+  ${box(340, 110, 'PostgreSQL', 'Prisma ORM', 'neutral')}
   ${arrow('p0', 460, 130, 498, 130)}
-  ${box('p0', 500, 110, 'AWS ECS', 'Fargate', 'external')}
-  <!-- Flèche API → Redis -->
+  ${box(500, 110, 'AWS ECS', 'Fargate', 'external')}
   ${arrow('p0', 240, 150, 240, 178)}
-  <!-- Ligne workers -->
-  ${box('p0', 180, 180, 'Redis', 'BullMQ', 'primary')}
+  ${box(180, 180, 'Redis', 'BullMQ', 'primary')}
   ${arrow('p0', 300, 200, 338, 200)}
-  ${box('p0', 340, 180, 'Worker', 'Import CSV', 'primary')}
+  ${box(340, 180, 'Worker', 'Import CSV', 'primary')}
   ${arrow('p0', 460, 200, 498, 200)}
-  ${box('p0', 500, 180, 'Worker', 'Recalcul', 'primary')}
-  <!-- Zone poste client (on-premise) -->
-  <rect x="10" y="258" width="340" height="80" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4 3"/>
-  <text x="340" y="272" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280" text-anchor="end">Poste client (on-premise)</text>
-  ${box('p0', 20, 283, 'Agent Go', 'Service Windows', 'primary')}
-  <text x="179" y="294" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280" text-anchor="middle">Lecture seule</text>
+  ${box(500, 180, 'Worker', 'Recalcul', 'primary')}
+  <rect class="sch-zone" x="10" y="258" width="340" height="80" rx="6"/>
+  ${note(340, 272, 'Poste client (on-premise)', 'end')}
+  ${box(20, 283, 'Agent Go', 'Service Windows', 'primary')}
+  ${note(179, 294, 'Lecture seule')}
   ${arrow('p0', 140, 303, 218, 303)}
-  ${box('p0', 220, 283, 'SQL Server', 'Comptable EBP / Sage', 'external')}
-  <!-- Flèche Agent → API (vers le haut, contourne Redis) -->
+  ${box(220, 283, 'SQL Server', 'Comptable EBP / Sage', 'external')}
   ${arrow('p0', 85, 283, 195, 152)}
-  <text x="130" y="241" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280">HTTPS : imports, heartbeat, auto-update</text>
+  ${note(130, 241, 'HTTPS : imports, heartbeat, auto-update', 'start')}
 </svg>`,
   },
   {
     slug: 'slow-adventures',
     titre: 'Slow Adventures',
-    secteur: 'Tourisme / Travel',
+    client: 'Slow Adventures',
+    secteur: 'Tourisme',
+    stamp: 'Tourisme',
+    tone: 'pale',
     periode: 'mars 2025',
+    annees: '2025',
     url: 'https://slowadventures.fr',
+    capture: captureSlowAdventures,
+    captureAlt: "Page d'accueil de slowadventures.fr",
     resume:
-      "Accompagnement complet de la création d'activité d'une travel planner spécialisée dans les Amériques — de la vision produit jusqu'à la livraison du site. Ateliers brainstorming, business, UX/UI, puis développement Astro SSG mobile-first.",
+      "Accompagnement complet de la création d'activité d'une travel planner spécialisée dans les Amériques, de la vision produit jusqu'à la livraison du site. Ateliers brainstorming, business, UX/UI, puis développement Astro SSG mobile-first.",
+    accroche:
+      'Du positionnement au site livré pour une travel planner : ateliers produit et UX, puis un site Astro pensé pour le mobile.',
+    fait: "Plus de 80 % du trafic vient d'Instagram",
     contexte:
-      "Elena Dolla lance son activité de travel planner en solo. Mission à spectre large : structurer le positionnement, clarifier l'offre et les personas, concevoir l'expérience utilisateur, puis développer et livrer le site. 80 %+ du trafic vient d'Instagram Stories — le site doit transformer ce trafic mobile en discovery calls sans friction.",
+      "Elena Dolla lance son activité de travel planner en solo. Mission à spectre large : structurer le positionnement, clarifier l'offre et les personas, concevoir l'expérience utilisateur, puis développer et livrer le site. Plus de 80 % du trafic vient d'Instagram Stories : le site doit transformer ce trafic mobile en appels découverte sans friction.",
     stack: ['Astro', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Netlify'],
     livrables: [
       'Ateliers de brainstorming et de positionnement (offre, personas, différenciation)',
@@ -148,27 +163,34 @@ export const PROJETS: Projet[] = [
       'CI/CD GitHub Actions → Netlify avec headers de sécurité',
     ],
     schema: `<svg viewBox="0 0 620 200" ${SVG_ATTRS}>${markerDef('psa')}
-  ${box('psa', 20, 80, 'Astro SSG', 'TypeScript', 'primary')}
+  ${box(20, 80, 'Astro SSG', 'TypeScript', 'primary')}
   ${arrow('psa', 140, 100, 178, 100)}
-  ${box('psa', 180, 80, 'Netlify', 'CDN / Deploy', 'primary')}
+  ${box(180, 80, 'Netlify', 'CDN / Deploy', 'primary')}
   ${arrow('psa', 300, 100, 338, 100)}
-  ${box('psa', 340, 80, 'Navigateur', 'Mobile-first', 'neutral')}
+  ${box(340, 80, 'Navigateur', 'Mobile-first', 'neutral')}
   ${arrow('psa', 240, 120, 240, 153)}
-  ${box('psa', 180, 155, 'Calendly', 'Discovery calls', 'external')}
+  ${box(180, 155, 'Calendly', 'Discovery calls', 'external')}
   ${arrow('psa', 400, 120, 440, 153)}
-  <rect x="400" y="155" width="100" height="36" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
-  <text x="450" y="173" font-size="11" font-family="system-ui,sans-serif" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Brevo / GA4</text>
+  ${box(400, 155, 'Brevo', 'GA4', 'external')}
 </svg>`,
   },
   {
     slug: 'fftri-race-simulator',
     titre: 'FFTri Race Simulator',
-    secteur: 'Sport / Événementiel',
-    periode: 'mars 2024 — juil. 2024',
+    client: 'FFTri',
+    secteur: 'Sport, événementiel',
+    stamp: 'JO Paris 2024',
+    tone: 'cyan',
+    periode: 'mars – juil. 2024',
+    annees: '2024',
     url: 'https://triathlon-race-simulator.com/fr',
-    localScreenshot: '/projects/fftri-race-simulator.jpg',
+    capture: captureFftri,
+    captureAlt: "Écran d'accueil du Race Simulator de la Fédération Française de Triathlon",
     resume:
       'Simulateur de course multijoueur en temps réel pour la Fédération Française de Triathlon, projeté sur les stands du Village des Jeux Olympiques de Paris 2024 sur vélos et tapis connectés.',
+    accroche:
+      'Un simulateur de course multijoueur en temps réel, projeté dans le Village des Jeux de Paris 2024.',
+    fait: '5 disciplines, vélos et tapis connectés',
     contexte:
       "Commandé par la FFTri pour les JO de Paris 2024. Les participants pédalent ou courent sur des équipements connectés dans le Village Olympique, leur position s'affiche en temps réel sur une carte 3D Cesium avec vue POV caméra.",
     stack: [
@@ -183,7 +205,7 @@ export const PROJETS: Projet[] = [
     ],
     livrables: [
       'Synchronisation temps réel des équipements connectés (vélos, tapis) via Socket.io',
-      'Carte 3D immersive avec Cesium — altitude, tracé de course, positions des participants',
+      'Carte 3D immersive avec Cesium : altitude, tracé de course, positions des participants',
       'Vue caméra POV dynamique par participant',
       'Streaming vidéo multi-flux via Agora RTC',
       'Page de résultats post-course avec classement et données de performance',
@@ -191,39 +213,41 @@ export const PROJETS: Projet[] = [
       'Déploiement continu staging + production, projectable sur grands écrans',
     ],
     schema: `<svg viewBox="0 0 720 230" ${SVG_ATTRS}>${markerDef('pfft')}
-  <!-- Équipements connectés -->
-  ${box('pfft', 20, 50, 'Vélos', 'Connectés', 'neutral')}
-  ${box('pfft', 20, 150, 'Tapis', 'Connectés', 'neutral')}
+  ${box(20, 50, 'Vélos', 'Connectés', 'neutral')}
+  ${box(20, 150, 'Tapis', 'Connectés', 'neutral')}
   ${arrow('pfft', 140, 70, 188, 100)}
   ${arrow('pfft', 140, 170, 188, 120)}
-  <!-- Serveur temps réel -->
-  ${box('pfft', 190, 90, 'Socket.io', 'Temps réel', 'primary')}
+  ${box(190, 90, 'Socket.io', 'Temps réel', 'primary')}
   ${arrow('pfft', 310, 110, 348, 110)}
-  <!-- App Next.js -->
-  ${box('pfft', 350, 90, 'Next.js 14', 'App', 'primary')}
+  ${box(350, 90, 'Next.js 14', 'App', 'primary')}
   ${arrow('pfft', 470, 110, 508, 110)}
-  <!-- Affichage final -->
-  ${box('pfft', 510, 90, 'Écran JO', 'Village Paris', 'neutral')}
-  <!-- Intégrations sous Next.js -->
+  ${box(510, 90, 'Écran JO', 'Village Paris', 'neutral')}
   ${arrow('pfft', 410, 130, 350, 163)}
   ${arrow('pfft', 410, 130, 470, 163)}
-  ${box('pfft', 290, 165, 'Cesium', 'Carte 3D', 'external')}
-  ${box('pfft', 430, 165, 'Agora', 'Streaming', 'external')}
-  <!-- Kinomap au-dessus de Next.js -->
-  <text x="410" y="62" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280" text-anchor="middle">API course</text>
-  <rect x="350" y="30" width="120" height="28" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
-  <text x="410" y="44" font-size="11" font-family="system-ui,sans-serif" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Kinomap API</text>
-  ${arrow('pfft', 410, 90, 410, 58)}
+  ${box(290, 165, 'Cesium', 'Carte 3D', 'external')}
+  ${box(430, 165, 'Agora', 'Streaming', 'external')}
+  ${note(410, 22, 'API course')}
+  ${box(350, 30, 'Kinomap API', '', 'external')}
+  ${arrow('pfft', 410, 90, 410, 72)}
 </svg>`,
   },
   {
     slug: 'hotelave',
     titre: 'HotelAve',
+    client: 'HotelAve',
     secteur: 'Hôtellerie',
-    periode: 'oct. 2022 — nov. 2023',
+    stamp: 'SaaS B2B',
+    tone: 'cyan',
+    periode: 'oct. 2022 – nov. 2023',
+    annees: '2022 – 2023',
     url: 'https://www.singlepaneapp.com/',
+    capture: captureHotelave,
+    captureAlt: "Page d'accueil de singlepaneapp.com",
     resume:
       "Développement frontend d'un SaaS hôtelier sous Angular, avec API GraphQL. Déploiement AWS Amplify, authentification Cognito avec MFA, et intégration SSO DUO.",
+    accroche:
+      "Le front d'un SaaS hôtelier en Angular, branché sur une API GraphQL et déployé sur AWS.",
+    fait: 'Connexion MFA et SSO pour les comptes entreprise',
     contexte:
       "Mission frontend sur un produit SaaS B2B à destination des hôtels. Stack AWS complète : Amplify pour le déploiement, Cognito pour l'authentification avec MFA, et intégration d'un SSO DUO pour les clients enterprise.",
     stack: ['Angular', 'GraphQL', 'AWS Amplify', 'AWS Cognito', 'SSO DUO'],
@@ -235,25 +259,34 @@ export const PROJETS: Projet[] = [
       'Intégration SSO DUO pour les comptes enterprise',
     ],
     schema: `<svg viewBox="0 0 660 220" ${SVG_ATTRS}>${markerDef('p1')}
-  ${box('p1', 20, 90, 'Angular', 'SaaS Front', 'primary')}
+  ${box(20, 90, 'Angular', 'SaaS Front', 'primary')}
   ${arrow('p1', 140, 110, 178, 110)}
-  ${box('p1', 180, 90, 'GraphQL', 'API', 'primary')}
+  ${box(180, 90, 'GraphQL', 'API', 'primary')}
   ${arrow('p1', 300, 110, 338, 110)}
-  ${box('p1', 340, 90, 'AWS Cognito', 'Auth + MFA', 'external')}
+  ${box(340, 90, 'AWS Cognito', 'Auth + MFA', 'external')}
   ${arrow('p1', 460, 110, 498, 110)}
-  ${box('p1', 500, 90, 'AWS Amplify', 'Déploiement', 'external')}
+  ${box(500, 90, 'AWS Amplify', 'Déploiement', 'external')}
   ${arrow('p1', 400, 130, 400, 163)}
-  ${box('p1', 340, 165, 'SSO DUO', 'Enterprise', 'neutral')}
+  ${box(340, 165, 'SSO DUO', 'Enterprise', 'neutral')}
 </svg>`,
   },
   {
     slug: 'vouloir-dire',
     titre: 'Vouloir Dire',
-    secteur: 'Plateforme / Social',
-    periode: 'mai 2022 — nov. 2023',
+    client: 'Vouloir Dire',
+    secteur: 'Plateforme, accessibilité',
+    stamp: 'Accessibilité',
+    tone: 'paper',
+    periode: 'mai 2022 – nov. 2023',
+    annees: '2022 – 2023',
     url: 'https://vouloir-dire.fr/',
+    capture: captureVouloirDire,
+    captureAlt: "Page d'accueil de vouloir-dire.fr",
     resume:
       "Plateforme de mise en relation entre clients et interprètes en langue des signes. Migration Angular 6 → 13, refonte de l'API Express vers NestJS, développement de nouvelles fonctionnalités.",
+    accroche:
+      'Une plateforme qui met en relation des clients et des interprètes en langue des signes.',
+    fait: 'Angular 6 → 13 sans interruption de service',
     contexte:
       "Mission fullstack d'un an et demi sur une plateforme sociale à fort enjeu d'accessibilité. Stack Angular + NestJS + GraphQL. Migration majeure du frontend et de l'API en parallèle.",
     stack: ['Angular', 'NestJS', 'GraphQL', 'Prisma', 'PostgreSQL'],
@@ -265,24 +298,33 @@ export const PROJETS: Projet[] = [
       'Nouvelles fonctionnalités front (réservation, profil interprète, messagerie)',
     ],
     schema: `<svg viewBox="0 0 580 180" ${SVG_ATTRS}>${markerDef('p2')}
-  ${box('p2', 20, 70, 'Angular', 'Frontend', 'primary')}
+  ${box(20, 70, 'Angular', 'Frontend', 'primary')}
   ${arrow('p2', 140, 90, 178, 90)}
-  ${box('p2', 180, 70, 'NestJS', 'GraphQL API', 'primary')}
+  ${box(180, 70, 'NestJS', 'GraphQL API', 'primary')}
   ${arrow('p2', 300, 90, 338, 90)}
-  ${box('p2', 340, 70, 'PostgreSQL', 'Prisma ORM', 'neutral')}
-  <text x="240" y="148" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280" text-anchor="middle" font-style="italic">Migration Express → NestJS</text>
-  <rect x="160" y="155" width="160" height="22" rx="4" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" stroke-dasharray="4 3"/>
-  <text x="240" y="166" font-size="10" font-family="system-ui,sans-serif" fill="#b91c1c" text-anchor="middle" dominant-baseline="middle">Express (legacy)</text>
+  ${box(340, 70, 'PostgreSQL', 'Prisma ORM', 'neutral')}
+  ${note(240, 146, 'Migration Express → NestJS')}
+  <g class="sch-legacy"><rect x="160" y="155" width="160" height="22" rx="4"/>
+  <text x="240" y="166" text-anchor="middle" dominant-baseline="middle">Express (legacy)</text></g>
 </svg>`,
   },
   {
     slug: 'ublo',
     titre: 'Ublo',
+    client: 'Ublo',
     secteur: 'Immobilier',
-    periode: 'oct. 2021 — mai 2022',
+    stamp: 'Équipe de 4',
+    tone: 'ink',
+    periode: 'oct. 2021 – mai 2022',
+    annees: '2021 – 2022',
     url: 'https://www.ublo.immo/',
+    capture: captureUblo,
+    captureAlt: "Page d'accueil d'ublo.immo",
     resume:
       "Développement fullstack d'un outil de gestion locative pour bailleurs. API NestJS, interface React Admin, base PostgreSQL avec TypeORM. Mission en équipe mixte, avec revue de code.",
+    accroche:
+      'Un outil de gestion locative pour bailleurs : API NestJS, interface React Admin, tests de bout en bout.',
+    fait: '4 développeurs juniors coordonnés',
     contexte:
       "Coordination d'une équipe de 4 développeurs juniors sur un outil SaaS de gestion locative en remote 4j/semaine. Cadrage des chantiers, revues de PR, accompagnement technique quotidien.",
     stack: ['NestJS', 'React Admin', 'React', 'PostgreSQL', 'TypeORM', 'Cypress'],
@@ -293,24 +335,33 @@ export const PROJETS: Projet[] = [
       'Tests end-to-end Cypress sur les parcours critiques',
       'Revues de code et accompagnement des développeurs juniors',
     ],
-    schema: `<svg viewBox="0 0 540 180" ${SVG_ATTRS}>${markerDef('p3')}
-  ${box('p3', 20, 70, 'React Admin', 'Interface', 'primary')}
+    schema: `<svg viewBox="0 0 540 200" ${SVG_ATTRS}>${markerDef('p3')}
+  ${box(20, 70, 'React Admin', 'Interface', 'primary')}
   ${arrow('p3', 140, 90, 178, 90)}
-  ${box('p3', 180, 70, 'NestJS', 'API REST', 'primary')}
+  ${box(180, 70, 'NestJS', 'API REST', 'primary')}
   ${arrow('p3', 300, 90, 338, 90)}
-  ${box('p3', 340, 70, 'PostgreSQL', 'TypeORM', 'neutral')}
+  ${box(340, 70, 'PostgreSQL', 'TypeORM', 'neutral')}
   ${arrow('p3', 240, 110, 240, 143)}
-  ${box('p3', 180, 145, 'Cypress', 'Tests E2E', 'external')}
+  ${box(180, 145, 'Cypress', 'Tests E2E', 'external')}
 </svg>`,
   },
   {
     slug: 'scalex-invest',
     titre: 'ScaleX Invest',
-    secteur: 'FinTech / Data',
-    periode: 'mars 2021 — juil. 2021',
+    client: 'ScaleX Invest',
+    secteur: 'FinTech, data',
+    stamp: 'Data',
+    tone: 'orange',
+    periode: 'mars – juil. 2021',
+    annees: '2021',
     url: 'https://www.scalex-invest.com/',
+    capture: captureScalex,
+    captureAlt: "Page d'accueil de scalex-invest.com",
     resume:
       "API d'agrégation de données financières provenant d'APIs tierces et de flux SFTP. Calcul de modèles financiers, exposition en GraphQL, et rendu SSR via GatsbyJS.",
+    accroche:
+      'Une API qui agrège des données financières de plusieurs sources et calcule des modèles de scoring.',
+    fait: 'APIs tierces et flux SFTP, une seule API GraphQL',
     contexte:
       "Mission courte mais techniquement dense sur une plateforme d'évaluation de startups tech cotées. Agrégation multi-sources, calcul de scoring financier, et front SSR pour performance sur volume de données important.",
     stack: ['NestJS', 'Node.js', 'GraphQL', 'GatsbyJS', 'PostgreSQL'],
@@ -322,27 +373,36 @@ export const PROJETS: Projet[] = [
       'Base PostgreSQL pour la persistance des scores calculés',
     ],
     schema: `<svg viewBox="0 0 680 220" ${SVG_ATTRS}>${markerDef('p4')}
-  ${box('p4', 20, 50, 'APIs tierces', '', 'neutral')}
-  ${box('p4', 20, 150, 'SFTP', 'Flux données', 'neutral')}
+  ${box(20, 50, 'APIs tierces', '', 'neutral')}
+  ${box(20, 150, 'SFTP', 'Flux données', 'neutral')}
   ${arrow('p4', 140, 70, 188, 105)}
   ${arrow('p4', 140, 170, 188, 125)}
-  ${box('p4', 190, 90, 'NestJS', 'Agrégation', 'primary')}
+  ${box(190, 90, 'NestJS', 'Agrégation', 'primary')}
   ${arrow('p4', 310, 110, 348, 110)}
-  ${box('p4', 350, 90, 'GraphQL', 'API', 'primary')}
+  ${box(350, 90, 'GraphQL', 'API', 'primary')}
   ${arrow('p4', 470, 110, 508, 110)}
-  ${box('p4', 510, 90, 'GatsbyJS', 'SSR Front', 'primary')}
+  ${box(510, 90, 'GatsbyJS', 'SSR Front', 'primary')}
   ${arrow('p4', 240, 130, 240, 163)}
-  ${box('p4', 180, 165, 'PostgreSQL', 'Scores', 'neutral')}
+  ${box(180, 165, 'PostgreSQL', 'Scores', 'neutral')}
 </svg>`,
   },
   {
     slug: 'margoo',
     titre: 'Margoo',
+    client: 'Margoo',
     secteur: 'E-commerce',
-    periode: 'juil. 2020 — 2021',
+    stamp: 'E-commerce',
+    tone: 'ink',
+    periode: 'juil. 2020 – 2021',
+    annees: '2020 – 2021',
     url: 'https://margoo.fr',
+    capture: captureMargoo,
+    captureAlt: "Page d'accueil de margoo.fr",
     resume:
       "Collaboration sur la plateforme e-commerce margoo.fr : développement du site, d'un robot de discussion, de l'API et d'une partie du CRM prestataire.",
+    accroche:
+      "Plusieurs couches d'une plateforme e-commerce : site Gatsby, API NestJS, robot de discussion et modules du CRM.",
+    fait: 'Site, API, chatbot et CRM',
     contexte:
       'Intervention sur plusieurs couches du produit : front Gatsby, API NestJS, bot de conversation Botpress, et modules du CRM prestataire.',
     stack: ['GatsbyJS', 'NestJS', 'AngularJS', 'Botpress', 'SQL'],
@@ -354,25 +414,34 @@ export const PROJETS: Projet[] = [
       'Base de données SQL partagée entre les services',
     ],
     schema: `<svg viewBox="0 0 660 220" ${SVG_ATTRS}>${markerDef('p5')}
-  ${box('p5', 20, 90, 'Gatsby', 'Site web', 'primary')}
+  ${box(20, 90, 'Gatsby', 'Site web', 'primary')}
   ${arrow('p5', 140, 110, 178, 110)}
-  ${box('p5', 180, 90, 'NestJS', 'API', 'primary')}
+  ${box(180, 90, 'NestJS', 'API', 'primary')}
   ${arrow('p5', 300, 110, 338, 110)}
-  ${box('p5', 340, 90, 'SQL', 'Base de données', 'neutral')}
+  ${box(340, 90, 'SQL', 'Base de données', 'neutral')}
   ${arrow('p5', 240, 130, 240, 163)}
-  ${box('p5', 180, 165, 'Botpress', 'Chatbot', 'external')}
+  ${box(180, 165, 'Botpress', 'Chatbot', 'external')}
   ${arrow('p5', 460, 110, 498, 110)}
-  ${box('p5', 500, 90, 'CRM', 'AngularJS', 'neutral')}
+  ${box(500, 90, 'CRM', 'AngularJS', 'neutral')}
 </svg>`,
   },
   {
     slug: 'bdl-capital-management',
     titre: 'BDL Capital Management',
-    secteur: 'Banque & Assurances',
-    periode: 'fév. 2018 — juin 2020',
+    client: 'BDL Capital Management',
+    secteur: 'Banque, assurance',
+    stamp: 'Finance',
+    tone: 'pale',
+    periode: 'fév. 2018 – juin 2020',
+    annees: '2018 – 2020',
     url: 'https://www.bdlcm.com/',
+    capture: captureBdl,
+    captureAlt: "Page d'accueil de bdlcm.com",
     resume:
       "Développement fullstack sur deux ans et demi pour une société de gestion d'actifs parisienne. Applications React, APIs NestJS et Express, base SQL, site WordPress et infrastructure Docker.",
+    accroche:
+      "Des outils internes pour les analystes d'une société de gestion d'actifs : interfaces React, APIs métier, automatisation.",
+    fait: '2 ans et demi de mission',
     contexte:
       "Stack diversifiée : interfaces React pour les analystes, APIs métier en Node.js/NestJS, scripts d'automatisation, et maintenance de l'infrastructure serveur.",
     stack: ['React', 'NestJS', 'Express', 'Node.js', 'TypeScript', 'SQL', 'Docker', 'WordPress'],
@@ -384,16 +453,35 @@ export const PROJETS: Projet[] = [
       'Déploiement et maintenance des serveurs via Docker',
     ],
     schema: `<svg viewBox="0 0 660 220" ${SVG_ATTRS}>${markerDef('p6')}
-  ${box('p6', 20, 90, 'React', 'Interfaces', 'primary')}
+  ${box(20, 90, 'React', 'Interfaces', 'primary')}
   ${arrow('p6', 140, 110, 178, 110)}
-  ${box('p6', 180, 90, 'NestJS', 'API métier', 'primary')}
+  ${box(180, 90, 'NestJS', 'API métier', 'primary')}
   ${arrow('p6', 300, 110, 338, 110)}
-  ${box('p6', 340, 90, 'SQL', 'Base de données', 'neutral')}
+  ${box(340, 90, 'SQL', 'Base de données', 'neutral')}
   ${arrow('p6', 240, 130, 240, 163)}
-  ${box('p6', 180, 165, 'Express', 'Scripts / jobs', 'neutral')}
-  <text x="560" y="60" font-size="10" font-family="system-ui,sans-serif" fill="#6b7280" text-anchor="middle">Infra</text>
-  ${box('p6', 500, 68, 'Docker', 'Déploiement', 'external')}
-  <line x1="460" y1="110" x2="498" y2="88" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+  ${box(180, 165, 'Express', 'Scripts / jobs', 'neutral')}
+  ${note(560, 60, 'Infra')}
+  ${box(500, 68, 'Docker', 'Déploiement', 'external')}
+  <line class="sch-arrow sch-arrow--dashed" x1="460" y1="110" x2="498" y2="88"/>
 </svg>`,
   },
 ];
+
+/** Projets mis en avant sur la home, dans l'ordre de la bande. */
+export const HOME_PROJET_SLUGS = [
+  'fftri-race-simulator',
+  'agregata',
+  'vouloir-dire',
+  'ublo',
+  'bdl-capital-management',
+] as const;
+
+export function getProjet(slug: string): Projet {
+  const projet = PROJETS.find((entry) => entry.slug === slug);
+  if (!projet) throw new Error(`Projet inconnu : ${slug}`);
+  return projet;
+}
+
+export function projetHostname(projet: Projet): string {
+  return new URL(projet.url).hostname.replace(/^www\./, '');
+}

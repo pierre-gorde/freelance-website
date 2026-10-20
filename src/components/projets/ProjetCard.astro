@@ -1,0 +1,154 @@
+---
+import { Image } from 'astro:assets';
+
+import { EVENT_PROJET } from '../../lib/analytics.const';
+import { projetHostname, type Projet } from '../../lib/projets.const';
+import { useLocale } from '../../lib/i18n';
+
+type Props = {
+  projet: Projet;
+  headingLevel?: 'h2' | 'h3';
+  /** Tampon animé par le module générique ; la bande de la home l'anime elle-même. */
+  stampMotion?: boolean;
+  class?: string;
+};
+
+const { projet, headingLevel: Heading = 'h3', stampMotion = true, class: className } = Astro.props;
+const { t, l } = useLocale(Astro.currentLocale);
+---
+
+<li
+  class:list={['panel', `tone-${projet.tone}`, className]}
+  style={`view-transition-name: projet-${projet.slug}`}
+  data-slug={projet.slug}
+>
+  <a
+    class="panel-link"
+    href={l(`/projets/${projet.slug}`)}
+    data-umami-event={EVENT_PROJET}
+    data-umami-event-slug={projet.slug}
+  >
+    <span class="stamp" data-stamp={stampMotion ? '' : undefined}>{projet.stamp}</span>
+    <Heading
+      class="panel-title display"
+      style={`view-transition-name: projet-${projet.slug}-titre`}
+    >
+      {projet.titre}
+    </Heading>
+    <p class="panel-meta">{projet.secteur} · {projet.annees}</p>
+    <div class="shot-wrap">
+      <Image
+        class="panel-shot"
+        src={projet.capture}
+        alt=""
+        widths={[480, 960]}
+        sizes="(min-width: 900px) 520px, 100vw"
+      />
+      <span class="shot-host">{projetHostname(projet)}</span>
+    </div>
+    <p class="panel-desc">{projet.accroche}</p>
+    <p class="panel-fait">{projet.fait}</p>
+    <span class="panel-cta">{t('Lire le projet', { 'fr-MU': 'Get proze-la' })} →</span>
+  </a>
+</li>
+
+<style>
+  .panel {
+    display: flex;
+    flex-direction: column;
+    border: var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    transition: box-shadow 0.2s var(--ease-out);
+  }
+
+  .panel:hover,
+  .panel:focus-within {
+    box-shadow: var(--shadow-xl);
+  }
+
+  .panel-link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 26px 26px 22px;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+  }
+
+  .panel-title {
+    margin: 4px 0 0;
+    font-size: var(--text-h3);
+  }
+
+  .panel-meta {
+    font-weight: 600;
+    font-size: var(--text-sm);
+  }
+
+  .shot-wrap {
+    position: relative;
+    height: 170px;
+    overflow: hidden;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--ink);
+  }
+
+  .panel-shot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transform: scale(1.18);
+  }
+
+  .shot-host {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    padding: 2px 10px;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  .panel-desc {
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+
+  .panel-fait {
+    align-self: flex-start;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 800;
+    font-size: 1rem;
+  }
+
+  .panel-cta {
+    margin-top: auto;
+    padding-top: 6px;
+    font-weight: 800;
+  }
+
+  .panel-link:hover .panel-cta {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel {
+      transition: none;
+    }
+  }
+</style>

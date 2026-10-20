@@ -1,0 +1,106 @@
+---
+type Props = {
+  schema: string;
+  label: string;
+};
+
+const { schema, label } = Astro.props;
+---
+
+<figure class="schema" data-draw>
+  <div class="schema-scroll" set:html={schema} />
+  <figcaption class="sr-only">{label}</figcaption>
+</figure>
+
+<style>
+  .schema {
+    margin: 0;
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    background-color: var(--paper);
+    background-image: radial-gradient(var(--paper-2) 1.4px, transparent 1.7px);
+    background-size: var(--halftone-size) var(--halftone-size);
+  }
+
+  .schema-scroll {
+    overflow-x: auto;
+    padding: clamp(16px, 3vw, 32px);
+  }
+
+  .schema :global(svg) {
+    display: block;
+    width: 100%;
+    min-width: 560px;
+    height: auto;
+    font-family: var(--font-sans);
+  }
+
+  .schema :global(.sch-node rect) {
+    stroke: var(--ink);
+    stroke-width: 2;
+  }
+
+  .schema :global(.sch-node--primary rect) {
+    fill: var(--cyan-pale);
+  }
+
+  .schema :global(.sch-node--neutral rect) {
+    fill: var(--paper-2);
+  }
+
+  .schema :global(.sch-node--external rect) {
+    fill: var(--orange-pale);
+  }
+
+  .schema :global(.sch-label) {
+    fill: var(--ink);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .schema :global(.sch-sub) {
+    fill: var(--ink-soft);
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .schema :global(.sch-arrow) {
+    stroke: var(--ink);
+    stroke-width: 1.75;
+  }
+
+  .schema :global(.sch-arrow--dashed) {
+    stroke-dasharray: 4 3;
+  }
+
+  .schema :global(.sch-head) {
+    fill: var(--ink);
+  }
+
+  .schema :global(.sch-note) {
+    fill: var(--ink-soft);
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .schema :global(.sch-zone) {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 4;
+  }
+
+  .schema :global(.sch-legacy rect) {
+    fill: var(--paper);
+    stroke: var(--orange-ink);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 3;
+  }
+
+  .schema :global(.sch-legacy text) {
+    fill: var(--orange-ink);
+    font-size: 10px;
+    font-weight: 700;
+  }
+</style>
