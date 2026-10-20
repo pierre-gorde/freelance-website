@@ -1,0 +1,53 @@
+---
+import { SLAM_ROTATIONS } from '../../lib/motion.const';
+import { frenchSpacing } from '../../lib/typo';
+
+type Props = {
+  as?: 'h1' | 'h2';
+  text: string;
+  /** Fin de titre surlignée en cyan. */
+  highlight?: string;
+  id?: string;
+  class?: string;
+};
+
+const { as: Tag = 'h1', text, highlight, id, class: className } = Astro.props;
+
+const toWords = (value: string, offset: number) =>
+  frenchSpacing(value)
+    .split(/ +/)
+    .filter(Boolean)
+    .map((word, index) => ({
+      word,
+      style: `--i:${offset + index};--r:${SLAM_ROTATIONS[(offset + index) % SLAM_ROTATIONS.length]}deg`,
+    }));
+
+const words = toWords(text, 0);
+const highlightWords = highlight ? toWords(highlight, words.length) : [];
+---
+
+<Tag id={id} class:list={['display', 'slam-in', className]}>
+  {
+    words.map(({ word, style }) => (
+      <>
+        <span class="w" style={style}>
+          {word}
+        </span>{' '}
+      </>
+    ))
+  }
+  {
+    highlightWords.length > 0 && (
+      <span class="hl">
+        {highlightWords.map(({ word, style }, index) => (
+          <>
+            <span class="w" style={style}>
+              {word}
+            </span>
+            {index < highlightWords.length - 1 && ' '}
+          </>
+        ))}
+      </span>
+    )
+  }
+</Tag>
