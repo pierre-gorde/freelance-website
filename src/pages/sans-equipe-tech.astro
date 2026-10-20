@@ -1,0 +1,115 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import PrimaryCta from '../components/ui/PrimaryCta.astro';
+import Engagements from '../components/ui/Engagements.astro';
+import Steps from '../components/ui/Steps.astro';
+import FaqSection from '../components/ui/FaqSection.astro';
+import FinalCta from '../components/ui/FinalCta.astro';
+import ProjetsSelection from '../components/projets/ProjetsSelection.astro';
+import type { FaqId } from '../lib/faq.const';
+import { DEVIS_DELAY_LABEL, FORFAIT_MAX_DAYS, RDV_DURATION_LABEL } from '../lib/site.const';
+import { useLocale } from '../lib/i18n';
+
+const { t, l, tjm } = useLocale(Astro.currentLocale);
+
+const engagements = [
+  {
+    title: "On parle métier d'abord",
+    text: "Je traduis vos enjeux en choix techniques. Vous n'avez pas besoin de savoir ce qu'est une API pour décider.",
+  },
+  {
+    title: 'Un cadrage avant la première ligne de code',
+    text: "On fixe ensemble le périmètre, l'architecture et les jalons. Vous savez ce qui sera livré avant que je commence.",
+  },
+  {
+    title: 'Un compte-rendu lisible par tous',
+    text: "Chaque soir : ce qui est fait, ce qui bloque, ce que j'attends de vous. Écrit pour être compris sans bagage technique.",
+  },
+  {
+    title: 'Un démarrage sans engagement long',
+    text: `Un devis de démarrage, jusqu'à ${FORFAIT_MAX_DAYS} jours. Si ça vous convient, on continue en régie à ${tjm}.`,
+  },
+];
+
+const journey = [
+  {
+    title: 'Un premier échange',
+    duration: RDV_DURATION_LABEL,
+    text: 'Votre contexte, votre marché, ce que vous voulez construire et pourquoi. Pas besoin de savoir ce que vous voulez techniquement.',
+  },
+  {
+    title: 'Du besoin au plan technique',
+    duration: DEVIS_DELAY_LABEL,
+    text: "J'écris ce que ça implique : périmètre, architecture, jalons, estimation. En français, sans jargon. Vous arbitrez.",
+  },
+  {
+    title: 'Le démarrage',
+    duration: `Jusqu'à ${FORFAIT_MAX_DAYS} jours`,
+    text: 'Un devis à durée limitée. Vous recevez un compte-rendu chaque soir et vous gardez la main sur les priorités.',
+  },
+  {
+    title: 'La suite en régie',
+    duration: tjm,
+    text: 'Si la collaboration convient des deux côtés, on continue pour faire vivre et évoluer le produit.',
+  },
+];
+
+const FAQ_IDS: readonly FaqId[] = [
+  'non-tech',
+  'conseil-stack',
+  'recrutement',
+  'demarrage',
+  'pourquoi-vous',
+];
+---
+
+<SiteLayout
+  title="Projet sans équipe tech"
+  description="Vous portez un projet ou vous dirigez une entreprise sans équipe tech ? Je cadre, je développe et je livre, avec un compte-rendu écrit chaque soir, sans jargon."
+  canonicalPath="/sans-equipe-tech"
+>
+  <PageHero
+    title={t("Pas d'équipe tech en place ?")}
+    highlight={t('Je cadre et je livre le projet.')}
+    lead="Vous portez un projet ou vous dirigez une entreprise, et personne ne s'occupe de la technique. Je traduis vos besoins en choix techniques, je vous explique ce que je fais et pourquoi, et je livre jusqu'à la mise en production."
+    tone="orange"
+  >
+    <div class="actions">
+      <PrimaryCta size="lg" tone="ink" place="sans-equipe-hero" magnet />
+      <a class="link" href={l('/methode')}>{t('Voir ma méthode', { 'fr-MU': 'Get mo metod' })}</a>
+    </div>
+  </PageHero>
+
+  <Engagements id="engagements" title="Ce que vous obtenez" items={engagements} />
+
+  <ProjetsSelection
+    title="Des projets partis de zéro"
+    slugs={['slow-adventures', 'agregata', 'fftri-race-simulator']}
+  />
+
+  <Steps
+    id="deroule"
+    title={t('Comment ça se passe', { 'fr-MU': 'Kouma sa pasé' })}
+    steps={journey}
+    tone="plain"
+  />
+
+  <FaqSection ids={FAQ_IDS} />
+
+  <FinalCta
+    title={t('On parle de votre projet ?', { 'fr-MU': 'Nou koz ou proze ?' })}
+    text={`Vous arrivez avec votre projet et vos contraintes. Vous repartez avec mon avis et des pistes pour avancer. ${RDV_DURATION_LABEL}, gratuit.`}
+    place="sans-equipe-final"
+  />
+</SiteLayout>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px 26px;
+    margin-top: 8px;
+  }
+</style>

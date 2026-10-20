@@ -1,0 +1,59 @@
+---
+type Item = { title: string; text: string };
+
+type Props = {
+  id: string;
+  title: string;
+  items: readonly Item[];
+};
+
+const { id, title, items } = Astro.props;
+const TONES = ['tone-cyan', 'tone-paper', 'tone-pale', 'tone-orange'] as const;
+---
+
+<section class="engagements" aria-labelledby={`${id}-titre`}>
+  <div class="wrap">
+    <h2 class="display section-title" id={`${id}-titre`} data-slam>{title}</h2>
+    <ul class="engagements-grid" data-rise>
+      {
+        items.map((item, index) => (
+          <li class:list={['engagement', TONES[index % TONES.length]]}>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .engagements {
+    padding-block: var(--space-section);
+  }
+
+  .engagements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .engagement {
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .engagement h3 {
+    font-size: 1.25rem;
+    font-weight: 900;
+    font-stretch: 110%;
+    line-height: 1.2;
+  }
+
+  .engagement p {
+    margin-top: 10px;
+  }
+</style>
