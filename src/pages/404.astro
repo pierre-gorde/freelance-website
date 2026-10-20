@@ -1,40 +1,38 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
-import Container from '../components/layout/Container.astro';
-import Button from '../components/ui/Button.astro';
+import PageHero from '../components/ui/PageHero.astro';
 import PrimaryCta from '../components/ui/PrimaryCta.astro';
 ---
 
 <SiteLayout title="Page introuvable" noindex={true}>
-  <section class="py-[var(--space-section)]">
-    <Container size="default">
-      <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-        404
-      </p>
-      <h1
-        class="mt-4 max-w-[20ch] text-[length:var(--text-4xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.025em] text-[var(--color-text)]"
-        data-notfound-title
+  <PageHero
+    title="Cette page n'existe pas,"
+    highlight="ou plus."
+    lead="Vous pouvez revenir à l'accueil, ou réserver un échange si vous avez un projet en tête."
+    tone="pale"
+  >
+    <div class="actions">
+      <PrimaryCta size="lg" place="404" />
+      <span data-notfound-home class="contents"
+        ><a class="btn btn-lg btn-paper" href="/">Retour à l'accueil</a></span
       >
-        Cette page n'existe pas, ou plus.
-      </h1>
-      <p
-        class="mt-6 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-        data-notfound-text
-      >
-        Pas un drame. Vous pouvez revenir à l'accueil, ou directement réserver un échange si vous
-        avez un projet en tête.
-      </p>
-      <div class="mt-10 flex flex-wrap items-center gap-4">
-        <PrimaryCta size="lg" class="w-full sm:w-auto" />
-        <span data-notfound-home class="contents">
-          <Button href="/" variant="secondary" size="lg" class="w-full sm:w-auto"
-            >Retour à l'accueil</Button
-          >
-        </span>
-      </div>
-    </Container>
-  </section>
+    </div>
+  </PageHero>
 </SiteLayout>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    margin-top: 8px;
+  }
+
+  .contents {
+    display: contents;
+  }
+</style>
 
 <!-- La 404 est servie depuis le build FR pour toutes les routes, /mu/* inclus (un seul
      404.html sur Cloudflare Pages) : le clin d'oeil kreol se fait côté client. -->
@@ -44,16 +42,15 @@ import PrimaryCta from '../components/ui/PrimaryCta.astro';
     location.pathname === MU_PREFIX || location.pathname.startsWith(`${MU_PREFIX}/`);
 
   if (isMauritianPath) {
-    const title = document.querySelector('[data-notfound-title]');
+    const title = document.querySelector('main h1');
     if (title) title.textContent = 'Sa paz-la pa existé.';
-    const text = document.querySelector('[data-notfound-text]');
-    if (text) {
-      text.textContent =
+    const lead = document.querySelector('main .lead');
+    if (lead) {
+      lead.textContent =
         'Pa grav. Ou kapav retourn lakaz, ouswa rézerv enn kozé si ou éna enn proze an tet.';
     }
     const homeLink = document.querySelector('[data-notfound-home] a');
     homeLink?.setAttribute('href', MU_PREFIX);
-    const homeLabel = homeLink?.querySelector('span');
-    if (homeLabel) homeLabel.textContent = 'Retourn lakaz';
+    if (homeLink) homeLink.textContent = 'Retourn lakaz';
   }
 </script>

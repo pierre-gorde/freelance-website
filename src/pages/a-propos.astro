@@ -1,253 +1,239 @@
 ---
+import { Image } from 'astro:assets';
+
 import SiteLayout from '../layouts/SiteLayout.astro';
-import Container from '../components/layout/Container.astro';
-import PrimaryCta from '../components/ui/PrimaryCta.astro';
-import Reveal from '../components/ui/Reveal.astro';
-import { RDV_DURATION_LABEL } from '../lib/site.const';
+import PageHero from '../components/ui/PageHero.astro';
+import FinalCta from '../components/ui/FinalCta.astro';
+import illustration from '../assets/pierre-illustration.png';
+import photo from '../assets/pierre-photo.jpg';
+import { COTON_URL, COTON_YEARS, EXPERIENCE_YEARS } from '../lib/site.const';
 import { useLocale } from '../lib/i18n';
 
-const { t } = useLocale(Astro.currentLocale);
+const { t, l } = useLocale(Astro.currentLocale);
 
-const skills = [
+const stack = [
+  { label: 'Front', items: ['React', 'Angular', 'Next.js', 'Astro', 'Gatsby', 'MUI'] },
+  { label: 'Back', items: ['NestJS', 'Node.js', 'GraphQL', 'Prisma', 'TypeORM', 'BullMQ', 'Go'] },
+  { label: 'Données', items: ['PostgreSQL', 'SQL Server', 'Redis'] },
   {
-    label: 'Frontend',
-    items: [
-      'Interfaces web',
-      'Rendu serveur',
-      'Sites statiques',
-      'Frameworks TypeScript',
-      'Design system',
-      'Animations',
-    ],
+    label: 'Infra',
+    items: ['AWS (ECS, Amplify, Cognito, S3)', 'Terraform', 'Docker', 'GitHub Actions', 'Netlify'],
   },
-  {
-    label: 'Backend & données',
-    items: [
-      'APIs REST',
-      'GraphQL',
-      'Logique métier',
-      'Bases SQL',
-      'Bases NoSQL',
-      'Cache',
-      'Temps réel',
-    ],
-  },
-  {
-    label: 'Infra & DevOps',
-    items: ['CI/CD', 'Containers', 'Cloud', 'Edge & CDN', 'Monitoring', 'IaC'],
-  },
-  {
-    label: 'Intégrations IA',
-    items: ['Chat streaming', 'APIs LLM', 'RAG', 'Modèles locaux', 'Pipelines IA'],
-  },
+  { label: 'Temps réel et IA', items: ['Socket.io', 'Agora', 'Agents LLM'] },
 ];
 ---
 
 <SiteLayout
   title="À propos"
-  description="Dev TypeScript senior, ex-cofondateur du collectif Coton (6 ans). Je passe en solo pour porter des projets tech de bout en bout, avec rigueur et un compte-rendu quotidien."
+  description={`Développeur TypeScript depuis ${EXPERIENCE_YEARS} ans, front et back, co-fondateur pendant ${COTON_YEARS} ans du collectif de freelances Coton.`}
   canonicalPath="/a-propos"
 >
-  <!-- HERO + illustration -->
-  <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
-    <Container size="wide">
-      <div class="grid gap-16 lg:grid-cols-12 lg:items-start lg:gap-16">
-        <!-- Colonne gauche : récit -->
-        <Reveal class="lg:col-span-7">
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            {t('À propos', { 'fr-MU': 'Enn ti mo lor mwa' })}
-          </p>
-          <h1
-            class="mt-5 max-w-[18ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
-          >
-            Pierre,
-            <span class="block text-[var(--color-primary-700)]"
-              >{t('développeur depuis 10 ans.', { 'fr-MU': 'devlopper depi 10 an.' })}</span
-            >
-          </h1>
-          <div
-            class="mt-12 space-y-6 text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-          >
-            <p>
-              Pendant 6 ans, j'ai co-fondé et co-géré <strong class="text-[var(--color-text)]"
-                ><a
-                  href="https://coton.dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="underline underline-offset-2 hover:no-underline">Coton</a
-                ></strong
-              >, un collectif de développeurs freelance — tout en continuant à coder en mission côté
-              client.
-            </p>
-            <p>
-              Je me concentre désormais uniquement sur le freelance dev en solo. Pour{' '}
-              <strong class="text-[var(--color-text)]"
-                >porter chaque projet jusqu'à sa livraison</strong
-              >, sans intermédiaire, avec ce qui marche : compte-rendu quotidien, cadrage explicite,
-              tarif transparent.
-            </p>
-          </div>
-        </Reveal>
-
-        <!-- Colonne droite : illustration 01 -->
-        <Reveal class="lg:col-span-5 lg:sticky lg:top-28" delay={120}>
-          <div class="overflow-hidden rounded-[var(--radius-lg)] aspect-4/5">
-            <img
-              src="/illustrations/pierre-01.png"
-              alt="Pierre Gordé"
-              width="600"
-              height="750"
-              loading="eager"
-              decoding="async"
-              class="w-full h-full object-cover object-center"
-            />
-          </div>
-        </Reveal>
-      </div>
-    </Container>
-  </section>
-
-  <!-- COMPÉTENCES TECHNIQUES -->
-  <section
-    class="mt-[var(--space-section-tight)] py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+  <PageHero
+    title="Pierre,"
+    highlight={t(`développeur depuis ${EXPERIENCE_YEARS} ans.`, {
+      'fr-MU': `devlopper depi ${EXPERIENCE_YEARS} an.`,
+    })}
+    tone="orange"
   >
-    <Container size="wide">
-      <Reveal class="max-w-[100ch]">
-        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          {t('Côté technique', { 'fr-MU': 'Kote teknik' })}
-        </p>
-        <h2
-          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
-        >
-          {t('Mes compétences.', { 'fr-MU': 'Séki mo koné fer.' })}
-        </h2>
-        <p
-          class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-        >
-          Une liste d'outils n'est pas un argument de vente — ce qui compte c'est de savoir choisir
-          les bons pour un projet donné. Pour situer : je couvre confortablement ce qui suit.
-        </p>
-      </Reveal>
+    <div class="intro" data-rise>
+      <p>
+        Pendant {COTON_YEARS} ans, j'ai co-fondé et co-géré
+        <a class="link" href={COTON_URL} target="_blank" rel="noopener noreferrer">Coton</a>, un
+        collectif de développeurs freelance, tout en continuant à coder chez les clients.
+      </p>
+      <p>
+        Aujourd'hui je travaille en solo. Je prends des projets que je mène jusqu'à la production,
+        avec un compte-rendu écrit chaque soir.
+      </p>
+    </div>
+    <div class="portrait-case" slot="visual">
+      <Image
+        class="portrait printing"
+        src={illustration}
+        alt="Portrait illustré de Pierre Gordé"
+        widths={[320, 480, 600]}
+        sizes="(min-width: 900px) 440px, 90vw"
+        loading="eager"
+      />
+    </div>
+  </PageHero>
 
-      <dl class="mt-16 grid items-start gap-x-12 gap-y-12 md:grid-cols-2">
+  <section class="stack" aria-labelledby="stack-titre">
+    <div class="wrap">
+      <h2 class="display section-title" id="stack-titre" data-slam>Ce que j'utilise en mission</h2>
+      <p class="lead stack-intro">
+        Relevé dans les projets livrés, pas dans une liste de mots-clés. Le détail est dans chaque <a
+          class="link"
+          href={l('/projets')}>fiche projet</a
+        >.
+      </p>
+      <dl class="stack-grid" data-rise>
         {
-          skills.map((category, index) => (
-            <Reveal as="div" delay={index * 70} class="flex flex-col gap-4">
-              <dt class="flex items-baseline gap-3">
-                <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                  {category.label}
-                </span>
-                <span class="h-px flex-1 bg-[var(--color-border)]" aria-hidden="true" />
-              </dt>
+          stack.map((group) => (
+            <div class="stack-group">
+              <dt>{group.label}</dt>
               <dd>
-                <ul class="flex flex-wrap gap-2">
-                  {category.items.map((item) => (
-                    <li class="rounded-pill border border-border bg-bg px-3 py-1.5 text-sm text-text">
-                      {item}
-                    </li>
+                <ul>
+                  {group.items.map((item) => (
+                    <li class="chip">{item}</li>
                   ))}
                 </ul>
               </dd>
-            </Reveal>
+            </div>
           ))
         }
       </dl>
-    </Container>
-  </section>
-
-  <!-- POURQUOI LE SOLO -->
-  <section class="py-[var(--space-section)]">
-    <Container size="wide">
-      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
-        <Reveal class="lg:col-span-4">
-          <div class="overflow-hidden rounded-[var(--radius-lg)]">
-            <img
-              src="/pierre-homepage.jpg"
-              alt="Pierre Gordé"
-              width="800"
-              height="800"
-              loading="lazy"
-              decoding="async"
-              class="w-full h-auto block"
-            />
-          </div>
-        </Reveal>
-
-        <Reveal class="lg:col-span-8" delay={120}>
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            {t('Pourquoi le solo, maintenant', { 'fr-MU': 'Kifer solo, aster-la' })}
-          </p>
-          <h2
-            class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
-          >
-            {
-              t('Parce que la relation directe gagne sur tout le reste.', {
-                'fr-MU': 'Parski relasion direk pli for ki tou léres.',
-              })
-            }
-          </h2>
-          <div
-            class="mt-8 space-y-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-          >
-            <p>
-              Dans un collectif, l'attention se divise : entre la mission côté client, et les sujets
-              propres au collectif — recrutement, outillage, cohésion, stratégie commune. En solo,
-              tout va au projet en cours. <strong class="text-[var(--color-text)]"
-                >Un seul client à la fois, un seul focus.</strong
-              >
-            </p>
-            <p>
-              C'est aussi un choix de cadre : je décide de mes méthodes, je décide de ce que je
-              promets et de ce que je ne promets pas. Pour faire ce qui marche pour livrer un projet
-              proprement.
-            </p>
-            <p>
-              <strong class="text-[var(--color-text)]"
-                >Ce que je garde de Coton : l'idée que la transparence</strong
-              > — sur le travail, sur le prix, sur les limites — est une fondation. Pas un argument.
-            </p>
-          </div>
-        </Reveal>
-      </div>
-    </Container>
-  </section>
-
-  <!-- CTA FINALE -->
-  <section
-    class="relative overflow-hidden py-[var(--space-section)] bg-[var(--color-bg-deep)] text-[var(--color-text-inverse)]"
-  >
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full opacity-30"
-      style="background: radial-gradient(closest-side, oklch(50% 0.12 155 / 0.6), transparent);"
-    >
     </div>
-
-    <Container size="wide">
-      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
-        <Reveal class="lg:col-span-8">
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
-            {t('Premier échange', { 'fr-MU': 'Premie kozé' })} · {RDV_DURATION_LABEL} · Sans engagement
-          </p>
-          <h2
-            class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
-          >
-            {t('On se parle ?', { 'fr-MU': 'Nou kozé ?' })}
-            <span class="block text-[var(--color-primary-200)]"
-              >{t('On voit où vous en êtes.', { 'fr-MU': 'Nou get kot ou été.' })}</span
-            >
-          </h2>
-          <p
-            class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
-          >
-            Vous arrivez avec votre contexte, vous repartez avec une lecture honnête et des
-            directions concrètes. Que vous travailliez avec moi ensuite ou non.
-          </p>
-        </Reveal>
-        <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
-          <PrimaryCta size="lg" class="w-full sm:w-auto" />
-        </Reveal>
-      </div>
-    </Container>
   </section>
+
+  <section class="solo" aria-labelledby="solo-titre" data-wipe="left">
+    <div class="wrap solo-row">
+      <div class="solo-visual" data-tilt="-8,-2">
+        <Image
+          class="solo-photo"
+          src={photo}
+          alt="Pierre Gordé sur un balcon, au coucher du soleil"
+          widths={[320, 640]}
+          sizes="320px"
+          data-print
+        />
+      </div>
+      <div>
+        <h2 class="display section-title" id="solo-titre" data-slam>
+          {t('Pourquoi le solo', { 'fr-MU': 'Kifer solo' })}
+        </h2>
+        <div class="solo-text" data-rise>
+          <p>
+            Dans un collectif, l'attention se partage entre les missions et la vie du collectif :
+            recrutement, outils, stratégie commune. En solo, tout va au projet en cours.
+          </p>
+          <p>
+            C'est aussi un choix de cadre : je décide de mes méthodes, de ce que je promets et de ce
+            que je ne promets pas.
+          </p>
+          <p>
+            De Coton, je garde une idée : être transparent sur le travail, le prix et les limites,
+            dès le premier échange.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    title={t('On se parle ?', { 'fr-MU': 'Nou kozé ?' })}
+    text="Vous arrivez avec votre contexte, vous repartez avec mon avis, que vous travailliez avec moi ensuite ou non."
+    place="a-propos-final"
+  />
 </SiteLayout>
+
+<style>
+  .intro {
+    display: grid;
+    gap: 14px;
+    max-width: 36em;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .intro .link:hover {
+    color: var(--ink);
+  }
+
+  .portrait-case {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: clamp(300px, 34vw, 460px);
+    overflow: hidden;
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--cyan);
+    background-image: var(--halftone-cyan);
+    background-size: 9px 9px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .portrait {
+    display: block;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom;
+  }
+
+  .stack {
+    padding-block: var(--space-section);
+  }
+
+  .stack-intro {
+    margin-top: 20px;
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 28px 40px;
+    margin-top: 40px;
+  }
+
+  .stack-group dt {
+    font-weight: 900;
+    font-stretch: 112%;
+    font-size: 1.3rem;
+  }
+
+  .stack-group ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .stack-group dd {
+    margin: 0;
+  }
+
+  .solo {
+    background: var(--paper-2);
+    border-block: var(--border);
+  }
+
+  .solo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 48px 64px;
+    padding-block: var(--space-section);
+  }
+
+  .solo-visual {
+    flex: 0 0 auto;
+    width: min(320px, 100%);
+  }
+
+  .solo-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .solo-row > div:last-child {
+    flex: 1 1 420px;
+    min-width: 0;
+  }
+
+  .solo-text {
+    display: grid;
+    gap: 16px;
+    margin-top: 20px;
+    max-width: 36em;
+    font-size: 1.15rem;
+  }
+</style>

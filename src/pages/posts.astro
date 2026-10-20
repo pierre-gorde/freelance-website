@@ -1,56 +1,23 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
-import Container from '../components/layout/Container.astro';
-import Reveal from '../components/ui/Reveal.astro';
+import PageHero from '../components/ui/PageHero.astro';
 import { useLocale } from '../lib/i18n';
 
-const { t } = useLocale(Astro.currentLocale);
+const { l } = useLocale(Astro.currentLocale);
 ---
 
 <SiteLayout
   title="Posts"
-  description="Ce que j'apprends, ce que j'observe, ce qui me paraît utile à partager. Sur le dev TypeScript, la gestion de projet, et le freelance."
+  description="Des textes sur le développement TypeScript et la conduite de projet, quand j'ai quelque chose d'utile à dire."
   canonicalPath="/posts"
+  noindex={true}
 >
-  <!-- HERO -->
-  <section class="pt-16 pb-[var(--space-section)] md:pt-24">
-    <Container size="default">
-      <Reveal>
-        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          {t('Posts', { 'fr-MU': 'Bann post' })}
-        </p>
-        <h1
-          class="mt-5 max-w-[22ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
-        >
-          {
-            t("Ce que j'écris quand j'ai quelque chose à dire.", {
-              'fr-MU': 'Séki mo ekrir kan mo éna kitsoz pou dir.',
-            })
-          }
-        </h1>
-        <p
-          class="mt-8 max-w-[52ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
-        >
-          Pas de contenu régulier pour le principe. Quelques textes sur le dev TypeScript, la
-          gestion de projet, et ce que ça fait de passer en solo — quand j'ai quelque chose d'utile
-          à dire.
-        </p>
-      </Reveal>
-
-      <Reveal class="mt-20" delay={80}>
-        <div
-          class="flex flex-col items-center justify-center gap-6 rounded-[var(--radius-lg)] border border-dashed border-[var(--color-border)] py-24 text-center"
-        >
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-            {t('Bientôt disponible', { 'fr-MU': 'Biento disponib' })}
-          </p>
-          <p
-            class="max-w-[40ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-          >
-            Rien pour l'instant. J'écrirai quand j'aurai quelque chose qui vaut le coup d'être lu.
-          </p>
-        </div>
-      </Reveal>
-    </Container>
-  </section>
+  <PageHero
+    title="Rien de publié"
+    highlight="pour l'instant."
+    lead="J'écrirai ici quand un projet m'aura appris quelque chose d'utile à partager."
+    tone="pale"
+  >
+    <a class="link" href={l('/projets')}>En attendant, les projets livrés</a>
+  </PageHero>
 </SiteLayout>
