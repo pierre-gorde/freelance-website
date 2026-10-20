@@ -1,8 +1,25 @@
 ---
+import '@fontsource-variable/archivo/wdth.css';
 import '../styles/global.css';
-import { DEFAULT_DESCRIPTION, DEFAULT_OG_IMAGE, DEFAULT_TITLE } from '../lib/seo.const';
-import { CAL_EVENT_LINK, CAL_NAMESPACE, SITE_NAME, SITE_URL } from '../lib/site.const';
-import { UMAMI_SCRIPT_URL, UMAMI_WEBSITE_ID } from '../lib/analytics.const';
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TITLE,
+  TITLE_SEPARATOR,
+} from '../lib/seo.const';
+import {
+  CAL_BRAND_COLOR,
+  CAL_EVENT_LINK,
+  CAL_NAMESPACE,
+  CONTACT_EMAIL,
+  GITHUB_URL,
+  LINKEDIN_URL,
+  SITE_NAME,
+  SITE_ROLE,
+  SITE_URL,
+} from '../lib/site.const';
+import { UMAMI_DOMAINS, UMAMI_SCRIPT_URL, UMAMI_WEBSITE_ID } from '../lib/analytics.const';
 import { DEFAULT_LOCALE, LOCALES } from '../lib/locale.const';
 import { localizePath, stripLocalePrefix, useLocale } from '../lib/i18n';
 
@@ -22,7 +39,7 @@ const {
   noindex = false,
 } = Astro.props;
 
-const fullTitle = title === DEFAULT_TITLE ? title : `${title} — ${SITE_NAME}`;
+const fullTitle = title === DEFAULT_TITLE ? title : `${title}${TITLE_SEPARATOR}${SITE_NAME}`;
 
 const { locale } = useLocale(Astro.currentLocale);
 // Les pages passent un canonicalPath sans préfixe de locale : chaque variante est self-canonical.
@@ -35,6 +52,16 @@ const alternates = noindex
       href: new URL(localizePath(entry.code, basePath), SITE_URL).href,
     }));
 const xDefaultHref = new URL(localizePath(DEFAULT_LOCALE.code, basePath), SITE_URL).href;
+
+const personJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE_NAME,
+  jobTitle: SITE_ROLE,
+  url: SITE_URL,
+  email: `mailto:${CONTACT_EMAIL}`,
+  sameAs: [LINKEDIN_URL, GITHUB_URL],
+});
 ---
 
 <!doctype html>
@@ -65,21 +92,35 @@ const xDefaultHref = new URL(localizePath(DEFAULT_LOCALE.code, basePath), SITE_U
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <link rel="preconnect" href="https://api.fontshare.com" />
-    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
 
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script is:inline type="application/ld+json" set:html={personJsonLd} />
 
     {
       import.meta.env.PROD && UMAMI_WEBSITE_ID && (
-        <script is:inline defer src={UMAMI_SCRIPT_URL} data-website-id={UMAMI_WEBSITE_ID} />
+        <script
+          is:inline
+          defer
+          src={UMAMI_SCRIPT_URL}
+          data-website-id={UMAMI_WEBSITE_ID}
+          data-domains={UMAMI_DOMAINS}
+        />
       )
     }
   </head>
   <body>
     <slot />
-    <script is:inline define:vars={{ calEventLink: CAL_EVENT_LINK, calNamespace: CAL_NAMESPACE }}>
+    <script
+      is:inline
+      define:vars={{
+        calEventLink: CAL_EVENT_LINK,
+        calNamespace: CAL_NAMESPACE,
+        calBrandColor: CAL_BRAND_COLOR,
+      }}
+    >
       (function (C, A, L) {
         let p = function (a, ar) {
           a.q.push(ar);
@@ -114,10 +155,13 @@ const xDefaultHref = new URL(localizePath(DEFAULT_LOCALE.code, basePath), SITE_U
       })(window, 'https://app.cal.com/embed/embed.js', 'init');
       Cal('init', calNamespace, { origin: 'https://cal.com' });
       Cal.ns[calNamespace]('ui', {
-        styles: { branding: { brandColor: '#1a5231' } },
+        styles: { branding: { brandColor: calBrandColor } },
         hideEventTypeDetails: false,
         layout: 'month_view',
       });
+    </script>
+    <script>
+      import '../scripts/motion';
     </script>
   </body>
 </html>
