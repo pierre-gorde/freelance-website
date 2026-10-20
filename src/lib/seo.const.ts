@@ -1,6 +1,7 @@
-import { SITE_NAME, SITE_URL } from './site.const';
+import { SITE_NAME, SITE_ROLE, SITE_URL } from './site.const';
 
-export const DEFAULT_TITLE = `${SITE_NAME} — Dev TypeScript freelance`;
+export const TITLE_SEPARATOR = ' · ';
+export const DEFAULT_TITLE = `${SITE_NAME}${TITLE_SEPARATOR}${SITE_ROLE}`;
 export const DEFAULT_DESCRIPTION =
-  "Je conçois et je livre vos produits tech, avec rigueur, disponibilité et un compte-rendu quotidien sur l'avancée.";
-export const DEFAULT_OG_IMAGE = `https://api.microlink.io/?url=${encodeURIComponent(SITE_URL)}&screenshot=true&embed=screenshot.url&type=jpeg&meta=false`;
+  "Développeur TypeScript freelance, 10 ans d'expérience. Je prends le projet que votre équipe n'a pas le temps de faire, et je vous envoie un compte-rendu écrit chaque soir.";
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og.png`;
