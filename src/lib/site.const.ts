@@ -24,3 +24,4 @@ export const CAREER_START_YEAR = 2018;
 // Calculé au build : le chiffre avance au premier déploiement de chaque année.
 export const EXPERIENCE_YEARS = new Date().getFullYear() - CAREER_START_YEAR;
 export const COTON_YEARS = 6;
+export const FREELANCE_START_YEAR = 2020;
