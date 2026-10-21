@@ -6,7 +6,7 @@ import PrimaryCta from '../ui/PrimaryCta.astro';
 import SlamTitle from '../ui/SlamTitle.astro';
 import illustration from '../../assets/pierre-illustration.png';
 import { HERO_REPORT } from '../../lib/report.const';
-import { EXPERIENCE_YEARS } from '../../lib/site.const';
+import { EXPERIENCE_YEARS, SITE_ROLE } from '../../lib/site.const';
 import { useLocale } from '../../lib/i18n';
 
 const { t, l, tjm } = useLocale(Astro.currentLocale);
@@ -23,8 +23,8 @@ const facts = [t('Temps plein ou partiel'), tjm];
         highlight={t('Je prends votre projet.')}
       />
       <p class="lead hero-sub">
-        Développeur TypeScript freelance, {EXPERIENCE_YEARS} ans d'expérience. Outil interne, migration,
-        connecteur, back-office : je le livre en autonomie dans votre stack. Chaque soir, un compte-rendu
+        {SITE_ROLE}, {EXPERIENCE_YEARS} ans d'expérience. Interface, serveur, hébergement, IA : je choisis
+        les bons outils avec vous et je mène le projet jusqu'à la mise en ligne. Chaque soir, un compte-rendu
         écrit vous dit où on en est.
       </p>
       <div class="hero-actions">
