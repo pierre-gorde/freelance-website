@@ -13,7 +13,7 @@ export const COTON_URL = 'https://coton.dev';
 export const CAL_EVENT_LINK = 'pierre-gorde/30min';
 export const CAL_NAMESPACE = 'rdv';
 
-export const FORFAIT_MAX_DAYS = 12;
+export const FORFAIT_MAX_DAYS = 20;
 export const DEVIS_DELAY_LABEL = 'Sous 5 jours ouvrés';
 
 export const RDV_DURATION_LABEL = '30 minutes';
