@@ -110,6 +110,23 @@ test('switcher pied de page : FR → MU → FR en préservant le chemin', async 
   await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
 });
 
+test('sélecteur header desktop : langue en cours affichée, chemin préservé', async ({ page }) => {
+  await page.goto('/methode');
+
+  const select = page.locator('#site-header [data-locale-select]');
+  await expect(select.locator('summary')).toContainText('FR');
+  await select.locator('summary').click();
+  await select.locator(`${SWITCHER_SELECTOR}[data-umami-event-to="fr-MU"]`).click();
+  await expect(page).toHaveURL(/\/mu\/methode$/);
+  await expect(page.locator('#site-header [data-locale-select] summary')).toContainText('MU');
+
+  await page.locator('#site-header [data-locale-select] summary').click();
+  await page
+    .locator(`#site-header [data-locale-select] ${SWITCHER_SELECTOR}[data-umami-event-to="fr"]`)
+    .click();
+  await expect(page).toHaveURL(/\/methode$/);
+});
+
 test('[mu] /mu — bulle « Bonzour ! » visible dans le hero', async ({ page }) => {
   await page.goto('/mu');
   await expect(page.locator('[data-hero-bubble]')).toContainText('Bonzour !');

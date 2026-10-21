@@ -76,7 +76,8 @@ Deux locales via l'i18n natif Astro (`astro.config.mjs`) :
   comme composant. `Astro.currentLocale` est déduit de l'URL, pas du fichier.
 - **Helpers** (`src/lib/i18n.ts`) : `useLocale(Astro.currentLocale)` fournit `t()` (override
   ponctuel par locale, greppable via `'fr-MU':`), `l()` (liens internes localisés), `tjm` et `hourly`.
-- **Sélecteur** : `LocaleSwitcher.astro`, pastilles FR/MU dans le pied de page et dans le menu
+- **Sélecteur** : `LocaleSwitcher.astro`. Dans le header (desktop), un menu déroulant qui affiche
+  la langue en cours (`variant="dropdown"`) ; pastilles FR/MU dans le pied de page et dans le menu
   mobile. Pur lien : l'URL porte l'état, pas de localStorage.
 - **SEO** : self-canonical par variante + hreflang `fr`/`fr-MU`/`x-default` (`BaseLayout`),
   sitemap i18n.

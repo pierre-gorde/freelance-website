@@ -40,6 +40,7 @@ const isActive = (href: string): boolean =>
     </nav>
 
     <div class="header-actions">
+      <LocaleSwitcher class="header-locales" variant="dropdown" />
       <PrimaryCta
         size="sm"
         place="header"
@@ -139,6 +140,7 @@ const isActive = (href: string): boolean =>
   .nav a {
     text-decoration: none;
     padding-block: 6px;
+    white-space: nowrap;
   }
 
   .nav a:hover,
@@ -263,8 +265,9 @@ const isActive = (href: string): boolean =>
     }
   }
 
-  @media (max-width: 859px) {
-    .nav {
+  @media (max-width: 999px) {
+    .nav,
+    .header-actions :global(.header-locales) {
       display: none;
     }
 
