@@ -11,7 +11,7 @@ import { useLocale } from '../../lib/i18n';
 
 const { t, l, tjm } = useLocale(Astro.currentLocale);
 
-const facts = [t('Temps plein ou partiel'), t('À distance'), tjm];
+const facts = [t('Temps plein ou partiel'), tjm];
 ---
 
 <section class="hero" id="top">
@@ -19,8 +19,8 @@ const facts = [t('Temps plein ou partiel'), t('À distance'), tjm];
     <div class="hero-copy">
       <SlamTitle
         class="hero-title"
-        text={t('Votre équipe est prise par le produit.')}
-        highlight={t("Je prends l'autre projet.")}
+        text={t('Seul ou en équipe.')}
+        highlight={t('Je prends votre projet.')}
       />
       <p class="lead hero-sub">
         Développeur TypeScript freelance, {EXPERIENCE_YEARS} ans d'expérience. Outil interne, migration,
@@ -119,11 +119,6 @@ const facts = [t('Temps plein ou partiel'), t('À distance'), tjm];
   .facts li:nth-child(2) {
     animation-delay: 0.67s;
     --r: 3deg;
-  }
-
-  .facts li:nth-child(3) {
-    animation-delay: 0.74s;
-    --r: -2deg;
     background: var(--cyan-pale);
   }
 
