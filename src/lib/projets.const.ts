@@ -476,6 +476,9 @@ export const HOME_PROJET_SLUGS = [
   'bdl-capital-management',
 ] as const;
 
+/** Cartes de la bande home sur mobile : les suivantes passent dans « Et aussi ». */
+export const HOME_MOBILE_PROJET_COUNT = 2;
+
 export function getProjet(slug: string): Projet {
   const projet = PROJETS.find((entry) => entry.slug === slug);
   if (!projet) throw new Error(`Projet inconnu : ${slug}`);

@@ -1,12 +1,18 @@
 ---
 import ProjetCard from '../projets/ProjetCard.astro';
-import { HOME_PROJET_SLUGS, PROJETS, getProjet } from '../../lib/projets.const';
+import {
+  HOME_MOBILE_PROJET_COUNT,
+  HOME_PROJET_SLUGS,
+  PROJETS,
+  getProjet,
+} from '../../lib/projets.const';
 import { useLocale } from '../../lib/i18n';
 
 const { t, l } = useLocale(Astro.currentLocale);
 
 const featured: readonly string[] = HOME_PROJET_SLUGS;
 const highlighted = HOME_PROJET_SLUGS.map((slug) => getProjet(slug));
+const desktopOnly = highlighted.slice(HOME_MOBILE_PROJET_COUNT);
 const others = PROJETS.filter((projet) => !featured.includes(projet.slug));
 const allLabel = t(`Voir les ${PROJETS.length} projets`, {
   'fr-MU': `Get ${PROJETS.length} proze`,
@@ -24,10 +30,25 @@ const allLabel = t(`Voir les ${PROJETS.length} projets`, {
     </div>
     <div class="strip-stage">
       <ol class="strip-track" data-strip-track>
-        {highlighted.map((projet) => <ProjetCard projet={projet} stampMotion={false} />)}
+        {
+          highlighted.map((projet, index) => (
+            <ProjetCard
+              projet={projet}
+              stampMotion={false}
+              class={index >= HOME_MOBILE_PROJET_COUNT ? 'desktop-only' : undefined}
+            />
+          ))
+        }
         <li class="panel-more tone-cyan">
           <span class="stamp">Et aussi</span>
           <ul>
+            {
+              desktopOnly.map((projet) => (
+                <li class="mobile-only">
+                  <a href={l(`/projets/${projet.slug}`)}>{projet.titre}</a>
+                </li>
+              ))
+            }
             {
               others.map((projet) => (
                 <li>
@@ -149,6 +170,18 @@ const allLabel = t(`Voir les ${PROJETS.length} projets`, {
   @media (min-width: 800px) {
     .strip-track {
       grid-auto-rows: 1fr;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .strip-track > :global(.desktop-only) {
+      display: none;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .mobile-only {
+      display: none;
     }
   }
 </style>
