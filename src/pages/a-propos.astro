@@ -6,7 +6,7 @@ import PageHero from '../components/ui/PageHero.astro';
 import FinalCta from '../components/ui/FinalCta.astro';
 import illustration from '../assets/pierre-illustration.png';
 import photo from '../assets/pierre-photo.jpg';
-import { COTON_URL, COTON_YEARS, EXPERIENCE_YEARS } from '../lib/site.const';
+import { COTON_URL, COTON_YEARS, EXPERIENCE_YEARS, FREELANCE_START_YEAR } from '../lib/site.const';
 import { useLocale } from '../lib/i18n';
 
 const { t, l } = useLocale(Astro.currentLocale);
@@ -25,7 +25,7 @@ const stack = [
 
 <SiteLayout
   title="À propos"
-  description={`Développeur TypeScript depuis ${EXPERIENCE_YEARS} ans, front et back, co-fondateur pendant ${COTON_YEARS} ans du collectif de freelances Coton.`}
+  description={`Développeur web depuis ${EXPERIENCE_YEARS} ans, freelance depuis ${FREELANCE_START_YEAR}, ${COTON_YEARS} ans à co-gérer un collectif de développeurs. Seul ou en équipe, je prends votre projet.`}
   canonicalPath="/a-propos"
 >
   <PageHero

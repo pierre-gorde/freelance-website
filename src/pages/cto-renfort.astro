@@ -8,7 +8,7 @@ import FaqSection from '../components/ui/FaqSection.astro';
 import FinalCta from '../components/ui/FinalCta.astro';
 import ProjetsSelection from '../components/projets/ProjetsSelection.astro';
 import type { FaqId } from '../lib/faq.const';
-import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL } from '../lib/site.const';
+import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL, SITE_ROLE } from '../lib/site.const';
 import { useLocale } from '../lib/i18n';
 
 const { t, l, tjm, hourly } = useLocale(Astro.currentLocale);
@@ -67,7 +67,7 @@ const FAQ_IDS: readonly FaqId[] = [
 
 <SiteLayout
   title="Renfort pour chef de projet et CTO"
-  description="Votre équipe est prise par le produit ? Je prends l'autre projet : outil interne, migration, connecteur, back-office. Développeur TypeScript freelance, compte-rendu écrit chaque soir."
+  description={`Votre roadmap déborde ? Seul ou avec votre équipe, je prends votre projet : outil interne, migration, connecteur, back-office. ${SITE_ROLE}, compte-rendu écrit chaque soir.`}
   canonicalPath="/cto-renfort"
 >
   <PageHero
