@@ -20,5 +20,7 @@ export const DEVIS_DELAY_LABEL = 'Sous 5 jours ouvrés';
 export const RDV_DURATION_LABEL = '30 minutes';
 export const RDV_DURATION_SHORT = '30 min';
 
-export const EXPERIENCE_YEARS = 10;
+export const CAREER_START_YEAR = 2018;
+// Calculé au build : le chiffre avance au premier déploiement de chaque année.
+export const EXPERIENCE_YEARS = new Date().getFullYear() - CAREER_START_YEAR;
 export const COTON_YEARS = 6;
