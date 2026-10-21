@@ -38,10 +38,10 @@ const {
 } = Astro.props;
 
 const sections = [
-  { label: 'Fait', items: done, tone: 'plain' },
-  { label: 'Bloqué', items: blocked, tone: 'alert' },
-  { label: 'Demain', items: upcoming, tone: 'plain' },
-  { label: 'À décider', items: decide, tone: 'alert' },
+  { label: 'Fait', items: done, tone: null },
+  { label: 'Bloqué', items: blocked, tone: 'is-blocked' },
+  { label: 'Demain', items: upcoming, tone: null },
+  { label: 'À décider', items: decide, tone: 'is-decide' },
 ].filter((section) => section.items.length > 0);
 ---
 
@@ -60,7 +60,7 @@ const sections = [
     {
       sections.map((section) => (
         <>
-          <dt class:list={[section.tone === 'alert' && 'is-alert']}>{section.label}</dt>
+          <dt class:list={[section.tone]}>{section.label}</dt>
           {section.items.map((item) => (
             <dd data-type={typing ? '' : undefined}>{frenchSpacing(item)}</dd>
           ))}
@@ -157,8 +157,12 @@ const sections = [
     margin-top: 6px;
   }
 
-  dt.is-alert {
-    color: var(--orange-ink);
+  dt.is-blocked {
+    color: var(--status-blocked);
+  }
+
+  dt.is-decide {
+    color: var(--status-decide);
   }
 
   .report-foot {

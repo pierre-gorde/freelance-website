@@ -38,6 +38,8 @@ Chaque route existe aussi sous `/mu/…` : la variante mauricienne (voir « i18n
 
 Charte pop-art tirée du portrait illustré : papier et encre, orange de la peau, cyan du t-shirt, trame de points, bordures noires de 2 px et ombres dures. Tokens dans `src/styles/tokens.css`, classes partagées (`.btn`, `.stamp`, `.chip`, `.tone-*`, `.display`) dans `src/styles/global.css`.
 
+La version mauricienne (`/mu`) garde la même planche en vert pin, crème et jaune beurre : `:root:lang(fr-MU)` redéfinit les couleurs dans `tokens.css`. Les statuts du compte-rendu ne changent pas de couleur selon la version : « À décider » en orange (`--status-decide`), « Bloqué » en rouge (`--status-blocked`).
+
 ### Animations
 
 - **Au-dessus de la ligne de flottaison** : animations CSS uniquement (`SlamTitle`, portrait qui s'imprime en trame). Le texte n'est jamais masqué en attendant le JS, le LCP reste immédiat.
