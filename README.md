@@ -160,7 +160,7 @@ scripts/
 - Hébergement : **Cloudflare Pages**, auto-deploy sur push `main`, URL de prévisualisation par branche.
 - Build en `format: 'file'` : `/methode` est servi depuis `methode.html`, sans redirection vers `/methode/`.
 - Domaine : **pierregorde.com** via Cloudflare Registrar.
-- Email : `contact@pierregorde.com` via Google Workspace.
+- Email affiché : `gordepierre@gmail.com`. Le domaine n'a pas de MX : aucune adresse en `@pierregorde.com` ne reçoit de mail.
 
 ## Analytics
 

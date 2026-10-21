@@ -2,7 +2,7 @@ export const SITE_URL = 'https://pierregorde.com';
 export const SITE_NAME = 'Pierre Gordé';
 export const SITE_ROLE = 'Développeur TypeScript freelance';
 
-export const CONTACT_EMAIL = 'contact@pierregorde.com';
+export const CONTACT_EMAIL = 'gordepierre@gmail.com';
 
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/pierre-gord%C3%A9/';
 export const GITHUB_URL = 'https://github.com/pierre-gorde';
