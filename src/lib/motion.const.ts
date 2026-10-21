@@ -22,3 +22,5 @@ export const RISE_ROTATIONS = [-3, 2, -2, 3] as const;
 
 export const MAGNET_PULL_X = 0.22;
 export const MAGNET_PULL_Y = 0.32;
+
+export const EMAIL_COPIED_DURATION_MS = 1800;

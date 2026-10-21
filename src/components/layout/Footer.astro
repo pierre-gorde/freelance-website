@@ -1,19 +1,9 @@
 ---
 import LocaleSwitcher from './LocaleSwitcher.astro';
+import CopyEmail from '../ui/CopyEmail.astro';
 import { PERSONA_LINKS, PRIMARY_NAV_LINKS } from '../../lib/links.const';
-import {
-  CONTACT_EMAIL,
-  GITHUB_URL,
-  LINKEDIN_URL,
-  SITE_NAME,
-  SOURCE_CODE_URL,
-} from '../../lib/site.const';
-import {
-  EVENT_CONTACT_EMAIL,
-  EVENT_GITHUB,
-  EVENT_LINKEDIN,
-  EVENT_SOURCE_CODE,
-} from '../../lib/analytics.const';
+import { GITHUB_URL, LINKEDIN_URL, SITE_NAME, SOURCE_CODE_URL } from '../../lib/site.const';
+import { EVENT_GITHUB, EVENT_LINKEDIN, EVENT_SOURCE_CODE } from '../../lib/analytics.const';
 import { useLocale } from '../../lib/i18n';
 
 const { t, l } = useLocale(Astro.currentLocale);
@@ -29,9 +19,7 @@ const wordmarkLetters = [...SITE_NAME];
         <a class="link" href={l('/sans-equipe-tech')}>Voir comment</a>
       </p>
       <p>
-        <a class="link" href={`mailto:${CONTACT_EMAIL}`} data-umami-event={EVENT_CONTACT_EMAIL}
-          >{CONTACT_EMAIL}</a
-        >
+        <CopyEmail class="link" />
       </p>
     </div>
 

@@ -1,0 +1,95 @@
+---
+import { CONTACT_EMAIL } from '../../lib/site.const';
+import { useLocale } from '../../lib/i18n';
+import { frenchSpacing } from '../../lib/typo';
+
+type Props = {
+  class?: string;
+  strong?: boolean;
+};
+
+const { class: className, strong = false } = Astro.props;
+const { t } = useLocale(Astro.currentLocale);
+---
+
+<span class="copy-email">
+  <a class:list={[className]} href={`mailto:${CONTACT_EMAIL}`} data-copy-email={CONTACT_EMAIL}
+    >{strong ? <strong>{CONTACT_EMAIL}</strong> : CONTACT_EMAIL}</a
+  >
+  <span class="bubble copy-bubble" role="status" data-label={frenchSpacing(t('Email copié !'))}
+  ></span>
+</span>
+
+<script>
+  import { EVENT_CONTACT_EMAIL } from '../../lib/analytics.const';
+  import { EMAIL_COPIED_DURATION_MS } from '../../lib/motion.const';
+
+  declare global {
+    interface Window {
+      umami?: { track: (event: string) => void };
+    }
+  }
+
+  const hideTimers = new WeakMap<HTMLElement, number>();
+
+  // Pas de data-umami-event sur le lien : Umami ouvrirait le mailto après avoir compté le clic.
+  document.addEventListener('click', async (event) => {
+    const link = (event.target as Element).closest<HTMLAnchorElement>('[data-copy-email]');
+    if (!link) return;
+    event.preventDefault();
+    window.umami?.track(EVENT_CONTACT_EMAIL);
+    try {
+      await navigator.clipboard.writeText(link.dataset.copyEmail ?? '');
+    } catch {
+      window.location.href = link.href;
+      return;
+    }
+    const bubble = link.nextElementSibling as HTMLElement;
+    bubble.textContent = bubble.dataset.label ?? '';
+    bubble.classList.remove('is-visible');
+    // Relance l'animation quand on reclique pendant que la bulle est affichée.
+    void bubble.offsetWidth;
+    bubble.classList.add('is-visible');
+    window.clearTimeout(hideTimers.get(bubble));
+    hideTimers.set(
+      bubble,
+      window.setTimeout(() => bubble.classList.remove('is-visible'), EMAIL_COPIED_DURATION_MS)
+    );
+  });
+</script>
+
+<style>
+  .copy-email {
+    position: relative;
+    display: inline-block;
+  }
+
+  .copy-bubble {
+    position: absolute;
+    z-index: 5;
+    right: 0;
+    bottom: calc(100% + 16px);
+    white-space: nowrap;
+    font-size: 1rem;
+    color: var(--ink);
+    transform: rotate(-4deg);
+    transform-origin: 80% 120%;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.2s,
+      visibility 0.2s;
+  }
+
+  .copy-bubble.is-visible {
+    visibility: visible;
+    opacity: 1;
+    animation: bubble-in 0.5s var(--ease-out);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .copy-bubble.is-visible {
+      animation: none;
+    }
+  }
+</style>

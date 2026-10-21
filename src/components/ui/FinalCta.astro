@@ -1,7 +1,6 @@
 ---
+import CopyEmail from './CopyEmail.astro';
 import PrimaryCta from './PrimaryCta.astro';
-import { CONTACT_EMAIL } from '../../lib/site.const';
-import { EVENT_CONTACT_EMAIL } from '../../lib/analytics.const';
 import { useLocale } from '../../lib/i18n';
 import { frenchSpacing } from '../../lib/typo';
 
@@ -25,9 +24,7 @@ const BURST_POINTS =
       {text && <p class="final-text">{frenchSpacing(text)}</p>}
       <p class="final-mail">
         {t('Ou écrivez-moi :', { 'fr-MU': 'Ouswa ekrir mwa :' })}
-        <a href={`mailto:${CONTACT_EMAIL}`} data-umami-event={EVENT_CONTACT_EMAIL}
-          ><strong>{CONTACT_EMAIL}</strong></a
-        >
+        <CopyEmail strong />
       </p>
     </div>
     <div class="final-cta">
@@ -81,7 +78,7 @@ const BURST_POINTS =
     font-weight: 700;
   }
 
-  .final-mail a {
+  .final-mail :global(a) {
     text-underline-offset: 4px;
   }
 

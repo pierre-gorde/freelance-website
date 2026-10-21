@@ -117,7 +117,7 @@ src/
 │   ├── layout/         Header, Footer, LocaleSwitcher
 │   ├── projets/        ProjetCard, ProjetSchema, ProjetsSelection
 │   ├── report/         DailyReport (le compte-rendu du soir)
-│   └── ui/             PrimaryCta, SlamTitle, PageHero, Steps, Engagements, FaqList, FaqSection, FinalCta, Flag
+│   └── ui/             PrimaryCta, SlamTitle, PageHero, Steps, Engagements, FaqList, FaqSection, FinalCta, Flag, CopyEmail
 ├── layouts/
 │   ├── BaseLayout      Squelette HTML, police, meta SEO, Open Graph, hreflang, Cal.com, motion
 │   └── SiteLayout      Header + main + Footer

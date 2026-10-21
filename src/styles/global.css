@@ -229,6 +229,36 @@ a {
   background: var(--paper);
 }
 
+/* Bulle de BD : chaque usage la positionne lui-même (position absolue requise pour la queue). */
+.bubble {
+  background: var(--paper);
+  border: var(--border);
+  border-radius: 20px;
+  padding: 10px 16px;
+  box-shadow: var(--shadow-md);
+  font-weight: 800;
+  font-stretch: 110%;
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  right: 30px;
+  bottom: -11px;
+  width: 18px;
+  height: 18px;
+  background: var(--paper);
+  border-right: var(--border);
+  border-bottom: var(--border);
+  transform: rotate(45deg);
+}
+
+@keyframes bubble-in {
+  from {
+    transform: scale(0) rotate(-28deg);
+  }
+}
+
 /* Tons de surface partagés par les dossiers projets et leurs pages. */
 .tone-cyan {
   background-color: var(--cyan);
