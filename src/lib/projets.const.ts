@@ -313,7 +313,7 @@ export const PROJETS: Projet[] = [
     titre: 'Ublo',
     client: 'Ublo',
     secteur: 'Immobilier',
-    stamp: 'Équipe de 4',
+    stamp: 'Immobilier',
     tone: 'ink',
     periode: 'oct. 2021 – mai 2022',
     annees: '2021 – 2022',
