@@ -1,6 +1,7 @@
 export const SITE_URL = 'https://pierregorde.com';
 export const SITE_NAME = 'Pierre Gordé';
 export const SITE_ROLE = 'Développeur web freelance';
+export const LEGAL_ENTITY_NAME = 'SOCIETE PIERRE GORDE';
 
 export const CONTACT_EMAIL = 'gordepierre@gmail.com';
 

@@ -1,24 +1,29 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
-import { CONTACT_EMAIL, SITE_URL } from '../lib/site.const';
+import { CONTACT_EMAIL, LEGAL_ENTITY_NAME, SITE_URL } from '../lib/site.const';
 
 const sections = [
   {
     title: 'Éditeur du site',
     items: [
-      { label: 'Nom', value: 'Pierre Gordé' },
-      { label: 'Statut', value: 'Entrepreneur individuel (micro-entreprise)' },
-      { label: 'SIRET', value: '824 998 587 00037' },
-      { label: 'Code APE', value: '62.01Z, programmation informatique' },
-      { label: 'Adresse', value: 'Bâtiment A, 93 rue Petit, 75019 Paris' },
+      { label: 'Dénomination', value: LEGAL_ENTITY_NAME },
+      { label: 'Forme', value: 'SARL au capital de 10 000 €' },
+      { label: 'RCS', value: '893 276 840 R.C.S. Nanterre' },
+      { label: 'SIRET', value: '893 276 840 00012' },
+      { label: 'TVA intracommunautaire', value: 'FR86893276840' },
+      {
+        label: 'Code APE',
+        value: '70.22Z, conseil pour les affaires et autres conseils de gestion',
+      },
+      { label: 'Siège social', value: '1 rue Lambrechts, 92400 Courbevoie' },
       { label: 'Email', value: CONTACT_EMAIL },
       { label: 'Site', value: SITE_URL },
     ],
   },
   {
     title: 'Directeur de publication',
-    items: [{ label: 'Responsable', value: 'Pierre Gordé' }],
+    items: [{ label: 'Responsable', value: 'Pierre Gordé, gérant' }],
   },
   {
     title: 'Hébergement',
@@ -60,9 +65,10 @@ const sections = [
     <section>
       <h2>Propriété intellectuelle</h2>
       <p>
-        L'ensemble du contenu de ce site (textes, illustrations, code) est la propriété de Pierre
-        Gordé, sauf mention contraire. Toute reproduction, même partielle, est soumise à
-        autorisation préalable.
+        L'ensemble du contenu de ce site (textes, illustrations, code) est la propriété de {
+          LEGAL_ENTITY_NAME
+        }, sauf mention contraire. Toute reproduction, même partielle, est soumise à autorisation
+        préalable.
       </p>
     </section>
 
