@@ -71,7 +71,7 @@ const sections = [
   <p class="report-foot">
     {
       footLink ? (
-        <a class="link" href={footLink.href}>
+        <a class="link report-link" href={footLink.href}>
           {footLink.label}
         </a>
       ) : (
@@ -90,6 +90,19 @@ const sections = [
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     padding: 20px 22px 18px;
+    transition: box-shadow 0.2s var(--ease-out);
+  }
+
+  .report:has(.report-link:hover) {
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Étire le lien sur toute la carte : un seul lien pour les lecteurs d'écran. */
+  .report-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
   }
 
   .report-title {
