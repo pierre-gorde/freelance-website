@@ -63,8 +63,8 @@ const note = (x: number, y: number, text: string, anchor: 'start' | 'middle' | '
 export const PROJETS: Projet[] = [
   {
     slug: 'agregata',
-    titre: 'Agregata',
-    client: 'Agregata',
+    titre: 'Agregata AI',
+    client: 'Agregata AI',
     secteur: 'FinTech, SaaS',
     stamp: 'FinTech',
     tone: 'orange',
@@ -74,7 +74,7 @@ export const PROJETS: Projet[] = [
     capture: captureAgregata,
     captureAlt: "Page d'accueil d'agregata.ai",
     resume:
-      "Plateforme SaaS de gestion et d'analyse de trésorerie que j'ai construite de zéro pour Agregata. Architecture fullstack TypeScript, infrastructure AWS Fargate, workers BullMQ séparés, connecteurs comptables automatisés et agents IA intégrés.",
+      "Plateforme SaaS de gestion et d'analyse de trésorerie que j'ai construite de zéro pour Agregata AI. Architecture fullstack TypeScript, infrastructure AWS Fargate, workers BullMQ séparés, connecteurs comptables automatisés et agents IA intégrés.",
     accroche:
       'Une plateforme de trésorerie construite de zéro. Un connecteur installé chez le client lit la comptabilité EBP ou Sage et supprime les exports manuels.',
     fait: 'Construite de zéro, déployée sur AWS',
