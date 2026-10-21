@@ -15,7 +15,7 @@ export const CAL_NAMESPACE = 'rdv';
 // L'embed Cal.com n'accepte qu'un hexadécimal : équivalent sRGB de --orange.
 export const CAL_BRAND_COLOR = '#ec6e38';
 
-export const FORFAIT_MAX_DAYS = 20;
+export const FORFAIT_MAX_DAYS = 12;
 export const DEVIS_DELAY_LABEL = 'Sous 5 jours ouvrés';
 
 export const RDV_DURATION_LABEL = '30 minutes';
