@@ -1,13 +1,18 @@
 ---
-import { CAL_EVENT_LINK, CAL_NAMESPACE } from '../../lib/site.const';
+import { CAL_EVENT_LINK, CAL_NAMESPACE, RDV_DURATION_SHORT } from '../../lib/site.const';
 import { EVENT_CTA_RDV } from '../../lib/analytics.const';
 import { useLocale } from '../../lib/i18n';
 
-const CTA_LABEL = 'Réserver un échange gratuit';
-
 type Props = {
   size?: 'sm' | 'md' | 'lg';
+  tone?: 'orange' | 'ink';
   label?: string;
+  /** Libellé réduit sous 700 px (header mobile). */
+  shortLabel?: string;
+  /** Emplacement remonté dans l'événement Umami, pour savoir quel bouton fait réserver. */
+  place: string;
+  magnet?: boolean;
+  burstTrigger?: boolean;
   class?: string;
 };
 
@@ -15,38 +20,60 @@ const { t } = useLocale(Astro.currentLocale);
 
 const {
   size = 'md',
-  label = t(CTA_LABEL, { 'fr-MU': 'Nou kozé ? — randevou gratis' }),
-  class: className = '',
+  tone = 'orange',
+  label = t(`Réserver un échange de ${RDV_DURATION_SHORT}`, {
+    'fr-MU': `Nou kozé ${RDV_DURATION_SHORT} ?`,
+  }),
+  shortLabel,
+  place,
+  magnet = false,
+  burstTrigger = false,
+  class: className,
 } = Astro.props;
 
-const sizeClasses = {
-  sm: 'h-9 px-4 text-sm',
-  md: 'h-11 px-6 text-base',
-  lg: 'h-14 px-8 text-lg',
-} as const;
+const classes = ['btn', size !== 'md' && `btn-${size}`, tone === 'ink' && 'btn-ink', className];
 ---
 
-<button
-  data-cal-link={CAL_EVENT_LINK}
-  data-cal-namespace={CAL_NAMESPACE}
-  data-umami-event={EVENT_CTA_RDV}
-  class={`relative overflow-hidden isolate inline-flex items-center justify-center gap-2 font-medium tracking-[-0.005em] whitespace-nowrap rounded-pill transition-[transform,box-shadow,background-color,color] duration-(--duration-default) ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-3 active:translate-y-px cursor-pointer btn-shiny bg-primary-600 text-text-inverse hover:bg-primary-700 shadow-(--shadow-cta) hover:shadow-(--shadow-cta-hover) ${sizeClasses[size]} ${className}`}
->
-  <span class="relative z-10 inline-flex items-center gap-2">
-    {label}
-    <svg
-      aria-hidden="true"
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.75"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path d="M2.5 7h9"></path>
-      <path d="M8 3.5 11.5 7 8 10.5"></path>
-    </svg>
-  </span>
-</button>
+<span class="magnet" data-magnet={magnet ? '' : undefined}>
+  <button
+    type="button"
+    class:list={classes}
+    data-cal-link={CAL_EVENT_LINK}
+    data-cal-namespace={CAL_NAMESPACE}
+    data-umami-event={EVENT_CTA_RDV}
+    data-umami-event-place={place}
+    data-burst-trigger={burstTrigger ? '' : undefined}
+    aria-label={shortLabel ? label : undefined}
+  >
+    {
+      shortLabel ? (
+        <>
+          <span class="cta-long" aria-hidden="true">
+            {label}
+          </span>
+          <span class="cta-short" aria-hidden="true">
+            {shortLabel}
+          </span>
+        </>
+      ) : (
+        label
+      )
+    }
+  </button>
+</span>
+
+<style>
+  .cta-short {
+    display: none;
+  }
+
+  @media (max-width: 699px) {
+    .cta-long {
+      display: none;
+    }
+
+    .cta-short {
+      display: inline;
+    }
+  }
+</style>

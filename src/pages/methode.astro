@@ -1,408 +1,298 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
-import Container from '../components/layout/Container.astro';
-import PrimaryCta from '../components/ui/PrimaryCta.astro';
-import Reveal from '../components/ui/Reveal.astro';
-import DailyReportMockup from '../components/home/DailyReportMockup.astro';
-import { FORFAIT_MAX_DAYS, RDV_DURATION_LABEL } from '../lib/site.const';
+import PageHero from '../components/ui/PageHero.astro';
+import Steps from '../components/ui/Steps.astro';
+import FinalCta from '../components/ui/FinalCta.astro';
+import DailyReport from '../components/report/DailyReport.astro';
+import { BLOCKED_REPORT, NOMINAL_REPORT } from '../lib/report.const';
+import { DEVIS_DELAY_LABEL, FORFAIT_MAX_DAYS, RDV_DURATION_LABEL } from '../lib/site.const';
 import { useLocale } from '../lib/i18n';
 
-const { t, tjm } = useLocale(Astro.currentLocale);
-
-const blockingReport = {
-  timestamp: 'Mercredi 4 juin · 18:42',
-  projectLabel: 'Projet · Refonte du paiement en ligne',
-  done: ["L'alerte d'échec de paiement est branchée et fonctionne en environnement de test."],
-  blockers: [
-    "Un cas particulier sur les remboursements partiels me résiste. J'ai exploré deux pistes, aucune ne tient proprement. Je creuse demain matin avec l'œil reposé. Si je n'avance pas d'ici midi, je vous propose qu'on en parle 15 min.",
-  ],
-  upcoming: [
-    'Finir la documentation pour votre équipe.',
-    'Faire un point sur la mise en production de la semaine prochaine.',
-  ],
-  decisions: [],
-  footnote: 'Lu en 30 secondes · Pas un timesheet',
-};
+const { t, tjm, hourly } = useLocale(Astro.currentLocale);
 
 const phases = [
   {
-    label: 'Premier échange gratuit',
+    title: 'Un premier échange',
     duration: RDV_DURATION_LABEL,
-    description:
-      'On parle de votre projet, de votre contexte, de vos contraintes. Vous repartez avec une lecture honnête et des directions concrètes, peu importe la suite.',
+    text: "Vous me présentez le projet et son contexte. Je vous dis comment je m'y prendrais et si je suis le bon profil. Gratuit, quelle que soit la suite.",
   },
   {
-    label: 'Cadrage et devis',
-    duration: 'Sous 5 jours ouvrés',
-    description:
-      "Si on est aligné, je formalise le scope, l'estimation et les jalons. Devis envoyé sous 5 jours. Si je n'ai pas assez d'éléments pour cadrer proprement, je vous le dis.",
+    title: 'Un devis de démarrage',
+    duration: DEVIS_DELAY_LABEL,
+    text: "Si on est alignés, j'écris le périmètre, l'estimation et les jalons. S'il me manque des éléments pour cadrer, je vous le dis.",
   },
   {
-    label: 'Démarrage borné',
-    duration: `Jusqu'à ${FORFAIT_MAX_DAYS} jours, sur devis`,
-    description:
-      "On commence par un cadre clair : un devis à durée limitée pour qu'on se teste sans s'engager longtemps. Vous voyez concrètement comment je travaille, je vois concrètement votre contexte.",
+    title: 'Le démarrage',
+    duration: `Jusqu'à ${FORFAIT_MAX_DAYS} jours`,
+    text: 'Un périmètre défini, une durée limitée. Vous voyez comment je travaille, je découvre votre contexte. Compte-rendu dès le premier soir.',
   },
   {
-    label: 'Long terme en régie',
+    title: 'La suite en régie',
     duration: tjm,
-    description:
-      'Si la collaboration est satisfaisante des deux côtés, on bascule en régie pour la suite. TJM transparent, pas de surcouche commerciale. Le compte-rendu quotidien continue.',
+    text: 'Si la collaboration convient des deux côtés, on continue en régie, à temps plein ou partiel. Le compte-rendu du soir continue.',
   },
 ];
 
 const modalites = [
-  {
-    label: 'Tarif',
-    value: tjm,
-    detail:
-      'Sur devis pour le démarrage, en régie pour la suite. Pas de "à partir de" : tarif unique transparent.',
-  },
-  {
-    label: 'Disponibilité',
-    value: 'Heures ouvrées',
-    detail:
-      "Je suis là tous les jours sur ces horaires. Pas d'engagement à la minute, mais une présence réelle.",
-  },
-  {
-    label: 'Modalité de travail',
-    value: 'Full remote',
-    detail:
-      "J'utilise vos outils : Slack, mail, Teams, GitHub, Linear, peu importe. Pas de portail dédié à apprendre.",
-  },
-  {
-    label: 'Compte-rendu quotidien',
-    value: 'Chaque soir travaillé',
-    detail:
-      "Un message factuel sur votre canal, lu en 30 secondes : ce qui a été fait, ce qui est bloqué, ce qui est prévu, ce que j'attends de vous.",
-  },
+  { label: 'Tarif', value: `${tjm} ou ${hourly}`, tone: 'tone-cyan' },
+  { label: 'Rythme', value: 'Temps plein ou partiel', tone: 'tone-paper' },
+  { label: 'Lieu', value: 'À distance, avec vos outils', tone: 'tone-orange' },
+  { label: 'Présence', value: 'Tous les jours travaillés, en heures ouvrées', tone: 'tone-pale' },
 ];
 
 const iaPoints = [
   {
     label: "Ce que l'IA fait",
     items: [
-      'Exploration rapide quand il faut comparer plusieurs approches.',
-      'Le gros du volume sur tout ce qui est balisé et connu.',
-      'Boilerplate, tests unitaires, refacto local.',
+      'Explorer vite quand il faut comparer plusieurs approches.',
+      'Le gros du volume sur ce qui est balisé et connu.',
+      'Le code répétitif, les tests unitaires, les refactorings locaux.',
     ],
   },
   {
     label: 'Ce que je fais',
     items: [
-      "J'écris les lignes que l'IA ne sait pas faire bien ou pas assez vite.",
-      "Je valide les choix structurels, l'architecture, la cohérence globale.",
-      'Je suis responsable du résultat : qualité, performance, stabilité, non-régression.',
+      "J'écris ce que l'IA ne sait pas bien faire.",
+      "Je valide les choix d'architecture et la cohérence d'ensemble.",
+      'Je réponds du résultat : qualité, performance, stabilité, non-régression.',
     ],
   },
 ];
 ---
 
 <SiteLayout
-  title="Comment je travaille"
-  description="Le compte-rendu quotidien, le premier échange gratuit, le déroulé d'une mission et les modalités de collaboration. Tout est explicite, rien ne se cache derrière des adjectifs."
+  title="Méthode"
+  description={`Le compte-rendu écrit chaque soir, le déroulé d'une mission, les tarifs (${tjm} ou ${hourly}) et la place de l'IA dans mon travail.`}
   canonicalPath="/methode"
 >
-  <!-- HERO -->
-  <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
-    <Container size="wide">
-      <Reveal>
-        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          {t('Méthode', { 'fr-MU': 'Metod' })}
-        </p>
-        <h1
-          class="mt-5 max-w-[22ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
-        >
-          {t('Comment je travaille,', { 'fr-MU': 'Kouma mo travay,' })}<br />
-          <span class="text-[var(--color-primary-700)]"
-            >{t('précisément', { 'fr-MU': 'présizéman' })}</span
-          >.
-        </h1>
-        <p
-          class="mt-10 max-w-[40ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
-        >
-          {
-            t(
-              "Le compte-rendu quotidien, le premier échange gratuit, le déroulé d'une mission, les tarifs.",
-              { 'fr-MU': 'Rapor toulézour, premie kozé gratis, dérouléman enn mision, bann tarif.' }
-            )
-          }
-        </p>
-      </Reveal>
-    </Container>
-  </section>
+  <PageHero
+    title={t('Comment je travaille,', { 'fr-MU': 'Kouma mo travay,' })}
+    highlight={t('au jour le jour.')}
+    lead="Le compte-rendu du soir, le déroulé d'une mission, les tarifs et la place de l'IA dans mon travail."
+  />
 
-  <!-- SECTION compte-rendu quotidien : explication + 2 mockups -->
-  <section
-    class="mt-[var(--space-section-tight)] py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
-  >
-    <Container size="wide">
-      <Reveal class="max-w-[100ch]">
-        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          01 · {t('Le compte-rendu quotidien', { 'fr-MU': 'Rapor toulézour' })}
-        </p>
-        <h2
-          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
-        >
-          {
-            t('Chaque soir de chaque jour travaillé, vous savez exactement où on en est.', {
-              'fr-MU': 'Sak swar travay, ou koné exakteman kot nou été.',
-            })
-          }
-        </h2>
-        <p
-          class="mt-6 text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-        >
-          Un message factuel, lu en 30 secondes. Trois sections : ce qui a été fait, ce qui est
-          bloqué, ce qui est prévu, ce que j'attends de vous. Envoyé sur votre canal (Slack, mail,
-          Teams). Pas un timesheet, pas une présentation soignée, pas une justification de jours
-          facturés. Juste l'état du projet, posé.
-        </p>
-      </Reveal>
-
-      <div class="mt-16 grid gap-8 lg:grid-cols-2 lg:gap-10 lg:items-start">
-        <Reveal>
-          <p
-            class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
-          >
-            {t('Une journée nominale', { 'fr-MU': 'Enn zourné normal' })}
-          </p>
-          <DailyReportMockup defaultOpen />
-        </Reveal>
-
-        <Reveal delay={120}>
-          <p
-            class="mb-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
-          >
-            {t('Une journée avec un blocage', { 'fr-MU': 'Enn zourné avek enn blokaz' })}
-          </p>
-          <DailyReportMockup {...blockingReport} showPing={false} defaultOpen />
-        </Reveal>
-      </div>
-
-      <Reveal class="mt-16 max-w-[100ch]">
-        <p
-          class="text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-        >
-          <span
-            class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]"
-            >{t('Pourquoi tous les jours', { 'fr-MU': 'Kifer toulézour' })} →</span
-          >
-          parce qu'une réunion hebdomadaire vous dit ce qui s'est passé. Un compte-rendu quotidien vous
-          permet d'arbitrer le jour-même quand un blocage tombe. Sur un projet financé, perdre une semaine
-          à attendre la prochaine réunion coûte cher.
-        </p>
-      </Reveal>
-    </Container>
-  </section>
-
-  <!-- SECTION IA : sobre, factuelle -->
-  <section class="py-[var(--space-section)]">
-    <Container size="wide">
-      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <Reveal class="lg:col-span-5">
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            02 · {t("L'IA dans mon travail", { 'fr-MU': 'IA dan mo travay' })}
-          </p>
-          <h2
-            class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
-          >
-            {
-              t("L'IA écrit le gros du code. Je garde la responsabilité du résultat.", {
-                'fr-MU': 'IA ekrir gro parti kod-la. Mwa mo gard responsabilité rézilta-la.',
-              })
-            }
-          </h2>
-          <p
-            class="mt-6 text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-          >
-            La question n'est plus de savoir si on code avec une IA. La question est de savoir qui
-            garantit que le résultat tient dans la durée. C'est mon job.
-          </p>
-        </Reveal>
-
-        <Reveal class="lg:col-span-7" delay={120}>
-          <dl class="grid gap-5 sm:grid-cols-2">
-            <div
-              class="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)] p-6"
-            >
-              <dt
-                class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
-              >
-                <b>🤖 {iaPoints[0].label}</b>
-              </dt>
-              <dd>
-                <ul class="space-y-2.5">
-                  {
-                    iaPoints[0].items.map((item) => (
-                      <li class="flex gap-2.5 text-sm leading-snug text-[var(--color-text-muted)]">
-                        <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-text-subtle)]" />
-                        <span>{item}</span>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </dd>
-            </div>
-            <div
-              class="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--color-primary-200)] bg-[var(--color-primary-50)] p-6"
-            >
-              <dt
-                class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]"
-              >
-                <b>👨‍💻 {iaPoints[1].label}</b>
-              </dt>
-              <dd>
-                <ul class="space-y-2.5">
-                  {
-                    iaPoints[1].items.map((item) => (
-                      <li class="flex gap-2.5 text-sm leading-snug text-[var(--color-text)]">
-                        <span class="mt-1.5 size-1 shrink-0 rounded-full bg-[var(--color-primary-500)]" />
-                        <span>{item}</span>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </dd>
-            </div>
-          </dl>
-        </Reveal>
-      </div>
-    </Container>
-  </section>
-
-  <!-- SECTION déroulé d'une mission : 4 phases -->
-  <section
-    class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-subtle)]"
-  >
-    <Container size="wide">
-      <Reveal class="max-w-[100ch]">
-        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          03 · {t("Le déroulé d'une mission", { 'fr-MU': 'Dérouléman enn mision' })}
-        </p>
-        <h2
-          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
-        >
-          {t('Quatre phases.', { 'fr-MU': 'Kat faz.' })}
-          <br />
-          {
-            t("Sans engagement long terme avant qu'on ait travaillé ensemble.", {
-              'fr-MU': 'San langazman long term avan nou finn travay ansam.',
-            })
-          }
-        </h2>
-      </Reveal>
-
-      <ol class="mt-16 border-b border-[var(--color-border)]">
+  <section class="reports" aria-labelledby="cr-titre">
+    <div class="wrap">
+      <h2 class="display section-title" id="cr-titre" data-slam>
         {
-          phases.map((phase, index) => (
-            <Reveal as="li" delay={index * 80}>
-              <article class="flex flex-col gap-6 border-t border-[var(--color-border)] py-10 md:flex-row md:items-start md:gap-12 md:py-12">
-                <div class="md:w-72 md:shrink-0">
-                  <p class="font-mono text-5xl font-semibold leading-none tracking-[-0.04em] text-[var(--color-primary-700)] md:text-6xl">
-                    {String(index + 1).padStart(2, '0')}
-                  </p>
-                  <p class="mt-4 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                    {phase.duration}
-                  </p>
-                </div>
-                <div class="md:min-w-0 md:flex-1">
-                  <h3 class="text-[length:var(--text-2xl)] font-semibold leading-[var(--leading-snug)] tracking-[-0.015em] text-[var(--color-text)]">
-                    {phase.label}
-                  </h3>
-                  <p class="mt-4 max-w-[65ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
-                    {phase.description}
-                  </p>
-                </div>
-              </article>
-            </Reveal>
-          ))
+          t('Chaque soir travaillé, un compte-rendu écrit.', {
+            'fr-MU': 'Sak swar travay, enn rapor ekri.',
+          })
         }
-      </ol>
-    </Container>
+      </h2>
+      <p class="lead reports-intro">
+        Un message factuel, lu en 30 secondes. Quatre parties : ce qui est fait, ce qui bloque, ce
+        qui suit, ce que j'attends de vous. Envoyé sur votre canal : Slack, mail ou Teams.
+      </p>
+      <div class="reports-grid">
+        <figure data-tilt="-6,-1">
+          <figcaption>Une journée normale</figcaption>
+          <DailyReport
+            meta={NOMINAL_REPORT.meta}
+            done={NOMINAL_REPORT.done}
+            upcoming={NOMINAL_REPORT.upcoming}
+            decide={NOMINAL_REPORT.decide}
+          />
+        </figure>
+        <figure data-tilt="6,1">
+          <figcaption>Une journée avec un blocage</figcaption>
+          <DailyReport
+            meta={BLOCKED_REPORT.meta}
+            done={BLOCKED_REPORT.done}
+            blocked={BLOCKED_REPORT.blocked}
+            upcoming={BLOCKED_REPORT.upcoming}
+            stampMotion
+          />
+        </figure>
+      </div>
+      <div data-rise>
+        <p class="reports-why">
+          <strong>Pourquoi tous les jours ?</strong> Une réunion hebdomadaire vous dit ce qui s'est passé.
+          Un compte-rendu quotidien vous permet d'arbitrer le jour même quand un blocage tombe.
+        </p>
+      </div>
+    </div>
   </section>
 
-  <!-- SECTION modalités : tarif, dispo, plafond, remote -->
-  <section
-    class="py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
-  >
-    <Container size="wide">
-      <Reveal class="max-w-[50ch]">
-        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          04 · {t('Modalités', { 'fr-MU': 'Bann modalité' })}
-        </p>
-        <h2
-          class="mt-5 text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
-        >
-          {
-            t('Les règles du jeu, posées dès le départ.', {
-              'fr-MU': 'Bann régleman, klér depi koumansman.',
-            })
-          }
-        </h2>
-      </Reveal>
+  <Steps
+    id="deroule"
+    title={t("Le déroulé d'une mission", { 'fr-MU': 'Dérouléman enn mision' })}
+    steps={phases}
+  />
 
-      <dl class="mt-16 grid items-start gap-x-12 gap-y-12 md:grid-cols-2">
+  <section class="modalites" aria-labelledby="modalites-titre" data-wipe="right">
+    <div class="wrap">
+      <h2 class="display section-title" id="modalites-titre" data-slam>
         {
-          modalites.map((item, index) => (
-            <Reveal as="div" delay={index * 70} class="flex flex-col gap-3">
-              <dt class="flex items-baseline gap-3">
-                <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                  {item.label}
-                </span>
-                <span class="h-px flex-1 bg-[var(--color-border)]" aria-hidden="true" />
-              </dt>
-              <dd>
-                <p class="text-[length:var(--text-2xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.015em] text-[var(--color-text)]">
-                  {item.value}
-                </p>
-                <p class="mt-3 max-w-[55ch] text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
-                  {item.detail}
-                </p>
-              </dd>
-            </Reveal>
+          t('Les règles, posées dès le départ.', {
+            'fr-MU': 'Bann régleman, klér depi koumansman.',
+          })
+        }
+      </h2>
+      <dl class="modalites-grid" data-rise>
+        {
+          modalites.map((item) => (
+            <div class:list={['modalite', item.tone]}>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
           ))
         }
       </dl>
-    </Container>
-  </section>
-
-  <!-- CTA FINALE -->
-  <section
-    class="relative overflow-hidden py-[var(--space-section)] bg-[var(--color-bg-deep)] text-[var(--color-text-inverse)]"
-  >
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full opacity-30"
-      style="background: radial-gradient(closest-side, oklch(50% 0.12 155 / 0.6), transparent);"
-    >
     </div>
-
-    <Container size="wide">
-      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
-        <Reveal class="lg:col-span-8">
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
-            Étape 01 · {t('Premier échange', { 'fr-MU': 'Premie kozé' })} · {RDV_DURATION_LABEL}
-          </p>
-          <h2
-            class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
-          >
-            {t('On commence par se parler.', { 'fr-MU': 'Nou komans par kozé.' })}
-            <span class="block text-[var(--color-primary-200)]"
-              >{t('Sans engagement.', { 'fr-MU': 'San langazman.' })}</span
-            >
-          </h2>
-          <p
-            class="mt-8 max-w-[55ch] text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[color-mix(in_oklab,var(--color-text-inverse)_75%,transparent)]"
-          >
-            Vous arrivez avec votre contexte. Vous repartez avec une lecture honnête, les bonnes
-            questions à se poser, et des directions concrètes pour avancer cette semaine.
-          </p>
-        </Reveal>
-        <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
-          <PrimaryCta size="lg" class="w-full sm:w-auto" />
-        </Reveal>
-      </div>
-    </Container>
   </section>
+
+  <section class="ia" aria-labelledby="ia-titre">
+    <div class="wrap ia-grid">
+      <div>
+        <h2 class="display section-title" id="ia-titre" data-slam>
+          {t("L'IA écrit une partie du code. Je réponds du résultat.")}
+        </h2>
+        <p class="lead ia-intro">
+          Coder avec une IA est devenu normal. La vraie question : qui garantit que le résultat
+          tient dans la durée ? C'est mon travail.
+        </p>
+      </div>
+      <div class="ia-cards" data-rise>
+        {
+          iaPoints.map((point, index) => (
+            <div class:list={['ia-card', index === 1 && 'tone-cyan']}>
+              <h3>{point.label}</h3>
+              <ul>
+                {point.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    title={t('On commence par se parler.', { 'fr-MU': 'Nou komans par kozé.' })}
+    text={`${RDV_DURATION_LABEL}, gratuit, sans engagement. Vous repartez avec mon avis sur votre projet.`}
+    place="methode-final"
+  />
 </SiteLayout>
+
+<style>
+  .reports {
+    padding-block: var(--space-section);
+  }
+
+  .reports-intro {
+    margin-top: 20px;
+  }
+
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: 40px;
+    align-items: start;
+    margin-top: 48px;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figcaption {
+    display: inline-block;
+    margin-bottom: 14px;
+    font-weight: 800;
+    font-stretch: 110%;
+    font-size: 1.1rem;
+  }
+
+  .reports-why {
+    max-width: 44em;
+    margin-top: 48px;
+    font-size: 1.15rem;
+  }
+
+  .modalites {
+    background: var(--paper-2);
+    border-bottom: var(--border);
+    padding-block: var(--space-section);
+  }
+
+  .modalites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .modalite {
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .modalite dt {
+    font-weight: 700;
+  }
+
+  .modalite dd {
+    margin: 8px 0 0;
+    font-weight: 900;
+    font-stretch: 112%;
+    font-size: 1.45rem;
+    line-height: 1.2;
+  }
+
+  .ia {
+    padding-block: var(--space-section);
+  }
+
+  .ia-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 40px clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .ia-intro {
+    margin-top: 20px;
+  }
+
+  .ia-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 20px;
+  }
+
+  .ia-card {
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    background: var(--paper);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .ia-card.tone-cyan {
+    background-color: var(--cyan);
+  }
+
+  .ia-card h3 {
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  .ia-card ul {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+    padding-left: 1.1em;
+    list-style: disc;
+  }
+
+  @media (max-width: 899px) {
+    .ia-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

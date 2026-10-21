@@ -6,7 +6,17 @@ export function resolveLocale(currentLocale: string | undefined): LocaleConfig {
   return LOCALES.find((locale) => locale.code === currentLocale) ?? DEFAULT_LOCALE;
 }
 
-export function stripLocalePrefix(pathname: string): string {
+/**
+ * Avec build.format: 'file', Astro.url.pathname vaut '/methode.html' ou '/index.html' au build :
+ * on revient à l'URL publique servie par Cloudflare Pages.
+ */
+function toPublicPath(pathname: string): string {
+  const path = pathname.replace(/\.html$/, '').replace(/\/index$/, '/');
+  return path || '/';
+}
+
+export function stripLocalePrefix(rawPathname: string): string {
+  const pathname = toPublicPath(rawPathname);
   for (const locale of LOCALES) {
     if (!locale.pathPrefix) continue;
     const prefix = `/${locale.pathPrefix}`;
@@ -32,6 +42,7 @@ type LocaleHelpers = {
   /** Localise un lien interne : l('/methode') → '/methode' ou '/mu/methode'. */
   l: (path: string) => string;
   tjm: string;
+  hourly: string;
 };
 
 export function useLocale(currentLocale: string | undefined): LocaleHelpers {
@@ -41,5 +52,6 @@ export function useLocale(currentLocale: string | undefined): LocaleHelpers {
     t: (fr, overrides) => overrides?.[locale.code] ?? fr,
     l: (path) => localizePath(locale.code, path),
     tjm: locale.tjmDisplay,
+    hourly: locale.hourlyDisplay,
   };
 }

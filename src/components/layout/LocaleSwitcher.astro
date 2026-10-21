@@ -5,11 +5,12 @@ import { EVENT_LOCALE_SWITCH } from '../../lib/analytics.const';
 import { localizePath, stripLocalePrefix, useLocale } from '../../lib/i18n';
 
 type Props = {
-  variant?: 'dropdown' | 'row';
+  /** `dropdown` : la langue en cours reste affichée, la liste s'ouvre au clic (header). */
+  variant?: 'row' | 'dropdown';
   class?: string;
 };
 
-const { variant = 'dropdown', class: className } = Astro.props;
+const { variant = 'row', class: className } = Astro.props;
 
 const { locale } = useLocale(Astro.currentLocale);
 const basePath = stripLocalePrefix(Astro.url.pathname);
@@ -22,42 +23,35 @@ const options = LOCALES.map((entry) => ({
 
 {
   variant === 'dropdown' ? (
-    <details class:list={['locale-select relative', className]} data-locale-select>
-      <summary
-        aria-label={`Langue : ${locale.shortLabel} — changer`}
-        class="inline-flex h-9 cursor-pointer list-none items-center gap-1.5 rounded-md px-2 select-none hover:bg-bg-subtle transition-colors duration-(--duration-fast)"
-      >
+    <details class:list={['locale-select', className]} data-locale-select>
+      <summary aria-label={`Langue : ${locale.shortLabel}, changer`}>
         <Flag country={locale.flag} />
+        {locale.shortLabel}
         <svg
+          class="chevron"
           aria-hidden="true"
           width="10"
           height="10"
           viewBox="0 0 10 10"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.5"
+          stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="text-text-subtle transition-transform duration-(--duration-fast)"
         >
           <path d="M2 3.5 5 6.5 8 3.5" />
         </svg>
       </summary>
-      <ul class="absolute top-full right-0 z-50 mt-2 min-w-24 rounded-md border border-border bg-bg-elevated p-1 shadow-(--shadow-cta)">
+      <ul class="locale-menu">
         {options.map((option) => (
           <li>
             <a
+              class="locale-option"
               href={option.href}
               aria-current={option.isCurrent ? 'true' : undefined}
               aria-label={option.switchLabel}
               data-umami-event={EVENT_LOCALE_SWITCH}
               data-umami-event-to={option.code}
-              class:list={[
-                'flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-sm font-medium transition-colors duration-(--duration-fast)',
-                option.isCurrent
-                  ? 'text-primary-700 bg-primary-50'
-                  : 'text-text-muted hover:text-text hover:bg-bg-subtle',
-              ]}
             >
               <Flag country={option.flag} />
               {option.shortLabel}
@@ -67,20 +61,15 @@ const options = LOCALES.map((entry) => ({
       </ul>
     </details>
   ) : (
-    <div class:list={['flex items-center gap-2 py-4', className]}>
+    <div class:list={['locales', className]} data-locale-switcher>
       {options.map((option) => (
         <a
+          class="locale-chip"
           href={option.href}
           aria-current={option.isCurrent ? 'true' : undefined}
           aria-label={option.switchLabel}
           data-umami-event={EVENT_LOCALE_SWITCH}
           data-umami-event-to={option.code}
-          class:list={[
-            'inline-flex h-9 items-center gap-2 rounded-md border px-3 text-sm font-medium transition-colors duration-(--duration-fast)',
-            option.isCurrent
-              ? 'border-primary-200 bg-primary-50 text-primary-700'
-              : 'border-border text-text-muted hover:text-text hover:bg-bg-subtle',
-          ]}
         >
           <Flag country={option.flag} />
           {option.shortLabel}
@@ -91,28 +80,108 @@ const options = LOCALES.map((entry) => ({
 }
 
 <style>
-  .locale-select summary::-webkit-details-marker {
+  .locales {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .locale-chip,
+  summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    padding: 5px 12px;
+    font-weight: 800;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    background: var(--paper);
+  }
+
+  .locale-chip[aria-current='true'] {
+    background: var(--cyan);
+  }
+
+  .locale-chip:hover:not([aria-current='true']),
+  summary:hover {
+    background: var(--cyan-pale);
+  }
+
+  .locale-select {
+    position: relative;
+  }
+
+  summary {
+    gap: 6px;
+    padding: 3px 10px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  summary::-webkit-details-marker {
     display: none;
   }
 
-  .locale-select[open] summary svg {
+  .chevron {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .locale-select[open] .chevron {
     transform: rotate(180deg);
+  }
+
+  .locale-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 50;
+    display: grid;
+    gap: 2px;
+    min-width: 100%;
+    padding: 4px;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--paper);
+    box-shadow: var(--shadow-md);
+  }
+
+  .locale-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-weight: 800;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .locale-option[aria-current='true'] {
+    background: var(--cyan);
+  }
+
+  .locale-option:hover:not([aria-current='true']) {
+    background: var(--cyan-pale);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chevron {
+      transition: none;
+    }
   }
 </style>
 
 <script>
-  document.querySelectorAll('[data-locale-select]').forEach((details) => {
+  document.querySelectorAll<HTMLDetailsElement>('[data-locale-select]').forEach((details) => {
     document.addEventListener('click', (event) => {
-      if (
-        details.hasAttribute('open') &&
-        event.target instanceof Node &&
-        !details.contains(event.target)
-      ) {
-        details.removeAttribute('open');
-      }
+      if (details.open && !details.contains(event.target as Node)) details.open = false;
     });
     details.addEventListener('keydown', (event) => {
-      if ((event as KeyboardEvent).key === 'Escape') details.removeAttribute('open');
+      if (event.key === 'Escape') details.open = false;
     });
   });
 </script>

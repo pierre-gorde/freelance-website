@@ -17,6 +17,10 @@ export type LocaleConfig = {
   currency: CurrencyCode;
   tjmAmount: number;
   tjmDisplay: string;
+  hourlyAmount: number;
+  hourlyDisplay: string;
+  /** L'embed Cal.com n'accepte qu'un hexadécimal : équivalent sRGB du --orange de la locale. */
+  calBrandColor: string;
 };
 
 export const LOCALES: readonly LocaleConfig[] = [
@@ -31,6 +35,9 @@ export const LOCALES: readonly LocaleConfig[] = [
     currency: 'EUR',
     tjmAmount: 700,
     tjmDisplay: '700 € HT / jour',
+    hourlyAmount: 100,
+    hourlyDisplay: '100 € HT / heure',
+    calBrandColor: '#ec6e38',
   },
   {
     code: 'fr-MU',
@@ -41,9 +48,13 @@ export const LOCALES: readonly LocaleConfig[] = [
     switchLabel: 'Voir la version mauricienne',
     shortLabel: 'MU',
     currency: 'MUR',
-    // Équivalent rond assumé du TJM 700 € (taux réel ~54, taux implicite 50).
-    tjmAmount: 35_000,
-    tjmDisplay: 'Rs 35 000 HT / zour',
+    // Tarif entreprises mauriciennes : 600 € / jour et 85 € / heure (600 / 7, arrondi),
+    // convertis au taux rond assumé de 50 Rs pour 1 €.
+    tjmAmount: 30_000,
+    tjmDisplay: 'Rs 30 000 HT / zour',
+    hourlyAmount: 4_250,
+    hourlyDisplay: 'Rs 4 250 HT / ler',
+    calBrandColor: '#46b86e',
   },
 ] as const;
 

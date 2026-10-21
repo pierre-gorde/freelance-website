@@ -7,19 +7,13 @@ export type NavLink = {
 };
 
 export const PRIMARY_NAV_LINKS: readonly NavLink[] = [
-  { href: '/methode', label: 'Méthode', labelOverrides: { 'fr-MU': 'Metod' } },
   { href: '/projets', label: 'Projets', labelOverrides: { 'fr-MU': 'Bann proze' } },
-  { href: '/posts', label: 'Posts', labelOverrides: { 'fr-MU': 'Bann post' } },
-  { href: '/faq', label: 'FAQ', labelOverrides: { 'fr-MU': 'Bann kestion' } },
+  { href: '/methode', label: 'Méthode', labelOverrides: { 'fr-MU': 'Metod' } },
   { href: '/a-propos', label: 'À propos', labelOverrides: { 'fr-MU': 'Lor mwa' } },
+  { href: '/faq', label: 'FAQ', labelOverrides: { 'fr-MU': 'Bann kestion' } },
 ] as const;
 
 export const PERSONA_LINKS: readonly NavLink[] = [
-  {
-    href: '/porteur-projet',
-    label: 'Porteur de projet',
-    labelOverrides: { 'fr-MU': 'Porter proze' },
-  },
-  { href: '/cto-renfort', label: 'CTO / lead dev' },
-  { href: '/dirigeant', label: 'Dirigeant', labelOverrides: { 'fr-MU': 'Patron' } },
+  { href: '/cto-renfort', label: 'Chef de projet, CTO' },
+  { href: '/sans-equipe-tech', label: "Pas d'équipe tech" },
 ] as const;

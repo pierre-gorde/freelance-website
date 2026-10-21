@@ -1,0 +1,56 @@
+---
+import ProjetCard from './ProjetCard.astro';
+import { PROJETS, getProjet } from '../../lib/projets.const';
+import { useLocale } from '../../lib/i18n';
+
+type Props = {
+  title: string;
+  slugs: readonly string[];
+};
+
+const { title, slugs } = Astro.props;
+const { l } = useLocale(Astro.currentLocale);
+const projets = slugs.map((slug) => getProjet(slug));
+---
+
+<section class="selection" aria-labelledby="selection-titre" data-wipe="left">
+  <div class="wrap">
+    <div class="selection-head">
+      <h2 class="display section-title" id="selection-titre" data-slam>{title}</h2>
+      <a class="link" href={l('/projets')}>Voir les {PROJETS.length} projets</a>
+    </div>
+    <ul class="selection-grid">
+      {projets.map((projet) => <ProjetCard projet={projet} />)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .selection {
+    background: var(--paper-2);
+    border-block: var(--border);
+    padding-block: var(--space-section);
+  }
+
+  .selection-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px 24px;
+  }
+
+  .selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 28px;
+    margin-top: 36px;
+  }
+
+  /* Cartes côte à côte : même hauteur. Empilées sur mobile : chacune sa hauteur. */
+  @media (min-width: 800px) {
+    .selection-grid {
+      grid-auto-rows: 1fr;
+    }
+  }
+</style>

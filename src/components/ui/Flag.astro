@@ -3,17 +3,13 @@ import type { FlagCountry } from '../../lib/locale.const';
 
 type Props = {
   country: FlagCountry;
-  class?: string;
 };
 
-const { country, class: className } = Astro.props;
+const { country } = Astro.props;
 ---
 
 {/* Couleurs officielles des drapeaux : valeurs fixes hors theme, exception assumée. */}
-<span
-  class:list={['inline-flex shrink-0 overflow-hidden rounded-[3px] ring-1 ring-border', className]}
-  aria-hidden="true"
->
+<span class="flag" aria-hidden="true">
   {
     country === 'mu' ? (
       <svg width="21" height="15" viewBox="0 0 21 15">
@@ -31,3 +27,13 @@ const { country, class: className } = Astro.props;
     )
   }
 </span>
+
+<style>
+  .flag {
+    display: inline-flex;
+    flex: none;
+    overflow: hidden;
+    border-radius: 3px;
+    outline: 1px solid var(--ink);
+  }
+</style>

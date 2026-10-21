@@ -1,301 +1,346 @@
 ---
+import { Image, getImage } from 'astro:assets';
+
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import Container from '../../components/layout/Container.astro';
-import PrimaryCta from '../../components/ui/PrimaryCta.astro';
-import Reveal from '../../components/ui/Reveal.astro';
-import { PROJETS } from '../../lib/projets.const';
+import FinalCta from '../../components/ui/FinalCta.astro';
+import ProjetSchema from '../../components/projets/ProjetSchema.astro';
+import { PROJETS, projetHostname, type Projet } from '../../lib/projets.const';
 import { getProjetsStaticPaths } from '../../lib/projets.paths';
+import { SITE_URL } from '../../lib/site.const';
 import { useLocale } from '../../lib/i18n';
 
 export const getStaticPaths = getProjetsStaticPaths;
 
+type Props = { projet: Projet };
+
+const OG_WIDTH = 1200;
+
 const { t, l } = useLocale(Astro.currentLocale);
+const { projet } = Astro.props;
 
-const { projet, screenshotUrl } = Astro.props;
-const index = PROJETS.findIndex((p) => p.slug === projet.slug);
-const prev = index > 0 ? PROJETS[index - 1] : null;
-const next = index < PROJETS.length - 1 ? PROJETS[index + 1] : null;
-
-const siteHostname = projet.url ? new URL(projet.url).hostname.replace('www.', '') : null;
+const index = PROJETS.findIndex((entry) => entry.slug === projet.slug);
+const prev = PROJETS[index - 1];
+const next = PROJETS[index + 1];
+const hostname = projetHostname(projet);
+const ogImage = await getImage({ src: projet.capture, width: OG_WIDTH, format: 'jpg' });
 ---
 
 <SiteLayout
-  title={projet.titre}
+  title={`${projet.titre} (${projet.secteur})`}
   description={projet.resume}
   canonicalPath={`/projets/${projet.slug}`}
-  ogImage={screenshotUrl ?? undefined}
+  ogImage={new URL(ogImage.src, SITE_URL).href}
 >
-  <!-- HERO -->
-  <section class="pt-16 pb-[var(--space-section-tight)] md:pt-24">
-    <Container size="wide">
-      <Reveal>
-        <a
-          href={l('/projets')}
-          class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)] hover:text-[var(--color-primary-700)] transition-colors duration-[var(--duration-fast)]"
-        >
-          <svg
-            aria-hidden="true"
-            width="12"
-            height="12"
-            viewBox="0 0 14 14"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="transition-transform duration-[var(--duration-fast)] group-hover:-translate-x-0.5"
-          >
-            <path d="M11.5 7h-9"></path>
-            <path d="M6 3.5 2.5 7 6 10.5"></path>
-          </svg>
-          {t('Tous les projets', { 'fr-MU': 'Tou bann proze' })}
-        </a>
-      </Reveal>
-
-      <div class="mt-8 grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-16">
-        <!-- Colonne gauche : texte -->
-        <Reveal class="lg:col-span-7">
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            {projet.secteur} · {projet.periode}
-          </p>
-          <h1
-            class="mt-5 max-w-[28ch] text-[length:var(--text-display)] font-semibold leading-[0.98] tracking-[-0.03em] text-[var(--color-text)]"
-          >
-            {projet.titre}
-          </h1>
-          <p
-            class="mt-8 max-w-[55ch] text-[length:var(--text-xl)] leading-[var(--leading-snug)] text-[var(--color-text-muted)] tracking-[-0.005em]"
-          >
-            {projet.resume}
-          </p>
-        </Reveal>
-
-        <!-- Colonne droite : card aperçu site -->
-        <Reveal class="lg:col-span-5" delay={100}>
-          {
-            projet.url ? (
-              <a
-                href={projet.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="site-card group block overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] transition-[box-shadow,border-color] duration-[var(--duration-default)] hover:border-[var(--color-primary-300)] hover:shadow-md"
-              >
-                <div class="relative aspect-video bg-[var(--color-bg-subtle)]" style="display:grid">
-                  <div
-                    class="flex items-center justify-center"
-                    style="grid-area:1/1"
-                    aria-hidden="true"
-                  >
-                    <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                      {siteHostname}
-                    </span>
-                  </div>
-                  <img
-                    src={screenshotUrl}
-                    alt={`Aperçu de ${siteHostname}`}
-                    loading="lazy"
-                    decoding="async"
-                    style="grid-area:1/1; width:100%; height:100%; object-fit:cover; object-position:top center"
-                    onerror="this.style.display='none'"
-                  />
-                </div>
-                <div class="flex items-center gap-2.5 border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-3">
-                  <img
-                    src={`https://www.google.com/s2/favicons?sz=32&domain=${siteHostname}`}
-                    alt=""
-                    aria-hidden="true"
-                    width="16"
-                    height="16"
-                    class="size-4 shrink-0"
-                    onerror="this.style.display='none'"
-                  />
-                  <span class="flex-1 truncate font-mono text-xs text-[var(--color-text-muted)]">
-                    {siteHostname}
-                  </span>
-                  <svg
-                    aria-hidden="true"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.75"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="shrink-0 text-[var(--color-text-subtle)] transition-transform duration-[var(--duration-fast)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  >
-                    <path d="M5 3h6v6" />
-                    <path d="M11 3 4 10" />
-                  </svg>
-                </div>
-              </a>
-            ) : (
-              <div class="overflow-hidden rounded-[var(--radius-lg)] border border-dashed border-[var(--color-border)]">
-                <div class="flex aspect-video items-center justify-center bg-[var(--color-bg-subtle)]">
-                  <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                    Site non public
-                  </p>
-                </div>
-                <div class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-3">
-                  <p class="font-mono text-xs text-[var(--color-text-subtle)]">
-                    Accès client restreint
-                  </p>
-                </div>
-              </div>
-            )
-          }
-        </Reveal>
-      </div>
-    </Container>
-  </section>
-
-  <!-- SCHÉMA ARCHITECTURE -->
   <section
-    class="mt-[var(--space-section-tight)] py-[var(--space-section)] border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+    class:list={['projet-hero', `tone-${projet.tone}`]}
+    style={`view-transition-name: projet-${projet.slug}`}
   >
-    <Container size="wide">
-      <Reveal>
-        <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-          Architecture
-        </p>
-        <h2
-          class="mt-5 text-[length:var(--text-2xl)] font-semibold leading-[var(--leading-tight)] tracking-[-0.02em] text-[var(--color-text)]"
+    <div class="wrap projet-hero-grid">
+      <div class="projet-hero-copy">
+        <a class="back" href={l('/projets')}
+          >← {t('Tous les projets', { 'fr-MU': 'Tou bann proze' })}</a
         >
-          {t("Vue d'ensemble technique", { 'fr-MU': 'Enn koudey teknik' })}
-        </h2>
-      </Reveal>
-
-      <Reveal class="mt-10" delay={80}>
-        <div
-          class="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg)] p-8"
+        <span class="stamp" data-stamp>{projet.stamp}</span>
+        <h1
+          class="display projet-title"
+          style={`view-transition-name: projet-${projet.slug}-titre`}
         >
-          <Fragment set:html={projet.schema} />
-        </div>
-      </Reveal>
-    </Container>
-  </section>
-
-  <!-- CONTEXTE + LIVRABLES -->
-  <section class="py-[var(--space-section)]">
-    <Container size="wide">
-      <div class="grid gap-16 lg:grid-cols-12 lg:gap-x-20">
-        <!-- Contexte -->
-        <Reveal class="lg:col-span-5">
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            {t('Contexte', { 'fr-MU': 'Kontex' })}
-          </p>
-          <p
-            class="mt-6 text-[length:var(--text-lg)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]"
-          >
-            {projet.contexte}
-          </p>
-
-          <div class="mt-10">
-            <p
-              class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]"
-            >
-              Stack
-            </p>
-            <ul class="mt-4 flex flex-wrap gap-2">
-              {
-                projet.stack.map((tag) => (
-                  <li class="rounded-[var(--radius-pill)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1.5 font-mono text-xs text-[var(--color-text)]">
-                    {tag}
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-        </Reveal>
-
-        <!-- Livrables -->
-        <Reveal class="lg:col-span-7" delay={100}>
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-600)]">
-            {t('Livrables', { 'fr-MU': 'Bann livrab' })}
-          </p>
-          <ul class="mt-6 space-y-4">
-            {
-              projet.livrables.map((livrable) => (
-                <li class="flex items-center gap-4">
-                  <span
-                    class="size-1.5 shrink-0 rounded-full bg-[var(--color-primary-500)]"
-                    aria-hidden="true"
-                  />
-                  <span class="text-[length:var(--text-base)] leading-[var(--leading-relaxed)] text-[var(--color-text-muted)]">
-                    {livrable}
-                  </span>
-                </li>
-              ))
-            }
-          </ul>
-        </Reveal>
+          {projet.titre}
+        </h1>
+        <p class="projet-meta">{projet.secteur} · {projet.periode}</p>
+        <p class="lead">{projet.resume}</p>
+        <p class="projet-fait">{projet.fait}</p>
       </div>
-    </Container>
+      <a
+        class="site-card"
+        href={projet.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-tilt="4,0"
+      >
+        <Image
+          class="site-shot"
+          src={projet.capture}
+          alt={projet.captureAlt}
+          widths={[480, 960, 1440]}
+          sizes="(min-width: 900px) 560px, 100vw"
+          loading="eager"
+        />
+        <span class="site-host">{hostname} ↗</span>
+      </a>
+    </div>
   </section>
 
-  <!-- NAVIGATION ENTRE PROJETS -->
-  {
-    (prev || next) && (
-      <section class="border-t border-[var(--color-border)] py-12">
-        <Container size="wide">
-          <div class="flex items-center justify-between gap-8">
-            {prev ? (
-              <a href={l(`/projets/${prev.slug}`)} class="group flex flex-col gap-1">
-                <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                  ← {t('Précédent', { 'fr-MU': 'Avan' })}
-                </span>
-                <span class="text-[length:var(--text-base)] font-medium text-[var(--color-text)] group-hover:text-[var(--color-primary-700)] transition-colors duration-[var(--duration-fast)]">
-                  {prev.titre}
-                </span>
-              </a>
-            ) : (
-              <span />
-            )}
-            {next && (
-              <a href={l(`/projets/${next.slug}`)} class="group flex flex-col items-end gap-1">
-                <span class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-text-subtle)]">
-                  {t('Suivant', { 'fr-MU': 'Apré' })} →
-                </span>
-                <span class="text-[length:var(--text-base)] font-medium text-[var(--color-text)] group-hover:text-[var(--color-primary-700)] transition-colors duration-[var(--duration-fast)]">
-                  {next.titre}
-                </span>
-              </a>
-            )}
-          </div>
-        </Container>
-      </section>
-    )
+  <section class="archi" aria-labelledby="archi-titre">
+    <div class="wrap">
+      <h2 class="display section-title" id="archi-titre" data-slam>
+        {t("Vue d'ensemble technique", { 'fr-MU': 'Enn koudey teknik' })}
+      </h2>
+      <div class="archi-figure">
+        <ProjetSchema
+          schema={projet.schema}
+          label={`Schéma d'architecture du projet ${projet.titre}`}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="detail" aria-label="Détail du projet" data-wipe="left">
+    <div class="wrap detail-grid">
+      <div>
+        <h2 class="display detail-title" data-slam>{t('Contexte', { 'fr-MU': 'Kontex' })}</h2>
+        <div data-rise><p class="detail-text">{projet.contexte}</p></div>
+        <h2 class="display detail-title detail-title--stack" data-slam>Stack</h2>
+        <ul class="stack-list" data-rise>
+          {projet.stack.map((tag) => <li class="chip">{tag}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2 class="display detail-title" data-slam>
+          {t("Ce que j'ai livré", { 'fr-MU': 'Bann livrab' })}
+        </h2>
+        <ul class="livrables" data-rise>
+          {projet.livrables.map((livrable) => <li>{livrable}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <nav class="wrap projet-nav" aria-label={t('Autres projets', { 'fr-MU': 'Lot bann proze' })}>
+    {
+      prev ? (
+        <a class:list={['nav-card', `tone-${prev.tone}`]} href={l(`/projets/${prev.slug}`)}>
+          <span>← {t('Précédent', { 'fr-MU': 'Avan' })}</span>
+          <strong>{prev.titre}</strong>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      next && (
+        <a
+          class:list={['nav-card', 'nav-card--next', `tone-${next.tone}`]}
+          href={l(`/projets/${next.slug}`)}
+        >
+          <span>{t('Suivant', { 'fr-MU': 'Apré' })} →</span>
+          <strong>{next.titre}</strong>
+        </a>
+      )
+    }
+  </nav>
+
+  <FinalCta
+    title={t('Un projet du même genre ? On en parle.', {
+      'fr-MU': 'Ou éna enn proze parey ? Nou kozé.',
+    })}
+    place={`projet-${projet.slug}`}
+  />
+</SiteLayout>
+
+<style>
+  .projet-hero {
+    border-bottom: var(--border);
   }
 
-  <!-- CTA FINALE -->
-  <section
-    class="relative overflow-hidden py-[var(--space-section)] bg-[var(--color-bg-deep)] text-[var(--color-text-inverse)]"
-  >
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full opacity-30"
-      style="background: radial-gradient(closest-side, oklch(50% 0.12 155 / 0.6), transparent);"
-    >
-    </div>
-    <Container size="wide">
-      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
-        <Reveal class="lg:col-span-8">
-          <p class="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-primary-200)]">
-            {t('Vous avez un projet similaire ?', { 'fr-MU': 'Ou éna enn proze parey ?' })}
-          </p>
-          <h2
-            class="mt-5 text-[length:var(--text-5xl)] font-semibold leading-[0.98] tracking-[-0.03em]"
-          >
-            {t('On en parle,', { 'fr-MU': 'Nou kozé,' })}
-            <span class="block text-[var(--color-primary-200)]"
-              >{t('sans engagement.', { 'fr-MU': 'san langazman.' })}</span
-            >
-          </h2>
-        </Reveal>
-        <Reveal class="lg:col-span-4 lg:text-right" delay={150}>
-          <PrimaryCta size="lg" class="w-full sm:w-auto" />
-        </Reveal>
-      </div>
-    </Container>
-  </section>
-</SiteLayout>
+  .projet-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px clamp(32px, 5vw, 72px);
+    align-items: center;
+    padding-block: clamp(28px, 4vw, 56px) clamp(48px, 6vw, 80px);
+  }
+
+  .projet-hero-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .back {
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 800;
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .back:hover {
+    background: var(--cyan-pale);
+  }
+
+  .projet-title {
+    margin: 0;
+    font-size: var(--text-h1);
+  }
+
+  .projet-meta {
+    font-weight: 700;
+  }
+
+  .projet-fait {
+    border: var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: var(--shadow-md);
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+
+  .site-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    background: var(--ink);
+    transition: box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .site-card:hover {
+    box-shadow: var(--shadow-xl);
+  }
+
+  .tone-ink .site-card {
+    box-shadow: 6px 6px 0 var(--paper);
+  }
+
+  .site-shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .site-host {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    padding: 4px 12px;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 800;
+    font-size: var(--text-sm);
+  }
+
+  .archi {
+    padding-block: var(--space-section);
+  }
+
+  .archi-figure {
+    margin-top: 36px;
+  }
+
+  .detail {
+    background: var(--paper-2);
+    border-block: var(--border);
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 40px clamp(32px, 6vw, 88px);
+    padding-block: var(--space-section);
+  }
+
+  .detail-title {
+    margin: 0;
+    font-size: var(--text-h3);
+  }
+
+  .detail-title--stack {
+    margin-top: 40px;
+  }
+
+  .detail-text {
+    margin-top: 16px;
+    font-size: 1.1rem;
+  }
+
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .livrables {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .livrables li {
+    border: var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    background: var(--paper);
+    box-shadow: var(--shadow-sm);
+    font-weight: 600;
+  }
+
+  .projet-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-block: 48px;
+  }
+
+  .nav-card {
+    display: grid;
+    gap: 4px;
+    min-width: min(280px, 45%);
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .nav-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav-card span {
+    font-weight: 700;
+  }
+
+  .nav-card strong {
+    font-weight: 900;
+    font-stretch: 112%;
+    font-size: 1.3rem;
+  }
+
+  .nav-card--next {
+    text-align: right;
+  }
+
+  @media (max-width: 899px) {
+    .projet-hero-grid,
+    .detail-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-card,
+    .nav-card {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,186 @@
+---
+import { Image } from 'astro:assets';
+
+import photo from '../../assets/pierre-photo.jpg';
+import { CAREER_START_YEAR, COTON_YEARS, FREELANCE_START_YEAR } from '../../lib/site.const';
+import { useLocale } from '../../lib/i18n';
+
+const { l } = useLocale(Astro.currentLocale);
+
+const stickers = [
+  `Freelance depuis ${FREELANCE_START_YEAR}`,
+  `${COTON_YEARS} ans à gérer un collectif`,
+  "De l'idée à la prod",
+];
+
+const parcours = [
+  {
+    year: CAREER_START_YEAR,
+    text: "J'entre chez BDL Capital Management, une société de gestion, et j'y deviens développeur.",
+  },
+  {
+    year: FREELANCE_START_YEAR,
+    text: `Je passe freelance et je co-fonde Coton, un collectif de développeurs freelance, que je co-gère pendant ${COTON_YEARS} ans.`,
+  },
+  {
+    year: 2024,
+    text: 'Je développe le simulateur de course de la Fédération Française de Triathlon, installé sur le Village des JO de Paris 2024.',
+  },
+  {
+    year: 2025,
+    text: "Je deviens CTO freelance d'Agregata AI et je construis la plateforme de zéro.",
+  },
+  {
+    year: 2026,
+    text: 'Je quitte Coton pour me consacrer à mon activité de freelance, en solo. Tout mon temps va au projet en cours.',
+  },
+];
+---
+
+<section class="about" id="qui" aria-labelledby="qui-titre">
+  <div class="wrap about-row">
+    <div class="about-visual">
+      <div data-tilt="-10,-3">
+        <Image
+          class="about-photo"
+          src={photo}
+          alt="Pierre Gordé sur un balcon, au coucher du soleil"
+          widths={[320, 640]}
+          sizes="300px"
+          data-print
+        />
+      </div>
+      <ul class="stickers" aria-label="En bref" data-pop>
+        {
+          stickers.map((sticker, index) => (
+            <li class={`sticker sticker--${index + 1}`}>{sticker}</li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="about-text">
+      <h2 class="display section-title" id="qui-titre" data-slam>Qui je suis</h2>
+      <div data-rise>
+        <ol class="parcours">
+          {
+            parcours.map((step) => (
+              <li>
+                <span class="parcours-year">{step.year}</span>
+                <p>{step.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <p><a class="link" href={l('/a-propos')}>Mon parcours en détail</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    overflow-x: clip;
+  }
+
+  .about-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 48px 64px;
+    padding-block: clamp(64px, 8vw, 112px);
+  }
+
+  .about-visual {
+    position: relative;
+    flex: 0 0 auto;
+    width: min(300px, 100%);
+  }
+
+  .about-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sticker {
+    position: absolute;
+    z-index: 2;
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    padding: 6px 12px;
+    box-shadow: var(--shadow-sm);
+    font-weight: 800;
+    font-stretch: 110%;
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+
+  .sticker--1 {
+    top: -16px;
+    right: -22px;
+    background: var(--cyan);
+    rotate: 6deg;
+  }
+
+  .sticker--2 {
+    bottom: 40px;
+    left: -20px;
+    background: var(--orange);
+    rotate: -5deg;
+  }
+
+  .sticker--3 {
+    bottom: -18px;
+    right: 6px;
+    background: var(--paper);
+    rotate: 3deg;
+  }
+
+  .about-text {
+    flex: 1 1 420px;
+    min-width: 0;
+  }
+
+  [data-rise] {
+    display: grid;
+    gap: 18px;
+    margin-top: 18px;
+    font-size: 1.15rem;
+    max-width: 36em;
+  }
+
+  .parcours {
+    display: grid;
+    gap: 14px;
+    border-left: 2px dashed var(--ink);
+    padding-left: 20px;
+  }
+
+  .parcours li {
+    display: grid;
+    grid-template-columns: 3.4em minmax(0, 1fr);
+    gap: 14px;
+    align-items: baseline;
+  }
+
+  .parcours-year {
+    font-weight: 900;
+    font-stretch: 112%;
+    color: var(--orange-ink);
+  }
+
+  @media (max-width: 699px) {
+    .sticker--1 {
+      right: -6px;
+    }
+
+    .sticker--2 {
+      left: -6px;
+    }
+  }
+</style>

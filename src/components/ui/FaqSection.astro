@@ -1,0 +1,50 @@
+---
+import FaqList from './FaqList.astro';
+import { getFaqEntries, type FaqId } from '../../lib/faq.const';
+import { useLocale } from '../../lib/i18n';
+
+type Props = {
+  ids: readonly FaqId[];
+};
+
+const { ids } = Astro.props;
+const { t, l, tjm, hourly } = useLocale(Astro.currentLocale);
+const entries = getFaqEntries({ tjm, hourly, l });
+---
+
+<section class="faq-section" aria-labelledby="faq-titre">
+  <div class="wrap faq-grid">
+    <h2 class="display section-title" id="faq-titre" data-slam>
+      {t('Questions qui reviennent', { 'fr-MU': 'Bann kestion ki revini' })}
+    </h2>
+    <div>
+      <FaqList items={ids.map((id) => entries[id])} />
+      <p class="faq-more"><a class="link" href={l('/faq')}>Toutes les questions</a></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding-block: var(--space-section);
+    border-top: var(--border);
+    background: var(--cyan-pale);
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 32px 48px;
+    align-items: start;
+  }
+
+  .faq-more {
+    margin-top: 24px;
+  }
+
+  @media (max-width: 899px) {
+    .faq-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
