@@ -19,6 +19,8 @@ export type LocaleConfig = {
   tjmDisplay: string;
   hourlyAmount: number;
   hourlyDisplay: string;
+  /** L'embed Cal.com n'accepte qu'un hexadécimal : équivalent sRGB du --orange de la locale. */
+  calBrandColor: string;
 };
 
 export const LOCALES: readonly LocaleConfig[] = [
@@ -35,6 +37,7 @@ export const LOCALES: readonly LocaleConfig[] = [
     tjmDisplay: '700 € HT / jour',
     hourlyAmount: 100,
     hourlyDisplay: '100 € HT / heure',
+    calBrandColor: '#ec6e38',
   },
   {
     code: 'fr-MU',
@@ -51,6 +54,7 @@ export const LOCALES: readonly LocaleConfig[] = [
     tjmDisplay: 'Rs 30 000 HT / zour',
     hourlyAmount: 4_250,
     hourlyDisplay: 'Rs 4 250 HT / ler',
+    calBrandColor: '#46b86e',
   },
 ] as const;
 

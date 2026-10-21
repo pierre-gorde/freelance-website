@@ -53,6 +53,25 @@
   --duration-base: 300ms;
 }
 
+/*
+ * Version mauricienne : vert pin et crème de l'ancien site, jaune beurre en second ton.
+ * Les noms de tokens restent ceux de la planche orange pour ne pas dupliquer les composants.
+ */
+:root:lang(fr-MU) {
+  --paper: oklch(98% 0.01 95);
+  --paper-2: oklch(94.5% 0.018 100);
+  --ink: oklch(20% 0.025 155);
+  --ink-dot: oklch(28% 0.035 155);
+  --ink-soft: oklch(38% 0.02 155);
+  --orange: oklch(70% 0.15 152);
+  --orange-dot: oklch(62% 0.15 152);
+  --orange-ink: oklch(36% 0.1 155);
+  --orange-pale: oklch(93% 0.045 150);
+  --cyan: oklch(88% 0.13 95);
+  --cyan-dot: oklch(81% 0.14 92);
+  --cyan-pale: oklch(95% 0.05 95);
+}
+
 @media (min-width: 700px) {
   :root {
     --gutter: 40px;

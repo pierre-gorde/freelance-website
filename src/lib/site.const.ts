@@ -12,8 +12,6 @@ export const COTON_URL = 'https://coton.dev';
 
 export const CAL_EVENT_LINK = 'pierre-gorde/30min';
 export const CAL_NAMESPACE = 'rdv';
-// L'embed Cal.com n'accepte qu'un hexadécimal : équivalent sRGB de --orange.
-export const CAL_BRAND_COLOR = '#ec6e38';
 
 export const FORFAIT_MAX_DAYS = 12;
 export const DEVIS_DELAY_LABEL = 'Sous 5 jours ouvrés';

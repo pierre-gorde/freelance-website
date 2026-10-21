@@ -9,7 +9,6 @@ import {
   TITLE_SEPARATOR,
 } from '../lib/seo.const';
 import {
-  CAL_BRAND_COLOR,
   CAL_EVENT_LINK,
   CAL_NAMESPACE,
   CONTACT_EMAIL,
@@ -118,7 +117,7 @@ const personJsonLd = JSON.stringify({
       define:vars={{
         calEventLink: CAL_EVENT_LINK,
         calNamespace: CAL_NAMESPACE,
-        calBrandColor: CAL_BRAND_COLOR,
+        calBrandColor: locale.calBrandColor,
       }}
     >
       (function (C, A, L) {
