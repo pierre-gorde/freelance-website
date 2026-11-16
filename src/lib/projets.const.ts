@@ -2,6 +2,7 @@ import type { ImageMetadata } from 'astro';
 
 import captureAgregata from '../assets/projets/agregata.jpg';
 import captureBdl from '../assets/projets/bdl-capital-management.jpg';
+import captureDodokaz from '../assets/projets/dodokaz.jpg';
 import captureFftri from '../assets/projets/fftri-race-simulator.jpg';
 import captureHotelave from '../assets/projets/hotelave.jpg';
 import captureMargoo from '../assets/projets/margoo.jpg';
@@ -15,8 +16,8 @@ export type ProjetTone = 'cyan' | 'orange' | 'paper' | 'pale' | 'ink';
 export type Projet = {
   slug: string;
   titre: string;
-  /** Nom court affiché dans le bandeau des clients. */
-  client: string;
+  /** Nom court affiché dans le bandeau des clients. Absent pour un produit à moi : ce n'est pas un client. */
+  client?: string;
   secteur: string;
   stamp: string;
   tone: ProjetTone;
@@ -61,6 +62,69 @@ const note = (x: number, y: number, text: string, anchor: 'start' | 'middle' | '
   `<text class="sch-note" x="${x}" y="${y}" text-anchor="${anchor}">${text}</text>`;
 
 export const PROJETS: Projet[] = [
+  {
+    slug: 'dodokaz',
+    titre: 'Dodokaz',
+    secteur: 'Immobilier, île Maurice',
+    stamp: 'Mon produit',
+    tone: 'cyan',
+    periode: "juin 2026 – aujourd'hui",
+    annees: 'depuis 2026',
+    url: 'https://dodokaz.com',
+    capture: captureDodokaz,
+    captureAlt: "Page d'accueil de dodokaz.com",
+    resume:
+      "Mon propre produit : toutes les locations de l'île Maurice au même endroit, sur une carte. Je l'ai conçu et développé, et je l'exploite seul : site Next.js, collecte quotidienne des annonces, recherche Typesense, alertes email et publications automatiques sur Instagram et Facebook.",
+    accroche:
+      "Toutes les locations de l'île Maurice sur une carte : une fiche par bien, et les nouvelles annonces par email dans l'heure.",
+    fait: 'Conçu, développé et exploité seul',
+    contexte:
+      "À Maurice, les annonces de location sont éparpillées entre plusieurs portails et des dizaines de sites d'agences. Le même bien apparaît plusieurs fois, souvent à des prix différents, et les annonces périmées restent en ligne. Dodokaz les rassemble sur une carte, en français, en anglais et en kreol morisien, pour les expatriés comme pour les Mauriciens. Je porte tout : le produit, le code, l'infrastructure, l'exploitation au quotidien et les premiers tests de publicité.",
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'PostgreSQL',
+      'PostGIS',
+      'Typesense',
+      'Redis',
+      'Playwright',
+      'Mapbox',
+      'Vercel',
+      'Railway',
+      'Resend',
+    ],
+    livrables: [
+      'Site Next.js pensé pour le téléphone : carte, liste, filtres et fiches, en français, anglais et kreol morisien',
+      "Collecte de deux portails chaque jour (import le jour, mise à jour la nuit), avec garde-fous et email en cas d'échec",
+      'Une fiche par bien : les doublons entre portails et agences sont fusionnés',
+      'Recherche Typesense derrière la carte et la liste, base PostgreSQL et PostGIS',
+      "Alertes email chaque heure, favoris, comptes avec connexion Google, contact de l'agence sur WhatsApp en un clic",
+      'Carrousel Instagram et Facebook des nouvelles annonces, chaque jour de semaine',
+      'Infrastructure Vercel et Railway, secrets dans Doppler, sauvegarde chiffrée chaque nuit, suivi Sentry et PostHog',
+    ],
+    schema: `<svg viewBox="0 0 720 340" ${SVG_ATTRS}>${markerDef('pdk')}
+  ${box(20, 20, 'Mapbox', 'Cartes', 'external')}
+  ${box(580, 20, 'Portails', 'Annonces', 'external')}
+  ${arrow('pdk', 80, 130, 80, 62)}
+  ${arrow('pdk', 640, 130, 640, 62)}
+  ${note(632, 100, 'Chaque jour', 'end')}
+  ${box(20, 130, 'Next.js 15', 'Site, Vercel', 'primary')}
+  ${box(580, 130, 'Collecte', 'Node, Railway', 'primary')}
+  ${box(300, 80, 'Typesense', 'Carte et liste', 'neutral')}
+  ${box(300, 180, 'PostgreSQL', 'PostGIS', 'neutral')}
+  ${arrow('pdk', 140, 145, 298, 102)}
+  ${arrow('pdk', 140, 155, 298, 198)}
+  ${arrow('pdk', 580, 145, 422, 102)}
+  ${arrow('pdk', 580, 155, 422, 198)}
+  ${arrow('pdk', 80, 170, 80, 238)}
+  ${box(20, 240, 'Upstash', 'Cache Redis', 'external')}
+  ${arrow('pdk', 640, 170, 640, 238)}
+  ${box(580, 240, 'Resend', 'Alertes email', 'external')}
+  ${arrow('pdk', 600, 170, 422, 290)}
+  ${box(300, 280, 'Meta API', 'Instagram, Facebook', 'external')}
+</svg>`,
+  },
   {
     slug: 'agregata',
     titre: 'Agregata AI',
@@ -466,6 +530,10 @@ export const PROJETS: Projet[] = [
 </svg>`,
   },
 ];
+
+export const MISSIONS = PROJETS.filter(
+  (projet): projet is Projet & { client: string } => projet.client !== undefined
+);
 
 /** Projets mis en avant sur la home, dans l'ordre de la bande. */
 export const HOME_PROJET_SLUGS = [

@@ -3,7 +3,7 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import FinalCta from '../../components/ui/FinalCta.astro';
 import ProjetCard from '../../components/projets/ProjetCard.astro';
-import { PROJETS } from '../../lib/projets.const';
+import { MISSIONS, PROJETS } from '../../lib/projets.const';
 import { useLocale } from '../../lib/i18n';
 
 const { t } = useLocale(Astro.currentLocale);
@@ -11,13 +11,13 @@ const { t } = useLocale(Astro.currentLocale);
 
 <SiteLayout
   title="Projets livrés"
-  description={`${PROJETS.length} missions livrées, de la FFTri pour les JO de Paris 2024 à Agregata AI : contexte, livrables, stack et schéma d'architecture pour chacune.`}
+  description={`${MISSIONS.length} missions livrées, des JO de Paris 2024 à Agregata AI, et Dodokaz, mon propre produit : contexte, livrables, stack et schéma d'architecture pour chacun.`}
   canonicalPath="/projets"
 >
   <PageHero
     title={t('Des projets', { 'fr-MU': 'Bann proze' })}
     highlight={t('livrés.', { 'fr-MU': 'livré.' })}
-    lead={`${PROJETS.length} missions, de 2018 à aujourd'hui. Chaque fiche donne le contexte, ce que j'ai livré, la stack et un schéma d'architecture.`}
+    lead={`${MISSIONS.length} missions de 2018 à aujourd'hui, et Dodokaz, mon propre produit. Chaque fiche donne le contexte, ce que j'ai livré, la stack et un schéma d'architecture.`}
     tone="pale"
   />
 

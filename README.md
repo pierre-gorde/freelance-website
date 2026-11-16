@@ -22,7 +22,7 @@ Ce n'est pas un portfolio : c'est un **site de vente**. Cible prioritaire : le c
 | Route | Description |
 |---|---|
 | `/` | Home : hero et compte-rendu qui s'écrit, bandeau clients, projets en bande horizontale, démarrage, compte-rendu, qui je suis |
-| `/projets` | Les 9 projets, cartes de même hauteur |
+| `/projets` | Les 10 projets (9 missions et Dodokaz, mon produit), cartes de même hauteur |
 | `/projets/[slug]` | Fiche projet : contexte, livrables, stack, capture du site, schéma d'architecture |
 | `/methode` | Compte-rendu du soir, déroulé d'une mission, modalités, IA |
 | `/a-propos` | Parcours, stack réelle, pourquoi le solo |
@@ -125,7 +125,7 @@ src/
 │   ├── BaseLayout      Squelette HTML, police, meta SEO, Open Graph, hreflang, Cal.com, motion
 │   └── SiteLayout      Header + main + Footer
 ├── lib/
-│   ├── projets.const.ts  Les 9 projets : textes, tampon, couleur, fait marquant, capture, schéma SVG
+│   ├── projets.const.ts  Les 10 projets : textes, tampon, couleur, fait marquant, capture, schéma SVG. Sans `client`, un projet est un produit à moi et reste hors du bandeau clients
 │   ├── projets.paths.ts  getStaticPaths partagé FR et /mu/
 │   ├── faq.const.ts      Questions fréquentes, réutilisées par la FAQ et les pages profils
 │   ├── report.const.ts   Exemples de comptes-rendus

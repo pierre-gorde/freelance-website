@@ -1,16 +1,16 @@
 ---
 import { EVENT_CLIENT } from '../../lib/analytics.const';
-import { HOME_PROJET_SLUGS, PROJETS } from '../../lib/projets.const';
+import { HOME_PROJET_SLUGS, MISSIONS } from '../../lib/projets.const';
 import { useLocale } from '../../lib/i18n';
 
 const { l } = useLocale(Astro.currentLocale);
 
 const featured: readonly string[] = HOME_PROJET_SLUGS;
 const clients = [
-  ...PROJETS.filter((projet) => featured.includes(projet.slug)).sort(
+  ...MISSIONS.filter((projet) => featured.includes(projet.slug)).sort(
     (a, b) => featured.indexOf(a.slug) - featured.indexOf(b.slug)
   ),
-  ...PROJETS.filter((projet) => !featured.includes(projet.slug)),
+  ...MISSIONS.filter((projet) => !featured.includes(projet.slug)),
 ];
 const copies = [false, true];
 ---
