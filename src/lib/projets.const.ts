@@ -103,10 +103,14 @@ export const PROJETS: Projet[] = [
       'Carrousel Instagram et Facebook des nouvelles annonces, chaque jour de semaine',
       'Infrastructure Vercel et Railway, secrets dans Doppler, sauvegarde chiffrée chaque nuit, suivi Sentry et PostHog',
     ],
-    schema: `<svg viewBox="0 0 720 340" ${SVG_ATTRS}>${markerDef('pdk')}
+    schema: `<svg viewBox="0 0 720 430" ${SVG_ATTRS}>${markerDef('pdk')}
+  <rect class="sch-zone" x="10" y="302" width="700" height="112" rx="6"/>
+  ${note(700, 404, 'Acquisition : publication automatique et pubs', 'end')}
   ${box(20, 20, 'Mapbox', 'Cartes', 'external')}
+  ${box(170, 20, 'Upstash', 'Cache Redis', 'external')}
   ${box(580, 20, 'Portails', 'Annonces', 'external')}
-  ${arrow('pdk', 80, 130, 80, 62)}
+  ${arrow('pdk', 60, 130, 60, 62)}
+  ${arrow('pdk', 110, 130, 205, 62)}
   ${arrow('pdk', 640, 130, 640, 62)}
   ${note(632, 100, 'Chaque jour', 'end')}
   ${box(20, 130, 'Next.js 15', 'Site, Vercel', 'primary')}
@@ -118,11 +122,19 @@ export const PROJETS: Projet[] = [
   ${arrow('pdk', 580, 145, 422, 102)}
   ${arrow('pdk', 580, 155, 422, 198)}
   ${arrow('pdk', 80, 170, 80, 238)}
-  ${box(20, 240, 'Upstash', 'Cache Redis', 'external')}
-  ${arrow('pdk', 640, 170, 640, 238)}
-  ${box(580, 240, 'Resend', 'Alertes email', 'external')}
-  ${arrow('pdk', 600, 170, 422, 290)}
-  ${box(300, 280, 'Meta API', 'Instagram, Facebook', 'external')}
+  ${box(20, 240, 'PostHog', 'Audience', 'external')}
+  ${arrow('pdk', 600, 170, 520, 238)}
+  ${box(440, 240, 'Resend', 'Alertes email', 'external')}
+  ${arrow('pdk', 660, 170, 660, 326)}
+  ${box(580, 328, 'Rendu images', 'Playwright', 'primary')}
+  ${arrow('pdk', 580, 348, 512, 348)}
+  ${box(390, 328, 'Meta Graph', 'Carrousel, guide', 'external')}
+  ${arrow('pdk', 390, 348, 322, 348)}
+  ${box(200, 328, 'Instagram', 'Facebook', 'neutral')}
+  ${arrow('pdk', 140, 348, 198, 348)}
+  ${box(20, 328, 'Meta Ads', 'Pubs, UTM', 'external')}
+  ${arrow('pdk', 240, 328, 110, 172)}
+  ${note(198, 264, 'Visites', 'start')}
 </svg>`,
   },
   {
